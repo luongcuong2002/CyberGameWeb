@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+table {
+  border-spacing: 0px;
+  white-space: nowrap; 
+}
+
+.wrapApp {
+  padding-top: 50px;
+  flex-direction: row;
+  display: flex;
+}
+
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+input[type="text"][disabled] {
+  background-color: rgba(169, 169, 169, 0.5);
+  color: #fff;
+}
+
+.pageBackground {
+  width: 100%;
+  height: calc(100vh - 50px);
+  margin-left: 240px;
+  padding: 0 20px;
+  background-image: linear-gradient(315deg, #696ac1 30%, #5c8fb0 74%);
+}
+
+/* @media screen and (max-width: 768px) {
+  
+}
+
+@media screen and (max-width: 576px) {
+  
+} */
