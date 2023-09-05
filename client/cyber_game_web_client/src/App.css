@@ -1,19 +1,56 @@
+@font-face {
+  font-family: "Linotte";
+  src: url(../src/fonts/Linotte/Linotte-Regular.ttf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Linotte";
+  src: url(../src/fonts/Linotte/Linotte-Bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Linotte";
+  src: url(../src/fonts/Linotte/Linotte-Heavy.ttf);
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: "Linotte";
+  src: url(../src/fonts/Linotte/Linotte-Light.ttf);
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Linotte";
+  src: url(../src/fonts/Linotte/Linotte-Semi-Bold.ttf);
+  font-weight: 600;
+}
+
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-size: 10px;
+  font-size: 100%;
+  font-family: Linotte;
+  color: #fff;
+  background-color: black;
 }
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 table {
   border-spacing: 0px;
   white-space: nowrap; 
+}
+
+p {
+  padding: 0px;
+  margin: 0px;
 }
 
 .wrapApp {
@@ -35,6 +72,12 @@ button {
 input[type="text"][disabled] {
   background-color: rgba(169, 169, 169, 0.5);
   color: #fff;
+}
+
+input:focus {
+  outline: none;
+  border-color: initial;
+  box-shadow: none;
 }
 
 .pageBackground {
