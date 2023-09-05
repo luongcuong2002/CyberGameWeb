@@ -53,6 +53,11 @@ p {
   margin: 0px;
 }
 
+ol, ul {
+  list-style: none;
+  margin: 0px;
+}
+
 .wrapApp {
   padding-top: 50px;
   flex-direction: row;
@@ -67,11 +72,6 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
-}
-
-input[type="text"][disabled] {
-  background-color: rgba(169, 169, 169, 0.5);
-  color: #fff;
 }
 
 input:focus {

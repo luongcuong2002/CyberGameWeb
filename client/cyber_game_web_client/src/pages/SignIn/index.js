@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { PiWarningCircleBold } from "react-icons/pi";
 import clsx from "clsx";
 import Loader from "../../components/Loader";
+import AlertDialog from "../../components/AlertDialog";
 
-const SignIn = () => {
+const SignInPage = () => {
   let navigate = useNavigate();
 
   const [userName, setUserName] = useState("");
@@ -13,6 +14,8 @@ const SignIn = () => {
   const [warning, setWarning] = useState("");
 
   const [waitingForServer, setWaitingForServer] = useState(false);
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const onClickSignInButton = () => {
     if (!userName) {
@@ -64,6 +67,7 @@ const SignIn = () => {
               placeholder="Nhập tên người dùng"
               autoCorrect="off"
               value={userName}
+              disabled={waitingForServer}
               onChange={onUserNameChange}
             />
           </div>
@@ -79,6 +83,7 @@ const SignIn = () => {
               placeholder="Nhập mật khẩu"
               autoCorrect="off"
               value={password}
+              disabled={waitingForServer}
               onChange={onPasswordChange}
             />
           </div>
@@ -93,11 +98,29 @@ const SignIn = () => {
           <button className={styles.signInButton} onClick={onClickSignInButton}>
             {waitingForServer ? <Loader /> : "Đăng nhập"}
           </button>
-          <p className={styles.forgotPasswordText}>Quên mật khẩu?</p>
+          <p
+            className={styles.forgotPasswordText}
+            onClick={() => {
+              if (waitingForServer) {
+                return;
+              }
+              setOpenDialog(true);
+            }}
+          >
+            Quên mật khẩu?
+          </p>
         </div>
       </div>
+      <AlertDialog
+        title={"Thông báo"}
+        message={"Bạn cần liên hệ với chủ quán để đổi mật khẩu!"}
+        isOpen={openDialog}
+        onClick={() => {
+          setOpenDialog(false);
+        }}
+      />
     </div>
   );
 };
 
-export default SignIn;
+export default SignInPage;

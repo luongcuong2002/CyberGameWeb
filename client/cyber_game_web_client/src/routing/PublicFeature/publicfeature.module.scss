@@ -1,0 +1,59 @@
+#root {
+    width: 100vw;
+    height: 100vh;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+}
+
+.navContainer {
+    height: 100%;
+    margin-right: 8px;
+}
+
+.navBox {
+    padding: 8px 12px;
+    background-color: #121212;
+    border-radius: 8px;
+}
+
+.navItem {
+    padding: 4px 12px;
+}
+
+.navLink {
+    width: 232px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+}
+
+.navIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 20px;
+}
+
+.navText {
+    font-size: 1rem;
+    text-align: center;
+    padding-top: 3px;
+}
+
+.navTextActive {
+    color: white;
+    font-weight: bold;
+}
+
+.navTextInactive {
+    color: #b3b3b3;
+    font-weight: 600;
+}
+
+.pageContent {
+    flex-grow: 1;
+    background-color: #121212;
+    border-radius: 8px;
+}

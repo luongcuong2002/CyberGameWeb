@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
-import { Route, Routes, Outlet } from 'react-router-dom';
-import './App.css';
-import AuthService from './services/auth.service';
-import AuthContext from './context/AuthProvider';
-import SignIn from './pages/SignIn';
+import { useState, useEffect, useContext } from "react";
+import "./App.css";
+import AuthService from "./services/auth.service";
+import AuthContext from "./context/AuthProvider";
+import MainRouting from "./routing/MainRouting";
 
 function App() {
-
   const { setAuth } = useContext(AuthContext);
   const [render, setRender] = useState(false);
 
@@ -17,7 +15,7 @@ function App() {
           await setAuth({
             user: data.userName,
             roles: [data.role],
-          })
+          });
         }
       })
       .catch((err) => {
@@ -28,18 +26,7 @@ function App() {
       });
   }, []);
 
-  return (
-    <>
-      {
-        render && (
-          <Routes>
-            <Route path='/' element={<SignIn />} />
-            <Route path='/trang-chu' element={<SignIn />} />
-          </Routes>
-        )
-      }
-    </>
-  );
+  return <>{render && <MainRouting />}</>;
 }
 
 export default App;
