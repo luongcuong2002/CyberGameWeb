@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./promotion.module.scss";
 
-const PromotionPage = () => {
+const PromotionPages = () => {
   return (
     <div id={styles.root}>
-      <h1>Promotion Page</h1>
+      <h1>Promotion Pages</h1>
     </div>
   );
 };
 
-export default PromotionPage;
+export default PromotionPages;

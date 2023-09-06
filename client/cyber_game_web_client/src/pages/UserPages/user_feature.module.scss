@@ -10,10 +10,14 @@
 .navContainer {
     height: 100%;
     padding-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .navBox {
     padding: 8px 12px;
+    margin-bottom: 8px;
     background-color: #121212;
     border-radius: 8px;
 }
@@ -71,9 +75,14 @@
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
     top: 0px;
-    z-index: 2;
+    z-index: 10;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
 }
 
 .overlay {
@@ -81,8 +90,70 @@
     height: 333px;
     position: absolute;
     top: 0px;
-    z-index: 1;
     background-image: linear-gradient(#53535367, #12121200);
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
+}
+
+.directButtonContent {
+    display: flex;
+    gap: 8px;
+}
+
+.directButton {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: black;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: not-allowed;
+}
+
+.directButtonActive {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.signInButton {
+    border-radius: 100px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    scale: 1.0;
+
+    &:hover {
+        scale: 1.03;
+    }
+}
+
+.signInText {
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+}
+
+.buttonsWrapper {
+    padding-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.buttonStyle {
+    padding: 8px 30px;
+    height: 40px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
 }
