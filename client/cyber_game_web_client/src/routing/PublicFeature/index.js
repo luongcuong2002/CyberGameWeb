@@ -60,11 +60,15 @@ const PublicFeature = () => {
       </nav>
 
       <div className={styles.pageContent}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/khuyen-mai" element={<PromotionPage />} />
-          <Route path="/su-kien" element={<EventPage />} />
-        </Routes>
+        <div className={styles.overlay} />
+        <div className={styles.header} />
+        <div className={styles.routes}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/khuyen-mai" element={<PromotionPage />} />
+            <Route path="/su-kien" element={<EventPage />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );
