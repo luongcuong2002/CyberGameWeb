@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
 import styles from "./user_feature.module.scss";
 import HomePage from "./Home";
@@ -22,6 +22,7 @@ import NotificationActiveIcon from "../../assets/icons/ic_notification_active.sv
 import NotificationInactiveIcon from "../../assets/icons/ic_notification_inactive.svg";
 import DepositMoneyActiveIcon from "../../assets/icons/ic_depositmoney_active.svg";
 import DepositMoneyInactiveIcon from "../../assets/icons/ic_depositmoney_inactive.svg";
+import NewTabIcon from "../../assets/icons/ic_new_tab.svg";
 
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import clsx from "clsx";
@@ -30,7 +31,9 @@ import PATH from "../../enums/path.enum";
 
 const UserPages = () => {
   const [isAuth, setIsAuth] = useState(true);
-  const [hasPhoto, setHasPhoto] = useState(true);
+  const [hasPhoto, setHasPhoto] = useState(false);
+
+  const [openPopup, setOpenPopup] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,6 +41,28 @@ const UserPages = () => {
 
   const canGoBack = navigationChecking[0];
   const canGoForward = navigationChecking[1];
+
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      const { target } = event;
+
+      if (!wrapperRef.current) return;
+
+      if (!wrapperRef.current.contains(target)) {
+        if (openPopup) {
+          setOpenPopup(false);
+        }
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [openPopup]);
 
   const NavLinkItem = (path, text, activeIcon, inactiveIcon) => {
     return (
@@ -65,6 +90,27 @@ const UserPages = () => {
     );
   };
 
+  const onOpenAccountTab = () => {
+    window.open(`${window.location.origin}${PATH.admin}`);
+    setOpenPopup(false);
+  };
+
+  const onOpenModeratorTab = () => {
+    window.open(`${window.location.origin}${PATH.moderator}`);
+  };
+
+  const onOpenAdminTab = () => {
+    window.open(`${window.location.origin}${PATH.admin}`);
+  };
+
+  const onClickUserAvatar = () => {
+    setOpenPopup(!openPopup);
+  };
+
+  const onSignOut = () => {
+    setOpenPopup(false);
+  };
+
   return (
     <div id={styles.root}>
       <nav className={styles.navContainer}>
@@ -89,46 +135,48 @@ const UserPages = () => {
           )}
         </ul>
 
-        <ul className={styles.navBox}>
-          {NavLinkItem(
-            PATH.profile,
-            "Hồ sơ",
-            ProfileActiveIcon,
-            ProfileInactiveIcon
-          )}
-          {NavLinkItem(PATH.chat, "Tin nhắn", ChatActiveIcon, ChatInactiveIcon)}
-          {NavLinkItem(
-            PATH.notification,
-            "Thông báo",
-            NotificationActiveIcon,
-            NotificationInactiveIcon
-          )}
-          {NavLinkItem(
-            PATH.deposit_money,
-            "Nạp tiền",
-            DepositMoneyActiveIcon,
-            DepositMoneyInactiveIcon
-          )}
-        </ul>
+        {isAuth && (
+          <>
+            <ul className={styles.navBox}>
+              {NavLinkItem(
+                PATH.profile,
+                "Hồ sơ",
+                ProfileActiveIcon,
+                ProfileInactiveIcon
+              )}
+              {NavLinkItem(
+                PATH.chat,
+                "Tin nhắn",
+                ChatActiveIcon,
+                ChatInactiveIcon
+              )}
+              {NavLinkItem(
+                PATH.notification,
+                "Thông báo",
+                NotificationActiveIcon,
+                NotificationInactiveIcon
+              )}
+              {NavLinkItem(
+                PATH.deposit_money,
+                "Nạp tiền",
+                DepositMoneyActiveIcon,
+                DepositMoneyInactiveIcon
+              )}
+            </ul>
 
-        <div className={styles.buttonsWrapper}>
-          <button
-            className={styles.buttonStyle}
-            onClick={() => {
-              window.open(`${window.location.origin}${PATH.moderator}`);
-            }}
-          >
-            <span>Đi đến trang quản lý</span>
-          </button>
-          <button
-            className={styles.buttonStyle}
-            onClick={() => {
-              window.open(`${window.location.origin}${PATH.admin}`);
-            }}
-          >
-            <span>Đi đến trang Admin</span>
-          </button>
-        </div>
+            <div className={styles.buttonsWrapper}>
+              <button
+                className={styles.buttonStyle}
+                onClick={onOpenModeratorTab}
+              >
+                <span>Đi đến trang quản lý</span>
+              </button>
+              <button className={styles.buttonStyle} onClick={onOpenAdminTab}>
+                <span>Đi đến trang Admin</span>
+              </button>
+            </div>
+          </>
+        )}
       </nav>
 
       <div className={styles.pageContent}>
@@ -173,18 +221,53 @@ const UserPages = () => {
           {isAuth ? (
             <div className={styles.userInfoContainer}>
               <button className={styles.coinButton}>50.000 VNĐ</button>
-              <button className={styles.userAvatarButton}>
-                <img
-                  className={
-                    hasPhoto ? styles.userWithAvatar : styles.userWithoutAvatar
-                  }
-                  src={
-                    hasPhoto
-                      ? "https://i.vietgiaitri.com/2020/11/12/vuong-anh-tu-tung-bi-tu-ti-ve-ngoai-hinh-quyet-tam-giam-30kg-de-lam-ca-si-e86-5368142.png"
-                      : ProfileInactiveIcon
-                  }
-                ></img>
-              </button>
+              <div className={styles.userAvatarAndPopupMenu} ref={wrapperRef}>
+                {openPopup && (
+                  <div className={styles.popupMenu}>
+                    <ul className={styles.popupItemList}>
+                      <li>
+                        <button
+                          className={styles.popupItem}
+                          onClick={onOpenAccountTab}
+                        >
+                          <span style={{ paddingTop: 2.5 }}>Tài khoản</span>
+                          <img
+                            src={NewTabIcon}
+                            style={{ width: 15, height: 15 }}
+                          />
+                        </button>
+                      </li>
+                      <li className={styles.divider}></li>
+                      <li>
+                        <button
+                          className={styles.popupItem}
+                          onClick={onSignOut}
+                        >
+                          <span style={{ paddingTop: 2.5 }}>Đăng xuất</span>
+                          <></>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                <button
+                  className={styles.userAvatarButton}
+                  onClick={onClickUserAvatar}
+                >
+                  <img
+                    className={
+                      hasPhoto
+                        ? styles.userWithAvatar
+                        : styles.userWithoutAvatar
+                    }
+                    src={
+                      hasPhoto
+                        ? "https://i.vietgiaitri.com/2020/11/12/vuong-anh-tu-tung-bi-tu-ti-ve-ngoai-hinh-quyet-tam-giam-30kg-de-lam-ca-si-e86-5368142.png"
+                        : ProfileInactiveIcon
+                    }
+                  />
+                </button>
+              </div>
             </div>
           ) : (
             <button
