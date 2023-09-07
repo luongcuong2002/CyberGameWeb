@@ -74,6 +74,10 @@ button {
   outline: inherit;
 }
 
+img {
+  object-fit: cover;
+}
+
 input:focus {
   outline: none;
   border-color: initial;

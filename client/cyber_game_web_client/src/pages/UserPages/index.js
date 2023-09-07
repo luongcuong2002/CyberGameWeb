@@ -30,6 +30,7 @@ import PATH from "../../enums/path.enum";
 
 const UserPages = () => {
   const [isAuth, setIsAuth] = useState(true);
+  const [hasPhoto, setHasPhoto] = useState(true);
 
   const navigate = useNavigate();
 
@@ -169,14 +170,32 @@ const UserPages = () => {
               />
             </button>
           </div>
-          <button
-            className={styles.signInButton}
-            onClick={() => {
-              navigate("/dang-nhap");
-            }}
-          >
-            <span className={styles.signInText}>Đăng nhập</span>
-          </button>
+          {isAuth ? (
+            <div className={styles.userInfoContainer}>
+              <button className={styles.coinButton}>50.000 VNĐ</button>
+              <button className={styles.userAvatarButton}>
+                <img
+                  className={
+                    hasPhoto ? styles.userWithAvatar : styles.userWithoutAvatar
+                  }
+                  src={
+                    hasPhoto
+                      ? "https://i.vietgiaitri.com/2020/11/12/vuong-anh-tu-tung-bi-tu-ti-ve-ngoai-hinh-quyet-tam-giam-30kg-de-lam-ca-si-e86-5368142.png"
+                      : ProfileInactiveIcon
+                  }
+                ></img>
+              </button>
+            </div>
+          ) : (
+            <button
+              className={styles.signInButton}
+              onClick={() => {
+                navigate("/dang-nhap");
+              }}
+            >
+              <span className={styles.signInText}>Đăng nhập</span>
+            </button>
+          )}
         </div>
         <div className={styles.routes}>
           <Routes>
