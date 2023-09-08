@@ -7,7 +7,7 @@ import { Alert } from "@mui/material";
 
 const ProfilePage = () => {
   const [shouldShowProfileDetailDialog, setShouldShowProfileDetailDialog] =
-    useState(true);
+    useState(false);
 
   const [base64Avatar, setBase64Avatar] = useState(null);
   const [imagePickingError, setImagePickingError] = useState(null);
