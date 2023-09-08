@@ -7,29 +7,19 @@ export default function AvatarPicker({
   size,
   allowDeleteAvatar = false,
   style = {},
+  image = null,
+  onClickPickImage,
   onClickDeleteAvatar = () => {},
 }) {
-  const fileInputRef = useRef(null);
-
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        //setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const coloredImgStyle = {
     filter: "grayscale(100%) brightness(50%)",
     width: size / 3,
     height: size / 3,
+  };
+
+  const imageBackgroundStyle = {
+    width: "100%",
+    height: "100%",
   };
 
   return (
@@ -37,9 +27,12 @@ export default function AvatarPicker({
       className={styles.background}
       style={{ ...style, width: size, height: size }}
     >
-      <img src={ProfileIcon} style={coloredImgStyle} />
+      <img
+        src={image ?? ProfileIcon}
+        style={image ? imageBackgroundStyle : coloredImgStyle}
+      />
       <div className={styles.overlayView}>
-        <button className={styles.textButton} onClick={handleButtonClick}>
+        <button className={styles.textButton} onClick={onClickPickImage}>
           Chọn ảnh
         </button>
         <SlPencil size={size / 6} color="white" />
@@ -49,13 +42,6 @@ export default function AvatarPicker({
           </button>
         )}
       </div>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        ref={fileInputRef}
-        style={{ display: "none" }}
-      />
     </div>
   );
 }
