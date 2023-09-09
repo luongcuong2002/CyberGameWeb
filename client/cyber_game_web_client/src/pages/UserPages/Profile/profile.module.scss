@@ -20,48 +20,30 @@
 
 .baseInfoContentWarper {
     display: flex;
+    align-items: end;
 }
 
-.profileDetailDialog {
-    width: 524px;
-    padding: 0px 24px;
-    border-radius: 8px;
-    background-color: #282828;
-}
-
-.dialogHeader {
-    width: 100%;
-    height: 86px;
+.nameWrapper {
+    flex-grow: 1;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+    align-items: start;
+    margin-bottom: 10px;
+    margin-left: 24px;
 }
 
-.dialogTitle {
-    font-size: 1.5rem;
-    font-weight: bold;
+.hasNotVerified {
+    border-radius: 30px;
+    border: 2px solid #808080;
+    padding: 8px 30px;
+    color: #808080;
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+
+.name {
+    font-size: 4rem;
     color: white;
-}
-
-.closeButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3px;
-    border-radius: 50px;
-
-    &:hover {
-        background-color: #4a4a4a5c;
-    }
-}
-
-.dialogBody {
-    width: 100%;
-    padding-bottom: 24px;
-}
-
-.alertErrorStyle {
-    margin-bottom: 24px;
-    padding: 0px 8px;
+    font-weight: bold;
 }

@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
-import Popup from "reactjs-popup";
 import styles from "./profile.module.scss";
 import AvatarPicker from "../../../components/AvatarPicker";
-import { IoCloseOutline } from "react-icons/io5";
-import { Alert } from "@mui/material";
+import ProfileDetailDialog from "./ingredient/ProfileDetailDialog";
+import useAuth from "../../../hooks/useAuth";
 
 const ProfilePage = () => {
+  const { auth } = useAuth();
+
   const [shouldShowProfileDetailDialog, setShouldShowProfileDetailDialog] =
     useState(false);
 
@@ -82,54 +83,38 @@ const ProfilePage = () => {
     }
   };
 
-  const ProfileDetailDialog = () => {
-    const closeDialog = () => {
-      setShouldShowProfileDetailDialog(false);
-    };
-
-    return (
-      <Popup
-        modal
-        open={shouldShowProfileDetailDialog}
-        overlayStyle={{ background: "#00000080" }}
-        onClose={closeDialog}
-      >
-        <div className={styles.profileDetailDialog}>
-          <div className={styles.dialogHeader}>
-            <span className={styles.dialogTitle}>Chi tiết hồ sơ</span>
-            <button className={styles.closeButton} onClick={closeDialog}>
-              <IoCloseOutline size={30} color="white" />
-            </button>
-          </div>
-          {imagePickingError && (
-            <Alert severity="error" className={styles.alertErrorStyle}>
-              {imagePickingError}
-            </Alert>
-          )}
-          <div className={styles.dialogBody}>
-            <AvatarPicker
-              size={180}
-              allowDeleteAvatar
-              onClickPickImage={onClickPickImage}
-              onClickDeleteAvatar={onClickDeleteImage}
-              image={base64Avatar}
-            />
-          </div>
-        </div>
-      </Popup>
-    );
-  };
-
   return (
     <div id={styles.root}>
       <div className={styles.baseInfo}>
         <div className={styles.baseInfoOverlayBackground}>
           <div className={styles.baseInfoContentWarper}>
-            <AvatarPicker size={192} onClickPickImage={onClickPickImage} />
+            <AvatarPicker
+              size={192}
+              onClickPickImage={onClickPickImage}
+              image={auth?.avatar ?? null}
+            />
+            <div className={styles.nameWrapper}>
+              {!auth?.hasVerified && (
+                <button className={styles.hasNotVerified}>
+                  Tài khoản chưa được xác thực
+                </button>
+              )}
+              <span className={styles.name}>{auth?.name}</span>
+            </div>
           </div>
         </div>
       </div>
-      <ProfileDetailDialog />
+      {shouldShowProfileDetailDialog && (
+        <ProfileDetailDialog
+          onClickDeleteImage={onClickDeleteImage}
+          onClickPickImage={onClickPickImage}
+          base64Avatar={base64Avatar}
+          setBase64Avatar={setBase64Avatar}
+          errorText={imagePickingError}
+          setShouldShowProfileDetailDialog={setShouldShowProfileDetailDialog}
+          setErrorText={setImagePickingError}
+        />
+      )}
       <input
         type="file"
         accept="image/*"

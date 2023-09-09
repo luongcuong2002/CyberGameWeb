@@ -28,10 +28,12 @@ import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import clsx from "clsx";
 import useNavigationChecking from "../../hooks/useNavigationChecking";
 import PATH from "../../enums/path.enum";
+import useAuth from "../../hooks/useAuth";
+import ROLE from "../../enums/role.enum";
+import Converter from "../../utils/converter";
 
 const UserPages = () => {
-  const [isAuth, setIsAuth] = useState(true);
-  const [hasPhoto, setHasPhoto] = useState(false);
+  const { auth, setAuth } = useAuth();
 
   const [openPopup, setOpenPopup] = useState(false);
 
@@ -109,6 +111,8 @@ const UserPages = () => {
 
   const onSignOut = () => {
     setOpenPopup(false);
+    setAuth(null);
+    navigate(PATH.root);
   };
 
   return (
@@ -135,7 +139,7 @@ const UserPages = () => {
           )}
         </ul>
 
-        {isAuth && (
+        {auth && (
           <>
             <ul className={styles.navBox}>
               {NavLinkItem(
@@ -164,17 +168,24 @@ const UserPages = () => {
               )}
             </ul>
 
-            <div className={styles.buttonsWrapper}>
-              <button
-                className={styles.buttonStyle}
-                onClick={onOpenModeratorTab}
-              >
-                <span>Đi đến trang quản lý</span>
-              </button>
-              <button className={styles.buttonStyle} onClick={onOpenAdminTab}>
-                <span>Đi đến trang Admin</span>
-              </button>
-            </div>
+            {(auth?.role === ROLE.admin || auth?.role === ROLE.moderator) && (
+              <div className={styles.buttonsWrapper}>
+                <button
+                  className={styles.buttonStyle}
+                  onClick={onOpenModeratorTab}
+                >
+                  <span>Đi đến trang quản lý</span>
+                </button>
+                {auth?.role === ROLE.admin && (
+                  <button
+                    className={styles.buttonStyle}
+                    onClick={onOpenAdminTab}
+                  >
+                    <span>Đi đến trang Admin</span>
+                  </button>
+                )}
+              </div>
+            )}
           </>
         )}
       </nav>
@@ -218,9 +229,11 @@ const UserPages = () => {
               />
             </button>
           </div>
-          {isAuth ? (
+          {auth ? (
             <div className={styles.userInfoContainer}>
-              <button className={styles.coinButton}>50.000 VNĐ</button>
+              <button className={styles.coinButton}>
+                {Converter.formatMoney(auth?.money)}
+              </button>
               <div className={styles.userAvatarAndPopupMenu} ref={wrapperRef}>
                 {openPopup && (
                   <div className={styles.popupMenu}>
@@ -256,15 +269,11 @@ const UserPages = () => {
                 >
                   <img
                     className={
-                      hasPhoto
+                      auth?.avatar
                         ? styles.userWithAvatar
                         : styles.userWithoutAvatar
                     }
-                    src={
-                      hasPhoto
-                        ? "https://i.vietgiaitri.com/2020/11/12/vuong-anh-tu-tung-bi-tu-ti-ve-ngoai-hinh-quyet-tam-giam-30kg-de-lam-ca-si-e86-5368142.png"
-                        : ProfileInactiveIcon
-                    }
+                    src={auth?.avatar ?? ProfileInactiveIcon}
                   />
                 </button>
               </div>
@@ -285,7 +294,10 @@ const UserPages = () => {
             <Route path={PATH.root} element={<HomePage />} />
             <Route path={PATH.promotion} element={<PromotionPages />} />
             <Route path={PATH.event} element={<EventPages />} />
-            <Route path={PATH.profile} element={<ProfilePage />} />
+            <Route
+              path={PATH.profile}
+              element={auth ? <ProfilePage /> : <PromotionPages />}
+            />
             <Route path={PATH.chat} element={<ChatPage />} />
             <Route path={PATH.notification} element={<NotificationPage />} />
             <Route path={PATH.deposit_money} element={<DepositMoneyPages />} />

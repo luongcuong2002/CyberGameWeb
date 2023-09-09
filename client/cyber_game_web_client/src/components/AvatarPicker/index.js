@@ -10,6 +10,7 @@ export default function AvatarPicker({
   image = null,
   onClickPickImage,
   onClickDeleteAvatar = () => {},
+  activeHover = true,
 }) {
   const coloredImgStyle = {
     filter: "grayscale(100%) brightness(50%)",
@@ -31,17 +32,19 @@ export default function AvatarPicker({
         src={image ?? ProfileIcon}
         style={image ? imageBackgroundStyle : coloredImgStyle}
       />
-      <div className={styles.overlayView}>
-        <button className={styles.textButton} onClick={onClickPickImage}>
-          Chọn ảnh
-        </button>
-        <SlPencil size={size / 6} color="white" />
-        {allowDeleteAvatar && (
-          <button className={styles.textButton} onClick={onClickDeleteAvatar}>
-            Xoá ảnh
+      {activeHover && (
+        <div className={styles.overlayView}>
+          <button className={styles.textButton} onClick={onClickPickImage}>
+            Chọn ảnh
           </button>
-        )}
-      </div>
+          <SlPencil size={size / 6} color="white" />
+          {allowDeleteAvatar && (
+            <button className={styles.textButton} onClick={onClickDeleteAvatar}>
+              Xoá ảnh
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

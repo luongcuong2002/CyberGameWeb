@@ -5,6 +5,7 @@ import { PiWarningCircleBold } from "react-icons/pi";
 import clsx from "clsx";
 import Loader from "../../components/Loader";
 import AlertDialog from "../../components/AlertDialog";
+import AlertError from "../../components/AlertError";
 
 const SignInPage = () => {
   let navigate = useNavigate();
@@ -87,15 +88,12 @@ const SignInPage = () => {
               onChange={onPasswordChange}
             />
           </div>
-          <>
-            {warning && (
-              <div className={styles.warningBox}>
-                <PiWarningCircleBold size={20} color="white" />
-                <p className={styles.warningText}>{warning}</p>
-              </div>
-            )}
-          </>
-          <button className={styles.signInButton} onClick={onClickSignInButton}>
+          <>{warning && <AlertError text={warning} />}</>
+          <button
+            className={styles.signInButton}
+            onClick={onClickSignInButton}
+            disabled={waitingForServer}
+          >
             {waitingForServer ? <Loader /> : "Đăng nhập"}
           </button>
           <p

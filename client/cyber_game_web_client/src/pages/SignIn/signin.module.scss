@@ -85,19 +85,6 @@ $essential-negative-color: #e91429;
     }
 }
 
-.warningBox {
-    background-color: $essential-negative-color;
-    display: flex;
-    align-items: center;
-    padding: 8px;
-}
-
-.warningText {
-    flex-grow: 1;
-    padding-left: 8px;
-    font-size: 0.875rem;
-}
-
 .signInButton {
     width: 100%;
     height: 47px;
