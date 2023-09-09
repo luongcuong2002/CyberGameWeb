@@ -31,6 +31,7 @@ import PATH from "../../enums/path.enum";
 import useAuth from "../../hooks/useAuth";
 import ROLE from "../../enums/role.enum";
 import Converter from "../../utils/converter";
+import NeedSignInPage from "../NeedSignIn";
 
 const UserPages = () => {
   const { auth, setAuth } = useAuth();
@@ -296,11 +297,20 @@ const UserPages = () => {
             <Route path={PATH.event} element={<EventPages />} />
             <Route
               path={PATH.profile}
-              element={auth ? <ProfilePage /> : <PromotionPages />}
+              element={auth ? <ProfilePage /> : <NeedSignInPage />}
             />
-            <Route path={PATH.chat} element={<ChatPage />} />
-            <Route path={PATH.notification} element={<NotificationPage />} />
-            <Route path={PATH.deposit_money} element={<DepositMoneyPages />} />
+            <Route
+              path={PATH.chat}
+              element={auth ? <ChatPage /> : <NeedSignInPage />}
+            />
+            <Route
+              path={PATH.notification}
+              element={auth ? <NotificationPage /> : <NeedSignInPage />}
+            />
+            <Route
+              path={PATH.deposit_money}
+              element={auth ? <DepositMoneyPages /> : <NeedSignInPage />}
+            />
           </Routes>
         </div>
       </div>
