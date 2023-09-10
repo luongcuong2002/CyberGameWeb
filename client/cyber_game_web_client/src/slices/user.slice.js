@@ -1,13 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import ROLE from "../enums/role.enum";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    userId: null,
-    name: null,
-    role: null,
+    userId: "CUONG",
+    name: "Nguyen Cuong",
+    role: ROLE.admin,
     avatar: null,
-    money: null,
+    hasVerified: false,
+    money: 20000,
   },
   reducers: {
     setUser: (state, action) => {
@@ -15,6 +17,7 @@ export const userSlice = createSlice({
       state.name = action.payload.name;
       state.role = action.payload.role;
       state.avatar = action.payload.avatar;
+      state.hasVerified = action.payload.hasVerified;
       state.money = action.payload.money;
     },
     setUserId: (state, action) => {
@@ -32,11 +35,21 @@ export const userSlice = createSlice({
     setMoney: (state, action) => {
       state.money = action.payload;
     },
+    setHasVerified: (state, action) => {
+      state.hasVerified = action.payload;
+    },
   },
 });
 
-export const { setUser, setUserId, setName, setAvatar, setRole, setMoney } =
-  userSlice.actions;
+export const {
+  setUser,
+  setUserId,
+  setName,
+  setAvatar,
+  setRole,
+  setMoney,
+  setHasVerified,
+} = userSlice.actions;
 
 export const selectUser = (state) => state.user;
 

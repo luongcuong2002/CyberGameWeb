@@ -47,3 +47,36 @@
     color: white;
     font-weight: bold;
 }
+
+.banner {
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    bottom: 0;
+    background-image: linear-gradient(90deg, #AF2896, #509BF5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+}
+
+.bannerMessageText {
+    font-size: 1rem;
+}
+
+.bannerEmphasizeText {
+    font-size: 1.5rem;
+    color: #ffd700;
+}
+
+.verifyingButton {
+    padding: 10px 24px;
+    border-radius: 100px;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+
+    &:hover {
+        scale: 1.03;
+    }
+}

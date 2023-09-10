@@ -1,11 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  NavLink,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import styles from "./user_feature.module.scss";
 import HomePage from "./Home";
 import EventPages from "./EventPages";
 import PromotionPages from "./PromotionPages";
 import ProfilePage from "./Profile";
-import ChatPage from "./Chat";
+import ChatRouting from "./Chat";
 import NotificationPage from "./Notification";
 import DepositMoneyPages from "./DepositMoneyPages";
 import HomeActiveIcon from "../../assets/icons/ic_home_active.svg";
@@ -28,13 +34,16 @@ import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import clsx from "clsx";
 import useNavigationChecking from "../../hooks/useNavigationChecking";
 import PATH from "../../enums/path.enum";
-import useAuth from "../../hooks/useAuth";
 import ROLE from "../../enums/role.enum";
 import Converter from "../../utils/converter";
 import NeedSignInPage from "../NeedSignIn";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, setUser, setUserId } from "../../slices/user.slice";
+import ErrorPage from "../ErrorPage";
 
 const UserPages = () => {
-  const { auth, setAuth } = useAuth();
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const [openPopup, setOpenPopup] = useState(false);
 
@@ -112,7 +121,7 @@ const UserPages = () => {
 
   const onSignOut = () => {
     setOpenPopup(false);
-    setAuth(null);
+    dispatch(setUserId(null));
     navigate(PATH.root);
   };
 
@@ -140,7 +149,7 @@ const UserPages = () => {
           )}
         </ul>
 
-        {auth && (
+        {user.userId && (
           <>
             <ul className={styles.navBox}>
               {NavLinkItem(
@@ -169,7 +178,7 @@ const UserPages = () => {
               )}
             </ul>
 
-            {(auth?.role === ROLE.admin || auth?.role === ROLE.moderator) && (
+            {(user.role === ROLE.admin || user.role === ROLE.moderator) && (
               <div className={styles.buttonsWrapper}>
                 <button
                   className={styles.buttonStyle}
@@ -177,7 +186,7 @@ const UserPages = () => {
                 >
                   <span>Đi đến trang quản lý</span>
                 </button>
-                {auth?.role === ROLE.admin && (
+                {user.role === ROLE.admin && (
                   <button
                     className={styles.buttonStyle}
                     onClick={onOpenAdminTab}
@@ -230,10 +239,10 @@ const UserPages = () => {
               />
             </button>
           </div>
-          {auth ? (
+          {user.userId ? (
             <div className={styles.userInfoContainer}>
               <button className={styles.coinButton}>
-                {Converter.formatMoney(auth?.money)}
+                {Converter.formatMoney(user.money)}
               </button>
               <div className={styles.userAvatarAndPopupMenu} ref={wrapperRef}>
                 {openPopup && (
@@ -270,11 +279,11 @@ const UserPages = () => {
                 >
                   <img
                     className={
-                      auth?.avatar
+                      user.avatar
                         ? styles.userWithAvatar
                         : styles.userWithoutAvatar
                     }
-                    src={auth?.avatar ?? ProfileInactiveIcon}
+                    src={user.avatar ?? ProfileInactiveIcon}
                   />
                 </button>
               </div>
@@ -297,20 +306,21 @@ const UserPages = () => {
             <Route path={PATH.event} element={<EventPages />} />
             <Route
               path={PATH.profile}
-              element={auth ? <ProfilePage /> : <NeedSignInPage />}
+              element={user ? <ProfilePage /> : <NeedSignInPage />}
             />
             <Route
-              path={PATH.chat}
-              element={auth ? <ChatPage /> : <NeedSignInPage />}
+              path={`${PATH.chat}/*`}
+              element={user ? <ChatRouting /> : <NeedSignInPage />}
             />
             <Route
               path={PATH.notification}
-              element={auth ? <NotificationPage /> : <NeedSignInPage />}
+              element={user ? <NotificationPage /> : <NeedSignInPage />}
             />
             <Route
               path={PATH.deposit_money}
-              element={auth ? <DepositMoneyPages /> : <NeedSignInPage />}
+              element={user ? <DepositMoneyPages /> : <NeedSignInPage />}
             />
+            <Route path={"/*"} element={<Navigate to={PATH.root} />} />
           </Routes>
         </div>
       </div>

@@ -6,21 +6,20 @@ import ModeratorPages from "./pages/ModeratorPages";
 import AdminPages from "./pages/AdminPages";
 import UserPages from "./pages/UserPages";
 import AuthService from "./services/auth.service";
-import AuthContext from "./context/AuthProvider";
 import "./App.css";
+import { setUser } from "./slices/user.slice";
+import { useDispatch } from "react-redux";
 
 function App() {
-  const { setAuth } = useContext(AuthContext);
+  const dispatch = useDispatch();
+
   const [render, setRender] = useState(false);
 
   useEffect(() => {
     AuthService.getCurrentUser()
       .then(async (data) => {
         if (data) {
-          await setAuth({
-            user: data.userName,
-            roles: [data.role],
-          });
+          dispatch(setUser(data));
         }
       })
       .catch((err) => {

@@ -1,23 +1,34 @@
 import React, { useRef, useState } from "react";
 import styles from "./profile.module.scss";
 import AvatarPicker from "../../../components/AvatarPicker";
-import ProfileDetailDialog from "./ingredient/ProfileDetailDialog";
-import useAuth from "../../../hooks/useAuth";
+import ProfileDetailDialog from "../../../components/ProfileDetailDialog";
+import Converter from "../../../utils/converter";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../slices/user.slice";
+import { selectSystemVariable } from "../../../slices/system_variable.slice";
 
 const ProfilePage = () => {
-  const { auth } = useAuth();
+  const user = useSelector(selectUser);
+  const systemVariable = useSelector(selectSystemVariable);
 
   const [shouldShowProfileDetailDialog, setShouldShowProfileDetailDialog] =
     useState(false);
 
-  const [base64Avatar, setBase64Avatar] = useState(null);
+  const [base64Avatar, setBase64Avatar] = useState(user.avatar);
   const [imagePickingError, setImagePickingError] = useState(null);
 
   const fileInputRef = useRef(null);
 
+  const onClickVerifyButton = () => {};
+
   const onClickPickImage = () => {
     fileInputRef.current.click();
+    showDialog();
+  };
+
+  const showDialog = () => {
     if (!shouldShowProfileDetailDialog) {
+      setBase64Avatar(user.avatar);
       setShouldShowProfileDetailDialog(true);
     }
   };
@@ -91,18 +102,41 @@ const ProfilePage = () => {
             <AvatarPicker
               size={192}
               onClickPickImage={onClickPickImage}
-              image={auth?.avatar ?? null}
+              image={user.avatar ?? null}
             />
             <div className={styles.nameWrapper}>
-              {!auth?.hasVerified && (
-                <button className={styles.hasNotVerified}>
+              {!user.hasVerified && (
+                <button
+                  className={styles.hasNotVerified}
+                  onClick={onClickVerifyButton}
+                >
                   Tài khoản chưa được xác thực
                 </button>
               )}
-              <span className={styles.name}>{auth?.name}</span>
+              <button className={styles.name} onClick={showDialog}>
+                {user.name}
+              </button>
             </div>
           </div>
         </div>
+      </div>
+      <div className={styles.banner}>
+        <p className={styles.bannerMessageText}>
+          Xác thực tài khoản để nhận{" "}
+          <b className={styles.bannerEmphasizeText}>
+            {" "}
+            {Converter.formatMoney(
+              systemVariable.moneyReceivedAfterVerifying
+            )}{" "}
+          </b>{" "}
+          ngay bây giờ.
+        </p>
+        <button
+          className={styles.verifyingButton}
+          onClick={onClickVerifyButton}
+        >
+          Xác thực ngay
+        </button>
       </div>
       {shouldShowProfileDetailDialog && (
         <ProfileDetailDialog

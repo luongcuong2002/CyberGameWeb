@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import styles from "./profile_detail_dialog.module.scss";
 import { IoCloseOutline } from "react-icons/io5";
-import AlertError from "../../../../../components/AlertError";
-import AvatarPicker from "../../../../../components/AvatarPicker";
-import Loader from "../../../../../components/Loader";
-import useAuth from "../../../../../hooks/useAuth";
+import AlertError from "../AlertError";
+import AvatarPicker from "../AvatarPicker";
+import Loader from "../Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, setAvatar, setName } from "../../slices/user.slice";
 
 const ProfileDetailDialog = ({
   setShouldShowProfileDetailDialog,
@@ -16,19 +17,20 @@ const ProfileDetailDialog = ({
   onClickPickImage,
   onClickDeleteImage,
 }) => {
-  const { auth, setAuth } = useAuth();
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
-  const [name, setName] = useState(auth?.name ?? "");
+  const [userName, setUserName] = useState(user.name ?? "");
   const [waitingForServer, setWaitingForServer] = useState(false);
 
   const onSave = () => {
-    const finalName = name.trim();
+    const finalName = userName.trim();
 
     if (!finalName) {
       return setErrorText("Tên không được để trống.");
     }
 
-    setName(finalName);
+    setUserName(finalName);
 
     setWaitingForServer(true);
 
@@ -36,22 +38,19 @@ const ProfileDetailDialog = ({
       setWaitingForServer(false);
 
       // gửi ảnh và tên lên server, nếu thành công sẽ trả về ảnh và tên mới ( không nên lấy của client vì có thể dialog bị đóng đột ngột dẫn đến name và avatar bị mất )
-      setAuth({
-        name: finalName,
-        avatar: base64Avatar,
-      });
+      dispatch(setName(finalName));
+      dispatch(setAvatar(base64Avatar));
 
       closeDialog();
-    }, 2000);
+    }, 1000);
   };
 
   const onUserNameChange = (event) => {
     const inputValue = event.target.value;
-    setName(inputValue);
+    setUserName(inputValue);
   };
 
   const closeDialog = () => {
-    setBase64Avatar(null);
     setShouldShowProfileDetailDialog(false);
   };
 
@@ -81,7 +80,7 @@ const ProfileDetailDialog = ({
             allowDeleteAvatar
             onClickPickImage={onClickPickImage}
             onClickDeleteAvatar={onClickDeleteImage}
-            image={base64Avatar ?? auth?.avatar}
+            image={base64Avatar ?? user.avatar}
             activeHover={!waitingForServer}
           />
           <div className={styles.editTextWrapper}>
@@ -91,7 +90,7 @@ const ProfileDetailDialog = ({
               type="text"
               placeholder="Nhập tên của bạn"
               autoCorrect="off"
-              value={name}
+              value={userName}
               maxLength={30}
               disabled={waitingForServer}
               onChange={onUserNameChange}
