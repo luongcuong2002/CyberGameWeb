@@ -38,8 +38,7 @@ import ROLE from "../../enums/role.enum";
 import Converter from "../../utils/converter";
 import NeedSignInPage from "../NeedSignIn";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, setUser, setUserId } from "../../slices/user.slice";
-import ErrorPage from "../ErrorPage";
+import { selectUser, setUserId } from "../../slices/user.slice";
 
 const UserPages = () => {
   const user = useSelector(selectUser);
@@ -84,6 +83,7 @@ const UserPages = () => {
             <>
               <img
                 className={styles.navIcon}
+                alt=""
                 src={isActive ? activeIcon : inactiveIcon}
               />
               <span
@@ -256,6 +256,7 @@ const UserPages = () => {
                           <span style={{ paddingTop: 2.5 }}>Tài khoản</span>
                           <img
                             src={NewTabIcon}
+                            alt=""
                             style={{ width: 15, height: 15 }}
                           />
                         </button>
@@ -278,6 +279,7 @@ const UserPages = () => {
                   onClick={onClickUserAvatar}
                 >
                   <img
+                    alt=""
                     className={
                       user.avatar
                         ? styles.userWithAvatar
@@ -306,19 +308,19 @@ const UserPages = () => {
             <Route path={PATH.event} element={<EventPages />} />
             <Route
               path={PATH.profile}
-              element={user ? <ProfilePage /> : <NeedSignInPage />}
+              element={user.userId ? <ProfilePage /> : <NeedSignInPage />}
             />
             <Route
               path={`${PATH.chat}/*`}
-              element={user ? <ChatRouting /> : <NeedSignInPage />}
+              element={user.userId ? <ChatRouting /> : <NeedSignInPage />}
             />
             <Route
               path={PATH.notification}
-              element={user ? <NotificationPage /> : <NeedSignInPage />}
+              element={user.userId ? <NotificationPage /> : <NeedSignInPage />}
             />
             <Route
               path={PATH.deposit_money}
-              element={user ? <DepositMoneyPages /> : <NeedSignInPage />}
+              element={user.userId ? <DepositMoneyPages /> : <NeedSignInPage />}
             />
             <Route path={"/*"} element={<Navigate to={PATH.root} />} />
           </Routes>
