@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import styles from "./signin.module.scss";
 import { useNavigate } from "react-router-dom";
-import { PiWarningCircleBold } from "react-icons/pi";
 import clsx from "clsx";
 import Loader from "../../components/Loader";
 import AlertDialog from "../../components/AlertDialog";
 import AlertError from "../../components/AlertError";
+import authService from "../../services/auth.service";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../slices/user.slice";
 
 const SignInPage = () => {
   let navigate = useNavigate();
+
+  let dispatch = useDispatch();
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -29,12 +33,17 @@ const SignInPage = () => {
     setWarning("");
     setWaitingForServer(true);
 
-    console.log("User: " + userName);
-    console.log("Pass: " + password);
-
-    setTimeout(() => {
-      setWaitingForServer(false);
-    }, 2000);
+    authService.signIn(userName, password)
+      .then((response) => {
+        dispatch(setUser(response.data));
+        navigate("/");
+      })
+      .catch((res) => {
+        console.log(res);
+      })
+      .finally(() => {
+        setWaitingForServer(false);
+      });
   };
 
   const onUserNameChange = (event) => {

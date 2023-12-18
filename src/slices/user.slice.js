@@ -1,54 +1,120 @@
 import { createSlice } from "@reduxjs/toolkit";
-import ROLE from "../enums/role.enum";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    userId: "CUONG",
-    name: "Nguyen Cuong",
-    role: ROLE.admin,
+    userId: null,
+    userName: null,
+    userPublicName: null,
     avatar: null,
-    hasVerified: false,
-    money: 20000,
+    role: null,
+    amount: null,
+    membershipClass: null,
+    realName: null,
+    dateOfBirth: null,
+    gender: null,
+    address: null,
+    phoneNumber: null,
+    email: null,
+    amountOwed: null,
+    sessionDisabled: null,
+    createdDate: null,
   },
   reducers: {
     setUser: (state, action) => {
       state.userId = action.payload.userId;
-      state.name = action.payload.name;
-      state.role = action.payload.role;
+      state.userName = action.payload.userName;
+      state.userPublicName = action.payload.userPublicName;
       state.avatar = action.payload.avatar;
-      state.hasVerified = action.payload.hasVerified;
-      state.money = action.payload.money;
+      state.role = action.payload.role;
+      state.amount = action.payload.amount;
+      state.membershipClass = action.payload.membershipClass;
+      state.realName = action.payload.realName;
+      state.dateOfBirth = action.payload.dateOfBirth;
+      state.gender = action.payload.gender;
+      state.address = action.payload.address;
+      state.phoneNumber = action.payload.phoneNumber;
+      state.email = action.payload.email;
+      state.amountOwed = action.payload.amountOwed;
+      state.sessionDisabled = action.payload.sessionDisabled;
+      state.createdDate = action.payload.createdDate;
     },
-    setUserId: (state, action) => {
-      state.userId = action.payload;
+    setUserNull: (state) => {
+      state.userId = null;
+      state.userName = null;
+      state.userPublicName = null;
+      state.avatar = null;
+      state.role = null;
+      state.amount = null;
+      state.membershipClass = null;
+      state.realName = null;
+      state.dateOfBirth = null;
+      state.gender = null;
+      state.address = null;
+      state.phoneNumber = null;
+      state.email = null;
+      state.amountOwed = null;
+      state.sessionDisabled = null;
+      state.createdDate = null;
     },
-    setName: (state, action) => {
-      state.name = action.payload;
+    setUserPublicName: (state, action) => {
+      state.userPublicName = action.payload.userPublicName;
     },
     setAvatar: (state, action) => {
-      state.avatar = action.payload;
-    },
-    setRole: (state, action) => {
-      state.role = action.payload;
+      state.avatar = action.payload.avatar;
     },
     setMoney: (state, action) => {
-      state.money = action.payload;
+      state.amount = action.payload.amount;
     },
-    setHasVerified: (state, action) => {
-      state.hasVerified = action.payload;
+    setMembershipClass: (state, action) => {
+      state.membershipClass = action.payload.membershipClass;
+    },
+    setRealName: (state, action) => {
+      state.realName = action.payload.realName;
+    },
+    setDateOfBirth: (state, action) => {
+      state.dateOfBirth = action.payload.dateOfBirth;
+    },
+    setGender: (state, action) => {
+      state.gender = action.payload.gender;
+    },
+    setAddress: (state, action) => {
+      state.address = action.payload.address;
+    },
+    setPhoneNumber: (state, action) => {
+      state.phoneNumber = action.payload.phoneNumber;
+    },
+    setEmail: (state, action) => {
+      state.email = action.payload.email;
+    },
+    setAmountOwed: (state, action) => {
+      state.amountOwed = action.payload.amountOwed;
+    },
+    setSessionDisabled: (state, action) => {
+      state.sessionDisabled = action.payload.sessionDisabled;
+    },
+    setCreatedDate: (state, action) => {
+      state.createdDate = action.payload.createdDate;
     },
   },
 });
 
 export const {
   setUser,
-  setUserId,
-  setName,
+  setUserNull,
+  setUserPublicName,
   setAvatar,
-  setRole,
   setMoney,
-  setHasVerified,
+  setMembershipClass,
+  setRealName,
+  setDateOfBirth,
+  setGender,
+  setAddress,
+  setPhoneNumber,
+  setEmail,
+  setAmountOwed,
+  setSessionDisabled,
+  setCreatedDate,
 } = userSlice.actions;
 
 export const selectUser = (state) => state.user;

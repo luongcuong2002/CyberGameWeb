@@ -6,9 +6,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function AlertDialog({ title, message, isOpen, onClick }) {
+export default function AlertDialog({ title, message, isOpen, onClick, closeWhenClickOutside = true }) {
   const handleClose = () => {
-    onClick();
+    if (closeWhenClickOutside) {
+      onClick();
+    }
   };
 
   return (
@@ -26,7 +28,7 @@ export default function AlertDialog({ title, message, isOpen, onClick }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={onClick} autoFocus>
             Ok
           </Button>
         </DialogActions>

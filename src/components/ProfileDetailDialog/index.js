@@ -6,7 +6,7 @@ import AlertError from "../AlertError";
 import AvatarPicker from "../AvatarPicker";
 import Loader from "../Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, setAvatar, setName } from "../../slices/user.slice";
+import { selectUser, setAvatar, setUserPublicName } from "../../slices/user.slice";
 
 const ProfileDetailDialog = ({
   setShouldShowProfileDetailDialog,
@@ -38,7 +38,7 @@ const ProfileDetailDialog = ({
       setWaitingForServer(false);
 
       // gửi ảnh và tên lên server, nếu thành công sẽ trả về ảnh và tên mới ( không nên lấy của client vì có thể dialog bị đóng đột ngột dẫn đến name và avatar bị mất )
-      dispatch(setName(finalName));
+      dispatch(setUserPublicName(finalName));
       dispatch(setAvatar(base64Avatar));
 
       closeDialog();

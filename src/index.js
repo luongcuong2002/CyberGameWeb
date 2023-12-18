@@ -6,11 +6,13 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../src/slices/user.slice";
 import systemVariableReducer from "../src/slices/system_variable.slice";
+import modalAppearanceReducer from "../src/slices/modal_appearance.slice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     systemVariable: systemVariableReducer,
+    modalAppearance: modalAppearanceReducer,
   },
 });
 

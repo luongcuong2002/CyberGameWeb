@@ -38,7 +38,7 @@ import ROLE from "../../enums/role.enum";
 import Converter from "../../utils/converter";
 import NeedSignInPage from "../NeedSignIn";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, setUserId } from "../../slices/user.slice";
+import { selectUser, setUserNull } from "../../slices/user.slice";
 
 const UserPages = () => {
   const user = useSelector(selectUser);
@@ -121,7 +121,7 @@ const UserPages = () => {
 
   const onSignOut = () => {
     setOpenPopup(false);
-    dispatch(setUserId(null));
+    dispatch(setUserNull(null));
     navigate(PATH.root);
   };
 
@@ -242,7 +242,7 @@ const UserPages = () => {
           {user.userId ? (
             <div className={styles.userInfoContainer}>
               <button className={styles.coinButton}>
-                {Converter.formatMoney(user.money)}
+                {Converter.formatMoney(user.amount)}
               </button>
               <div className={styles.userAvatarAndPopupMenu} ref={wrapperRef}>
                 {openPopup && (
