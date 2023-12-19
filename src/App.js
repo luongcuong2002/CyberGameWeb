@@ -4,7 +4,7 @@ import SignInPage from "./pages/SignIn";
 import PATH from "./enums/path.enum";
 import ModeratorPages from "./pages/ModeratorPages";
 import AdminPages from "./pages/AdminPages";
-import UserPages from "./pages/UserPages";
+import MainPages from "./pages/MainPages";
 import userService from "./services/user.service";
 import "./App.css";
 import { setUser } from "./slices/user.slice";
@@ -52,7 +52,7 @@ function App() {
           />
 
           <Routes>
-            <Route path={`${PATH.root}*`} element={<UserPages />} />
+            <Route path={`${PATH.root}*`} element={<MainPages />} />
             <Route path={`${PATH.moderator}/*`} element={<ModeratorPages />} />
             <Route path={`${PATH.admin}/*`} element={<AdminPages />} />
             <Route path={PATH.signIn} element={<SignInPage />} />

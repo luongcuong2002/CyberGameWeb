@@ -6,7 +6,7 @@ import {
   useNavigate,
   Navigate,
 } from "react-router-dom";
-import styles from "./user_feature.module.scss";
+import styles from "./main_pages.module.scss";
 import HomePage from "./Home";
 import EventPages from "./EventPages";
 import PromotionPages from "./PromotionPages";
@@ -40,7 +40,7 @@ import NeedSignInPage from "../NeedSignIn";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, setUserNull } from "../../slices/user.slice";
 
-const UserPages = () => {
+const MainPages = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -330,4 +330,4 @@ const UserPages = () => {
   );
 };
 
-export default UserPages;
+export default MainPages;
