@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from "./admin_header.module.scss";
+import styles from "./management_page_header.module.scss";
 import ProfileInactiveIcon from "../../assets/icons/ic_profile_inactive.svg";
 
-const AdminHeader = ({ onClickSignOut }) => {
+const ManagementPageHeader = ({ onClickSignOut }) => {
 
   const [openPopup, setOpenPopup] = useState(false);
 
@@ -64,4 +64,4 @@ const AdminHeader = ({ onClickSignOut }) => {
   );
 };
 
-export default AdminHeader;
+export default ManagementPageHeader;

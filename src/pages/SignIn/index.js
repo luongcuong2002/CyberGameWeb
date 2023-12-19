@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./signin.module.scss";
-import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import Loader from "../../components/Loader";
 import AlertDialog from "../../components/AlertDialog";
@@ -10,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../slices/user.slice";
 
 const SignInPage = () => {
-  let navigate = useNavigate();
 
   let dispatch = useDispatch();
 
@@ -36,10 +34,10 @@ const SignInPage = () => {
     authService.signIn(userName, password)
       .then((response) => {
         dispatch(setUser(response.data));
-        navigate("/");
+        window.location.href = "/";
       })
-      .catch((res) => {
-        console.log(res);
+      .catch((error) => {
+        setWarning(error.response.data.message);
       })
       .finally(() => {
         setWaitingForServer(false);

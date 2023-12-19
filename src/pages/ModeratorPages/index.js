@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./moderator.module.scss";
 import PATH from "../../enums/path.enum";
-import AdminHeader from "../../parts/AdminHeader";
-import AdminNavGenerator from "../../parts/AdminNavGenerator";
+import ManagementPageHeader from "../../parts/ManagementPageHeader";
+import ManagementPageNavGenerator from "../../parts/ManagementPageNavGenerator";
 import AccountManagement from "./AccountManagement";
 import IconAccountManagementActive from "../../assets/icons/tab_account_management_icon_active.svg";
 import IconAccountManagementInactive from "../../assets/icons/tab_account_management_icon_inactive.svg";
@@ -18,8 +18,8 @@ import IconPlayedTimeInactive from "../../assets/icons/tab_played_time_icon_inac
 const ModeratorPages = () => {
   return (
     <div id={styles.root}>
-      <AdminHeader onClickSignOut={() => {}} />
-      <AdminNavGenerator
+      <ManagementPageHeader onClickSignOut={() => {}} />
+      <ManagementPageNavGenerator
         routes={[
           {
             path: PATH.account_management,

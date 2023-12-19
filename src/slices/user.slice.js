@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import ROLE from "../enums/role.enum";
 
 export const userSlice = createSlice({
   name: "user",
@@ -7,7 +8,7 @@ export const userSlice = createSlice({
     userName: null,
     userPublicName: null,
     avatar: null,
-    role: null,
+    role: ROLE.moderator,
     amount: null,
     membershipClass: null,
     realName: null,
@@ -17,7 +18,6 @@ export const userSlice = createSlice({
     phoneNumber: null,
     email: null,
     amountOwed: null,
-    sessionDisabled: null,
     createdDate: null,
   },
   reducers: {
@@ -36,7 +36,6 @@ export const userSlice = createSlice({
       state.phoneNumber = action.payload.phoneNumber;
       state.email = action.payload.email;
       state.amountOwed = action.payload.amountOwed;
-      state.sessionDisabled = action.payload.sessionDisabled;
       state.createdDate = action.payload.createdDate;
     },
     setUserNull: (state) => {
@@ -54,7 +53,6 @@ export const userSlice = createSlice({
       state.phoneNumber = null;
       state.email = null;
       state.amountOwed = null;
-      state.sessionDisabled = null;
       state.createdDate = null;
     },
     setUserPublicName: (state, action) => {
@@ -90,9 +88,6 @@ export const userSlice = createSlice({
     setAmountOwed: (state, action) => {
       state.amountOwed = action.payload.amountOwed;
     },
-    setSessionDisabled: (state, action) => {
-      state.sessionDisabled = action.payload.sessionDisabled;
-    },
     setCreatedDate: (state, action) => {
       state.createdDate = action.payload.createdDate;
     },
@@ -113,7 +108,6 @@ export const {
   setPhoneNumber,
   setEmail,
   setAmountOwed,
-  setSessionDisabled,
   setCreatedDate,
 } = userSlice.actions;
 

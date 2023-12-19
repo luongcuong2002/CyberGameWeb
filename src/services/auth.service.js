@@ -25,7 +25,6 @@ class AuthService {
         //         phoneNumber: null,
         //         email: null,
         //         amountOwed: null,
-        //         sessionDisabled: null,
         //         createdDate: null,
         //       },
         //     });

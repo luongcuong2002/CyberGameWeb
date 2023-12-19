@@ -1,10 +1,11 @@
 import React from "react";
-import styles from "./admin_nav_generator.module.scss";
-import { NavLink, Route, Routes } from "react-router-dom";
+import styles from "./management_page_nav_generator.module.scss";
+import { NavLink, Navigate, Route, Routes } from "react-router-dom";
 import clsx from "clsx";
-import AccountManagement from "../../pages/ModeratorPages/AccountManagement";
+import Converter from "../../utils/converter.js";
+import PATH from "../../enums/path.enum.js";
 
-const AdminNavGenerator = ({ routes }) => {
+const ManagementPageNavGenerator = ({ routes }) => {
   const NavLinkItem = (path, text, activeIcon, inactiveIcon) => {
     return (
       <li>
@@ -49,15 +50,19 @@ const AdminNavGenerator = ({ routes }) => {
       </nav>
       <div className={styles.routes}>
         <Routes>
-            {
-                routes.map((route) => {
-                    return <Route path={route.path} element={<AccountManagement />} />
-                })
-            }
+          {routes.map((route) => {
+            return (
+              <Route
+                path={Converter.formatPath(PATH.moderator, route.path)}
+                element={<route.page />}
+              />
+            );
+          })}
+          <Route path="*" element={<Navigate to={routes[0].path} />} />
         </Routes>
       </div>
     </div>
   );
 };
 
-export default AdminNavGenerator;
+export default ManagementPageNavGenerator;
