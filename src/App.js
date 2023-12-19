@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectModalAppearance } from "./slices/modal_appearance.slice";
 import { setSignOutDialogShowing } from "./slices/modal_appearance.slice";
 import AlertDialog from "./components/AlertDialog";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 function App() {
   const dispatch = useDispatch();
@@ -20,20 +22,27 @@ function App() {
 
   const [render, setRender] = useState(false);
 
-  useEffect(() => {
-    userService
-      .getCurrentUser()
-      .then(async (data) => {
-        if (data) {
-          dispatch(setUser(data));
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setRender(true);
-      });
+  useEffect(async () => {
+
+    const accessToken = await cookies.get("accessToken");
+
+    if (!accessToken) {
+      setRender(true);
+    } else {
+      userService
+        .getCurrentUser()
+        .then(async (data) => {
+          if (data) {
+            dispatch(setUser(data));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setRender(true);
+        });
+    }
   }, []);
 
   return (

@@ -14,6 +14,10 @@ import IconViewFeedbackActive from "../../assets/icons/tab_view_feedback_icon_ac
 import IconViewFeedbackInactive from "../../assets/icons/tab_view_feedback_icon_inactive.svg";
 import IconPlayedTimeActive from "../../assets/icons/tab_played_time_icon_active.svg";
 import IconPlayedTimeInactive from "../../assets/icons/tab_played_time_icon_inactive.svg";
+import TopupRequest from "./TopupRequest";
+import SendingNotification from "./SendingNotification";
+import ViewFeedback from "./ViewFeedback";
+import PlayedTime from "./PlayedTime";
 
 const ModeratorPages = () => {
   return (
@@ -33,28 +37,28 @@ const ModeratorPages = () => {
             text: "Duyệt yêu cầu nạp tiền",
             activeIcon: IconApprovalTopUpRequestActive,
             inactiveIcon: IconApprovalTopUpRequestInactive,
-            page: AccountManagement,
+            page: TopupRequest,
           },
           {
             path: PATH.send_notification,
             text: "Gửi thông báo",
             activeIcon: IconSendNotificationActive,
             inactiveIcon: IconSendNotificationInactive,
-            page: AccountManagement,
+            page: SendingNotification,
           },
           {
             path: PATH.view_feedback,
             text: "Xem góp ý",
             activeIcon: IconViewFeedbackActive,
             inactiveIcon: IconViewFeedbackInactive,
-            page: AccountManagement,
+            page: ViewFeedback,
           },
           {
             path: PATH.played_time,
             text: "Thời gian chơi",
             activeIcon: IconPlayedTimeActive,
             inactiveIcon: IconPlayedTimeInactive,
-            page: AccountManagement,
+            page: PlayedTime,
           },
         ]}
       />
