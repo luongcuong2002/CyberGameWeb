@@ -24,6 +24,7 @@ const ModeratorPages = () => {
     <div id={styles.root}>
       <ManagementPageHeader onClickSignOut={() => {}} />
       <ManagementPageNavGenerator
+        parentRoute={PATH.moderator}
         routes={[
           {
             path: PATH.account_management,

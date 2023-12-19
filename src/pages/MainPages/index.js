@@ -103,7 +103,7 @@ const MainPages = () => {
   };
 
   const onOpenAccountTab = () => {
-    window.open(`${window.location.origin}${PATH.admin}`);
+    window.open(`${window.location.origin}${PATH.account}`);
     setOpenPopup(false);
   };
 

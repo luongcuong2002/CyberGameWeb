@@ -5,6 +5,7 @@ import PATH from "./enums/path.enum";
 import ModeratorPages from "./pages/ModeratorPages";
 import AdminPages from "./pages/AdminPages";
 import MainPages from "./pages/MainPages";
+import AccountPages from "./pages/AccountPages";
 import userService from "./services/user.service";
 import "./App.css";
 import { setUser } from "./slices/user.slice";
@@ -55,7 +56,7 @@ function App() {
             isOpen={modalAppearance.isSignOutDialogShowing}
             onClick={() => {
               window.location.href = PATH.signIn;
-              dispatch(setSignOutDialogShowing(false))
+              dispatch(setSignOutDialogShowing(false));
             }}
             closeWhenClickOutside={false}
           />
@@ -64,6 +65,7 @@ function App() {
             <Route path={`${PATH.root}*`} element={<MainPages />} />
             <Route path={`${PATH.moderator}/*`} element={<ModeratorPages />} />
             <Route path={`${PATH.admin}/*`} element={<AdminPages />} />
+            <Route path={`${PATH.account}/*`} element={<AccountPages />} />
             <Route path={PATH.signIn} element={<SignInPage />} />
           </Routes>
         </>

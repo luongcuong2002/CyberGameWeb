@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Converter from "../../utils/converter.js";
 import PATH from "../../enums/path.enum.js";
 
-const ManagementPageNavGenerator = ({ routes }) => {
+const ManagementPageNavGenerator = ({ routes, parentRoute }) => {
   const NavLinkItem = (path, text, activeIcon, inactiveIcon) => {
     return (
       <li>
@@ -53,7 +53,7 @@ const ManagementPageNavGenerator = ({ routes }) => {
           {routes.map((route) => {
             return (
               <Route
-                path={Converter.formatPath(PATH.moderator, route.path)}
+                path={Converter.formatPath(parentRoute, route.path)}
                 element={<route.page />}
               />
             );
