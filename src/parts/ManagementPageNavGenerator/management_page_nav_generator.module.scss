@@ -1,5 +1,5 @@
 #root {
-    width: 80%;
+    width: 80vw;
     height: 100vh;
     display: flex;
     flex-direction: row;
@@ -57,6 +57,7 @@
 }
 
 .routes {
-    width: 100%;
+    flex: 1 1 auto;
     height: 100%;
+    overflow: auto;
 }
