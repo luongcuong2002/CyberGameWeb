@@ -3,11 +3,13 @@ import styles from "./account_management.module.scss";
 import PagingTable from "../../../components/PagingTable";
 import MenuPopup from "../../../components/MenuPopup";
 import { IoIosSearch, IoMdPersonAdd } from "react-icons/io";
+import CreateUserDialog from "../../../parts/CreateUserDialog";
 
 const AccountManagement = () => {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const inputRef = useRef(null);
+  const [showCreateNewUserDialog, setShowCreateNewUserDialog] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const onNextPage = () => {
@@ -97,7 +99,7 @@ const AccountManagement = () => {
             <IoIosSearch size={20} />
           </div>
         </form>
-        <div className={styles.addUserIconBackground}>
+        <div className={styles.addUserIconBackground} onClick={() => setShowCreateNewUserDialog(true)}>
           <IoMdPersonAdd size={20} />
         </div>
       </span>
@@ -161,6 +163,10 @@ const AccountManagement = () => {
           }}
         />
       </div>
+      {
+        showCreateNewUserDialog &&
+        <CreateUserDialog setShowDialog={setShowCreateNewUserDialog} />
+      }
     </div>
   );
 };
