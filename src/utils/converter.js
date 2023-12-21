@@ -5,6 +5,10 @@ const formatMoney = (value) => {
   return `${value.toLocaleString("vi-VN")} VNĐ`;
 };
 
+function formatCurrency(number) {
+  return number.toLocaleString('vi-VN');
+}
+
 const formatPath = (removedPath, originalPath) => {
   if (originalPath === removedPath) {
     return "/";
@@ -14,6 +18,7 @@ const formatPath = (removedPath, originalPath) => {
 
 const Converter = {
   formatMoney,
+  formatCurrency,
   formatPath,
 };
 

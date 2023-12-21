@@ -4,13 +4,17 @@ import PagingTable from "../../../components/PagingTable";
 import MenuPopup from "../../../components/MenuPopup";
 import { IoIosSearch, IoMdPersonAdd } from "react-icons/io";
 import CreateUserDialog from "../../../parts/CreateUserDialog";
+import TopupDialog from "../../../parts/TopupDialog";
+import InputChecker from "../../../utils/input_checker";
 
 const AccountManagement = () => {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const inputRef = useRef(null);
   const [showCreateNewUserDialog, setShowCreateNewUserDialog] = useState(false);
+  const [showTopupDialog, setShowTopupDialog] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const onNextPage = () => {
     if (currentPage < data.totalPages) {
@@ -58,8 +62,7 @@ const AccountManagement = () => {
 
   const handleChange = (event) => {
     const value = event.target.value;
-    const regex = /^[a-zA-Z0-9]*$/;
-    if (regex.test(value)) {
+    if (InputChecker.isAlphanumeric(value)) {
       setSearchTerm(event.target.value.toUpperCase());
     }
   };
@@ -111,12 +114,13 @@ const AccountManagement = () => {
           onNextPage={onNextPage}
           onPrevPage={onPrevPage}
           renderPopup={(selectedItem, handleClosePopup) => {
-
             const menuButtons = [
               {
                 icon: null,
                 text: "Nạp tiền",
                 onClick: () => {
+                  setShowTopupDialog(true);
+                  setSelectedUser(selectedItem);
                   handleClosePopup();
                 },
               },
@@ -166,6 +170,10 @@ const AccountManagement = () => {
       {
         showCreateNewUserDialog &&
         <CreateUserDialog setShowDialog={setShowCreateNewUserDialog} />
+      }
+      {
+        showTopupDialog && selectedUser &&
+        <TopupDialog setShowDialog={setShowTopupDialog} user={selectedUser} />
       }
     </div>
   );

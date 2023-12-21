@@ -4,6 +4,7 @@ import Popup from "reactjs-popup";
 import CircleLoader from "../../components/CircleLoader";
 import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
+import InputChecker from "../../utils/input_checker";
 
 const CreateUserDialog = ({ setShowDialog }) => {
 
@@ -15,8 +16,7 @@ const CreateUserDialog = ({ setShowDialog }) => {
 
     const handleNameChange = (event) => {
         const value = event.target.value;
-        const regex = /^[a-zA-Z0-9]*$/;
-        if (regex.test(value)) {
+        if (InputChecker.isAlphanumeric(value)) {
             setName(event.target.value.toUpperCase());
         }
     };
@@ -36,7 +36,7 @@ const CreateUserDialog = ({ setShowDialog }) => {
                 const width = image.width;
                 const height = image.height;
 
-                const minDimension = 300;
+                const minDimension = 400;
                 const maxRatio = 4;
 
                 if (width < minDimension || height < minDimension) {
@@ -150,7 +150,7 @@ const CreateUserDialog = ({ setShowDialog }) => {
                     </div>
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="image">Ảnh</label>
+                    <label htmlFor="image">Căn cước công dân</label>
                     <div className={styles.inputWrapper}>
                         <input
                             type="file"

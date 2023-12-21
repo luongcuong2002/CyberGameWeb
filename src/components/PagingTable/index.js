@@ -50,7 +50,7 @@ const PagingTable = ({ data, onNextPage, onPrevPage, currentPage, renderPopup, i
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, []);
+    }, [popupVisible]);
 
     return (
         <>
