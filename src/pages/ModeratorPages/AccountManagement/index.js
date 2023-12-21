@@ -8,6 +8,7 @@ import TopupDialog from "../../../parts/TopupDialog";
 import InputChecker from "../../../utils/input_checker";
 import ChangePasswordDialog from "../../../parts/ChangePasswordDialog";
 import BlockUserDialog from "../../../parts/BlockUserDialog";
+import UserInfoDialog from "../../../parts/UserInfoDialog";
 
 const AccountManagement = () => {
   const [isLoadingData, setIsLoadingData] = useState(false);
@@ -18,6 +19,7 @@ const AccountManagement = () => {
   const [showTopupDialog, setShowTopupDialog] = useState(false);
   const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
   const [showBlockUserDialog, setShowBlockUserDialog] = useState(false);
+  const [showUserInfoDialog, setShowUserInfoDialog] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -152,6 +154,8 @@ const AccountManagement = () => {
                 icon: null,
                 text: "Xem thông tin",
                 onClick: () => {
+                  setShowUserInfoDialog(true);
+                  setSelectedUser(selectedItem);
                   handleClosePopup();
                 },
               },
@@ -185,6 +189,10 @@ const AccountManagement = () => {
       {
         showBlockUserDialog && selectedUser &&
         <BlockUserDialog setShowDialog={setShowBlockUserDialog} user={selectedUser} />
+      }
+      {
+        showUserInfoDialog && selectedUser &&
+        <UserInfoDialog setShowDialog={setShowUserInfoDialog} user={selectedUser} />
       }
     </div>
   );
