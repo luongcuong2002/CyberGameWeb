@@ -6,7 +6,8 @@ import { IoIosSearch, IoMdPersonAdd } from "react-icons/io";
 import CreateUserDialog from "../../../parts/CreateUserDialog";
 import TopupDialog from "../../../parts/TopupDialog";
 import InputChecker from "../../../utils/input_checker";
-import ChangePasswordDialog from "../../../parts/ChangePassword";
+import ChangePasswordDialog from "../../../parts/ChangePasswordDialog";
+import BlockUserDialog from "../../../parts/BlockUserDialog";
 
 const AccountManagement = () => {
   const [isLoadingData, setIsLoadingData] = useState(false);
@@ -16,6 +17,7 @@ const AccountManagement = () => {
   const [showCreateNewUserDialog, setShowCreateNewUserDialog] = useState(false);
   const [showTopupDialog, setShowTopupDialog] = useState(false);
   const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
+  const [showBlockUserDialog, setShowBlockUserDialog] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -141,6 +143,8 @@ const AccountManagement = () => {
                 icon: null,
                 text: "Khóa tài khoản",
                 onClick: () => {
+                  setShowBlockUserDialog(true);
+                  setSelectedUser(selectedItem);
                   handleClosePopup();
                 },
               },
@@ -177,6 +181,10 @@ const AccountManagement = () => {
       {
         showChangePasswordDialog && selectedUser &&
         <ChangePasswordDialog setShowDialog={setShowChangePasswordDialog} user={selectedUser} />
+      }
+      {
+        showBlockUserDialog && selectedUser &&
+        <BlockUserDialog setShowDialog={setShowBlockUserDialog} user={selectedUser} />
       }
     </div>
   );
