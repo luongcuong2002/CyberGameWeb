@@ -6,13 +6,17 @@ import { IoIosSearch, IoMdPersonAdd } from "react-icons/io";
 import CreateUserDialog from "../../../parts/CreateUserDialog";
 import TopupDialog from "../../../parts/TopupDialog";
 import InputChecker from "../../../utils/input_checker";
+import ChangePasswordDialog from "../../../parts/ChangePassword";
 
 const AccountManagement = () => {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const inputRef = useRef(null);
+
   const [showCreateNewUserDialog, setShowCreateNewUserDialog] = useState(false);
   const [showTopupDialog, setShowTopupDialog] = useState(false);
+  const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -128,13 +132,8 @@ const AccountManagement = () => {
                 icon: null,
                 text: "Đổi mật khẩu",
                 onClick: () => {
-                  handleClosePopup();
-                },
-              },
-              {
-                icon: null,
-                text: "Xem thông tin",
-                onClick: () => {
+                  setShowChangePasswordDialog(true);
+                  setSelectedUser(selectedItem);
                   handleClosePopup();
                 },
               },
@@ -147,7 +146,7 @@ const AccountManagement = () => {
               },
               {
                 icon: null,
-                text: "Xoá tài khoản",
+                text: "Xem thông tin",
                 onClick: () => {
                   handleClosePopup();
                 },
@@ -174,6 +173,10 @@ const AccountManagement = () => {
       {
         showTopupDialog && selectedUser &&
         <TopupDialog setShowDialog={setShowTopupDialog} user={selectedUser} />
+      }
+      {
+        showChangePasswordDialog && selectedUser &&
+        <ChangePasswordDialog setShowDialog={setShowChangePasswordDialog} user={selectedUser} />
       }
     </div>
   );
