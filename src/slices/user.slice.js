@@ -4,7 +4,7 @@ import ROLE from "../enums/role.enum";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    userId: "111",
+    userId: null,
     userName: null,
     userPublicName: null,
     avatar: null,
@@ -22,6 +22,9 @@ export const userSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
+
+      console.log(action.payload);
+
       state.userId = action.payload.userId;
       state.userName = action.payload.userName;
       state.userPublicName = action.payload.userPublicName;

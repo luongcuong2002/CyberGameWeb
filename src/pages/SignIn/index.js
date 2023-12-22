@@ -33,8 +33,12 @@ const SignInPage = () => {
 
     authService.signIn(userName, password)
       .then((response) => {
-        dispatch(setUser(response.data));
-        window.location.href = "/";
+        if (response.data && response.data.userInfo) {
+          dispatch(setUser(response.data.userInfo));
+          window.location.href = "/";
+        } else {
+          setWarning("Something went wrong!");
+        }
       })
       .catch((error) => {
         setWarning(error.response.data.message);

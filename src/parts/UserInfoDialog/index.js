@@ -5,6 +5,8 @@ import CircleLoader from "../../components/CircleLoader";
 import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
 import InputChecker from "../../utils/input_checker";
+import clsx from "clsx";
+import Converter from "../../utils/converter";
 
 const UserInfoDialog = ({ setShowDialog, user }) => {
 
@@ -113,7 +115,7 @@ const UserInfoDialog = ({ setShowDialog, user }) => {
         onClose={closeDialog}
         closeOnDocumentClick={false}
     >
-        <div className={styles.formContainer}>
+        <div className={styles.container}>
             <h2>Thông tin</h2>
             {
                 warning &&
@@ -124,58 +126,103 @@ const UserInfoDialog = ({ setShowDialog, user }) => {
                     showIcon={false}
                 />
             }
-            <form onSubmit={handleSubmit}>
-                <div className={styles.formGroup}>
-                    <label htmlFor="name">Tên đăng nhập</label>
-                    <div className={styles.inputWrapper}>
-                        <input
-                            type="text"
-                            id="name"
-                            placeholder="Nhập tên đăng nhập"
-                            value={name}
-                            onChange={handleNameChange}
-                        />
+            <div className={styles.content}>
+                <div className={styles.infoContainer}>
+                    <label className={styles.formHeader}>Thông tin cá nhân</label>
+                    <form onSubmit={handleSubmit}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="name">Họ và tên</label>
+                            <div className={styles.inputWrapper}>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    placeholder="Nhập họ và tên"
+                                    value={name}
+                                    onChange={handleNameChange}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="dateOfBirth">Ngày sinh</label>
+                            <div className={styles.inputWrapper}>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="Nhập mật khẩu"
+                                    value={password}
+                                    onChange={handlePasswordChange}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="image">Căn cước công dân</label>
+                            <div className={styles.inputWrapper}>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    id="image"
+                                    onChange={handleImageChange}
+                                />
+                                {
+                                    citizenIdentityCardImage &&
+                                    <img
+                                        src={citizenIdentityCardImage}
+                                        alt="Căn cước công dân"
+                                        className={styles.citizenIdentityCardImage}
+                                    />
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div className={styles.infoContainer}>
+                    <label className={styles.formHeader}>Thông tin tài khoản</label>
+                    <div className={styles.accountInfo}>
+                        <span className={styles.avatarAndName}>
+                            <div className={styles.avatarWrapper}>
+                                <img src={"https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-20.jpg"} alt="Avatar" />
+                                <button>Đổi ảnh</button>
+                            </div>
+                            <span className={styles.namesContainer}>
+                                <span className={styles.row}>
+                                    <label className={styles.nameLabel}>Tên đăng nhập:</label>
+                                    <input
+                                        type="text"
+                                        value={user.userName}
+                                        onChange={() => { }}
+                                    />
+                                </span>
+                                <span className={styles.row}>
+                                    <label className={styles.nameLabel}>Tên công khai:</label>
+                                    <input 
+                                        type="text"
+                                        value={user.userPublicName}
+                                        onChange={() => {}}
+                                    />
+                                    <button>Đổi tên</button>
+                                </span>
+                            </span>
+                        </span>
+                        <span className={styles.rowInfo}>
+                            <label className={styles.labelTitle}>Số dư:</label>
+                            <label className={clsx(styles.labelContent, styles.balance)}>{Converter.formatMoney(user.amount)}</label>
+                        </span>
+                        <span className={styles.rowInfo}>
+                            <label className={styles.labelTitle}>Số nợ:</label>
+                            <label className={clsx(styles.labelContent, styles.owe)}>{Converter.formatMoney(user.amountOwed)}</label>
+                        </span>
+                        <span className={styles.rowInfo}>
+                            <label className={styles.labelTitle}>Tình trạng:</label>
+                            <label className={styles.labelContent}>{user.disabledSession ? "Đã bị khóa" : "Đang hoạt động"}</label>
+                        </span>
+                        <span className={styles.rowInfo}>
+                            <label className={styles.labelTitle}>Ngày tham gia:</label>
+                            <label className={styles.labelContent}>{user.createdDate}</label>
+                        </span>
                     </div>
                 </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="password">Mật khẩu</label>
-                    <div className={styles.inputWrapper}>
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="Nhập mật khẩu"
-                            value={password}
-                            onChange={handlePasswordChange}
-                        />
-                    </div>
-                </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="image">Căn cước công dân</label>
-                    <div className={styles.inputWrapper}>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            id="image"
-                            onChange={handleImageChange}
-                        />
-                        {
-                            citizenIdentityCardImage &&
-                            <img
-                                src={citizenIdentityCardImage}
-                                alt="Căn cước công dân"
-                                className={styles.citizenIdentityCardImage}
-                            />
-                        }
-                    </div>
-                </div>
-                <div className={styles.confirmButton} onClick={handleSubmit}>
-                    {
-                        isSendingRequest
-                            ? <CircleLoader size="15px" strokeWidth="2px" color="transparent" />
-                            : <label htmlFor="confirm">Hoàn tất</label>
-                    }
-                </div>
-            </form>
+            </div>
             <div className={styles.closeButton} onClick={closeDialog}>
                 <IoCloseOutline color="#000" size={30} />
             </div>

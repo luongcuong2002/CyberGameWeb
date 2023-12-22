@@ -52,7 +52,15 @@ const AccountManagement = () => {
         name: "Số dư",
       },
       {
+        name: "Số nợ",
+        hidden: true,
+      },
+      {
         name: "Tình trạng",
+      },
+      {
+        name: "Ngày tạo",
+        hidden: true,
       },
     ],
     rows: [
@@ -61,7 +69,9 @@ const AccountManagement = () => {
         userName: "John Doe",
         userPublicName: "John",
         amount: 12345,
+        amountOwed: 10000,
         disabledSession: "Active",
+        createdDate: "22/12/2023",
       },
     ],
     totalPages: 15,
@@ -162,6 +172,13 @@ const AccountManagement = () => {
               {
                 icon: null,
                 text: "Lịch sử giao dịch",
+                onClick: () => {
+                  handleClosePopup();
+                },
+              },
+              {
+                icon: null,
+                text: "Quản lý nợ",
                 onClick: () => {
                   handleClosePopup();
                 },
