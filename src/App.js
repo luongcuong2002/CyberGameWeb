@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import SignInPage from "./pages/SignIn";
 import PATH from "./enums/path.enum";
@@ -8,17 +8,23 @@ import MainPages from "./pages/MainPages";
 import AccountPages from "./pages/AccountPages";
 import userService from "./services/user.service";
 import "./App.css";
-import { setUser } from "./slices/user.slice";
+import { selectUser, setUser } from "./slices/user.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectModalAppearance } from "./slices/modal_appearance.slice";
 import { setSignOutDialogShowing } from "./slices/modal_appearance.slice";
 import AlertDialog from "./components/AlertDialog";
 import Cookies from "universal-cookie";
+import GoToHomePage from "./pages/GoToHome";
+import NeedSignInPage from "./pages/NeedSignIn";
+import ROLE from "./enums/role.enum";
+
 const cookies = new Cookies();
 
 function App() {
+
   const dispatch = useDispatch();
 
+  const user = useSelector(selectUser);
   const modalAppearance = useSelector(selectModalAppearance);
 
   const [render, setRender] = useState(false);
@@ -26,8 +32,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const accessToken = await cookies.get("accessToken");
+      const refreshToken = await cookies.get("refreshToken");
 
-      if (!accessToken) {
+      if (!accessToken && !refreshToken) {
         setRender(true);
       } else {
         userService
@@ -48,8 +55,6 @@ function App() {
     fetchData();
   }, []);
 
-  console.log("isSignOutDialogShowing: ", modalAppearance.isSignOutDialogShowing);
-
   return (
     <>
       {render && (
@@ -67,10 +72,30 @@ function App() {
 
           <Routes>
             <Route path={`${PATH.root}*`} element={<MainPages />} />
-            <Route path={`${PATH.moderator}/*`} element={<ModeratorPages />} />
-            <Route path={`${PATH.admin}/*`} element={<AdminPages />} />
-            <Route path={`${PATH.account}/*`} element={<AccountPages />} />
-            <Route path={PATH.signIn} element={<SignInPage />} />
+            <Route 
+              path={`${PATH.admin}/*`}
+              element={
+                user?.userId ?
+                  (user?.role === ROLE.admin) ? <AdminPages /> : <GoToHomePage message={"Bạn không có quyền truy cập trang này!"} />
+                  : <NeedSignInPage />
+              }
+            />
+            <Route
+              path={`${PATH.moderator}/*`}
+              element={
+                user?.userId ?
+                  (user?.role === ROLE.moderator || user?.role === ROLE.admin) ? <ModeratorPages /> : <GoToHomePage message={"Bạn không có quyền truy cập trang này!"} />
+                  : <NeedSignInPage />
+              }
+            />
+            <Route
+              path={`${PATH.account}/*`}
+              element={user?.userId ? <AccountPages /> : <NeedSignInPage />}
+            />
+            <Route
+              path={PATH.signIn}
+              element={user?.userId ? <GoToHomePage /> : <SignInPage />}
+            />
           </Routes>
         </>
       )}

@@ -6,6 +6,7 @@ import API_ERROR from "../enums/apierror.enum";
 import { store } from "../redux/store";
 
 const cookies = new Cookies();
+let urlBeforeRefreshToken = "";
 
 const axiosApiInstance = axios.create({
   baseURL: CONSTANT.baseUrl,
@@ -40,12 +41,19 @@ axiosApiInstance.interceptors.response.use(
   (res) => res,
   async (error) => {
     const config = error?.config;
+    const url = config?.url;
+
+    if (!url) {
+      return Promise.reject(error);
+    }
+
     if (
-      config?.url.indexOf("/auth") >= 0 &&
-      config.url.indexOf("/auth/refresh-token") < 0
+      url.indexOf("/auth") >= 0 &&
+      url.indexOf("/auth/refresh-token") < 0
     ) {
       return Promise.reject(error);
     }
+
     if (error?.response?.status === 401) {
 
       let errorMessage = error?.response?.data?.error;
@@ -54,11 +62,15 @@ axiosApiInstance.interceptors.response.use(
         console.log("accessToken expired!");
         const refreshToken = await cookies.get("refreshToken");
 
+        // save url before refresh token
+        urlBeforeRefreshToken = url;
+
         const newAccessToken = await (await axiosApiInstance.post(
-          CONSTANT.baseUrl + "/auth/refresh-token", refreshToken
+          CONSTANT.baseUrl + "/auth/refresh-token", { refreshToken }
         )).data;
 
         if (!newAccessToken) {
+          urlBeforeRefreshToken = "";
           return Promise.reject(error);
         }
 
@@ -73,6 +85,10 @@ axiosApiInstance.interceptors.response.use(
         console.log("refreshToken expired!");
         cookies.remove("accessToken");
         cookies.remove("refreshToken");
+
+        if (urlBeforeRefreshToken.indexOf("/user/get-info") >= 0) {
+          return;
+        }
 
         store.dispatch(setSignOutDialogShowing({ isSignOutDialogShowing: true }));
       }

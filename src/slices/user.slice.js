@@ -22,41 +22,21 @@ export const userSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
-
-      console.log(action.payload);
-
-      state.userId = action.payload.userId;
-      state.userName = action.payload.userName;
-      state.userPublicName = action.payload.userPublicName;
-      state.avatar = action.payload.avatar;
-      state.role = action.payload.role;
-      state.amount = action.payload.amount;
-      state.membershipClass = action.payload.membershipClass;
-      state.realName = action.payload.realName;
-      state.dateOfBirth = action.payload.dateOfBirth;
-      state.gender = action.payload.gender;
-      state.address = action.payload.address;
-      state.phoneNumber = action.payload.phoneNumber;
-      state.email = action.payload.email;
-      state.amountOwed = action.payload.amountOwed;
-      state.createdDate = action.payload.createdDate;
-    },
-    setUserNull: (state) => {
-      state.userId = null;
-      state.userName = null;
-      state.userPublicName = null;
-      state.avatar = null;
-      state.role = null;
-      state.amount = null;
-      state.membershipClass = null;
-      state.realName = null;
-      state.dateOfBirth = null;
-      state.gender = null;
-      state.address = null;
-      state.phoneNumber = null;
-      state.email = null;
-      state.amountOwed = null;
-      state.createdDate = null;
+      state.userId = action.payload?.userId;
+      state.userName = action.payload?.userName;
+      state.userPublicName = action.payload?.userPublicName;
+      state.avatar = action.payload?.avatar;
+      state.role = action.payload?.role;
+      state.amount = action.payload?.amount;
+      state.membershipClass = action.payload?.membershipClass;
+      state.realName = action.payload?.realName;
+      state.dateOfBirth = action.payload?.dateOfBirth;
+      state.gender = action.payload?.gender;
+      state.address = action.payload?.address;
+      state.phoneNumber = action.payload?.phoneNumber;
+      state.email = action.payload?.email;
+      state.amountOwed = action.payload?.amountOwed;
+      state.createdDate = action.payload?.createdDate;
     },
     setUserPublicName: (state, action) => {
       state.userPublicName = action.payload.userPublicName;

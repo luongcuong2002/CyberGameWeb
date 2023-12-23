@@ -28,14 +28,15 @@ const SignInPage = () => {
 
     authService.signIn(userName, password)
       .then((response) => {
-        if (response.data) {
+        if (response?.data) {
           window.location.href = "/";
         } else {
           setWarning("Something went wrong!");
         }
       })
       .catch((error) => {
-        setWarning(error.response.data.message);
+        alert("Đã có lỗi xảy ra. Hãy thử lại sau ít phút!")
+        setWarning(error?.response?.data?.message);
       })
       .finally(() => {
         setWaitingForServer(false);

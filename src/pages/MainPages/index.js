@@ -38,7 +38,8 @@ import ROLE from "../../enums/role.enum";
 import Converter from "../../utils/converter";
 import NeedSignInPage from "../NeedSignIn";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, setUserNull } from "../../slices/user.slice";
+import { selectUser } from "../../slices/user.slice";
+import authService from "../../services/auth.service";
 
 const MainPages = () => {
   const user = useSelector(selectUser);
@@ -121,8 +122,13 @@ const MainPages = () => {
 
   const onSignOut = () => {
     setOpenPopup(false);
-    dispatch(setUserNull(null));
-    navigate(PATH.root);
+    authService.signOut()
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        navigate(PATH.root);
+      });
   };
 
   return (

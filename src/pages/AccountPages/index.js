@@ -20,51 +20,51 @@ import ChangePassword from "./ChangePassword";
 import SendFeedback from "./SendFeedback";
 
 const AccountPages = () => {
-    return (
-      <div id={styles.root}>
-        <ManagementPageHeader onClickSignOut={() => {}} />
-        <ManagementPageNavGenerator
-          parentRoute={PATH.account}
-          routes={[
-            {
-              path: PATH.account_info,
-              text: "Thông tin tài khoản",
-              activeIcon: IconAccountInfoActive,
-              inactiveIcon: IconAccountInfoInactive,
-              page: AccountInfo,
-            },
-            {
-              path: PATH.transaction_history,
-              text: "Lịch sử giao dịch",
-              activeIcon: IconTransactionHistoryActive,
-              inactiveIcon: IconTransactionHistoryInactive,
-              page: TransactionHistory,
-            },
-            {
-              path: PATH.debt_detail,
-              text: "Chi tiết số nợ",
-              activeIcon: IconDebtDetailActive,
-              inactiveIcon: IconDebtDetailInactive,
-              page: DebtDetail,
-            },
-            {
-              path: PATH.change_password,
-              text: "Đổi mật khẩu",
-              activeIcon: IconChangePasswordActive,
-              inactiveIcon: IconChangePasswordInactive,
-              page: ChangePassword,
-            },
-            {
-              path: PATH.feedback,
-              text: "Góp ý",
-              activeIcon: IconFeedbackActive,
-              inactiveIcon: IconFeedbackInactive,
-              page: SendFeedback,
-            },
-          ]}
-        />
-      </div>
-    );
+  return (
+    <div id={styles.root}>
+      <ManagementPageHeader onClickSignOut={() => { }} />
+      <ManagementPageNavGenerator
+        parentRoute={PATH.account}
+        routes={[
+          {
+            path: PATH.account_info,
+            text: "Thông tin tài khoản",
+            activeIcon: IconAccountInfoActive,
+            inactiveIcon: IconAccountInfoInactive,
+            page: AccountInfo,
+          },
+          {
+            path: PATH.transaction_history,
+            text: "Lịch sử giao dịch",
+            activeIcon: IconTransactionHistoryActive,
+            inactiveIcon: IconTransactionHistoryInactive,
+            page: TransactionHistory,
+          },
+          {
+            path: PATH.debt_detail,
+            text: "Chi tiết số nợ",
+            activeIcon: IconDebtDetailActive,
+            inactiveIcon: IconDebtDetailInactive,
+            page: DebtDetail,
+          },
+          {
+            path: PATH.change_password,
+            text: "Đổi mật khẩu",
+            activeIcon: IconChangePasswordActive,
+            inactiveIcon: IconChangePasswordInactive,
+            page: ChangePassword,
+          },
+          {
+            path: PATH.feedback,
+            text: "Góp ý",
+            activeIcon: IconFeedbackActive,
+            inactiveIcon: IconFeedbackInactive,
+            page: SendFeedback,
+          },
+        ]}
+      />
+    </div>
+  );
 }
 
 export default AccountPages;

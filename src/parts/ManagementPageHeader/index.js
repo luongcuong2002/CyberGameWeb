@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./management_page_header.module.scss";
 import ProfileInactiveIcon from "../../assets/icons/ic_profile_inactive.svg";
+import authService from "../../services/auth.service";
+import PATH from "../../enums/path.enum";
 
 const ManagementPageHeader = ({ onClickSignOut }) => {
 
@@ -34,7 +36,13 @@ const ManagementPageHeader = ({ onClickSignOut }) => {
 
   const onSignOut = () => {
     setOpenPopup(false);
-    onClickSignOut()
+    authService.signOut()
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        window.location.href = PATH.root;
+      });
   };
 
   return (

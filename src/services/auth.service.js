@@ -1,6 +1,8 @@
 import CONSTANT from "../utils/constant";
 import axiosApiInstance from "../config/axios.instance.config";
 import Cookies from "universal-cookie";
+import { store } from "../redux/store";
+import { setUser } from "../slices/user.slice";
 
 const cookies = new Cookies();
 
@@ -24,7 +26,13 @@ class AuthService {
     }
 
     async signOut() {
-        return axiosApiInstance.get(API_URL + "sign-out");
+        return axiosApiInstance.get(API_URL + "sign-out")
+            .finally(() => {
+                cookies.remove("accessToken");
+                cookies.remove("refreshToken");
+                store.dispatch(setUser(null));
+            }
+        );
     }
 }
 
