@@ -23,28 +23,32 @@ function App() {
 
   const [render, setRender] = useState(false);
 
-  useEffect(async () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const accessToken = await cookies.get("accessToken");
 
-    const accessToken = await cookies.get("accessToken");
-
-    if (!accessToken) {
-      setRender(true);
-    } else {
-      userService
-        .getCurrentUser()
-        .then(async (data) => {
-          if (data) {
-            dispatch(setUser(data));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setRender(true);
-        });
+      if (!accessToken) {
+        setRender(true);
+      } else {
+        userService
+          .getCurrentUser()
+          .then(async (data) => {
+            if (data) {
+              dispatch(setUser(data));
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            setRender(true);
+          });
+      }
     }
+    fetchData();
   }, []);
+
+  console.log("isSignOutDialogShowing: ", modalAppearance.isSignOutDialogShowing);
 
   return (
     <>

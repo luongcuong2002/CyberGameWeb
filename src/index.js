@@ -3,20 +3,11 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import { Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "../src/slices/user.slice";
-import systemVariableReducer from "../src/slices/system_variable.slice";
-import modalAppearanceReducer from "../src/slices/modal_appearance.slice";
+import { store } from "./redux/store";
+import { createRoot } from 'react-dom/client';
 
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-    systemVariable: systemVariableReducer,
-    modalAppearance: modalAppearanceReducer,
-  },
-});
-
-ReactDOM.render(
+const root = createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
@@ -25,6 +16,5 @@ ReactDOM.render(
         </Routes>
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

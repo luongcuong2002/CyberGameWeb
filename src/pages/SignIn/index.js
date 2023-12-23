@@ -5,13 +5,8 @@ import Loader from "../../components/Loader";
 import AlertDialog from "../../components/AlertDialog";
 import AlertError from "../../components/AlertError";
 import authService from "../../services/auth.service";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../slices/user.slice";
 
 const SignInPage = () => {
-
-  let dispatch = useDispatch();
-
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [warning, setWarning] = useState("");
@@ -33,8 +28,7 @@ const SignInPage = () => {
 
     authService.signIn(userName, password)
       .then((response) => {
-        if (response.data && response.data.userInfo) {
-          dispatch(setUser(response.data.userInfo));
+        if (response.data) {
           window.location.href = "/";
         } else {
           setWarning("Something went wrong!");

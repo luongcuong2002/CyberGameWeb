@@ -39,6 +39,8 @@ const useNavigationChecking = () => {
       setKeys([...keys, key]);
       setPreviousKey(key);
     }
+
+    return () => {};
   }, [pathname, type]);
 
   return [canGoBack, canGoForward];

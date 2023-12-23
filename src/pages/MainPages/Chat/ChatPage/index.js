@@ -147,6 +147,8 @@ const ChatPage = ({ chatChannel }) => {
 
     const scrollableDiv = document.getElementById("scrollableDiv");
     scrollableDiv.scrollTop = scrollableDiv.scrollHeight; // Cuộn xuống dưới cùng
+
+    return () => {};
   }, []);
 
   const handleKeyDown = (event) => {

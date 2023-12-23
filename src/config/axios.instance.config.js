@@ -3,6 +3,8 @@ import CONSTANT from "../utils/constant";
 import Cookies from 'universal-cookie';
 import { setSignOutDialogShowing } from "../slices/modal_appearance.slice";
 import API_ERROR from "../enums/apierror.enum";
+import { store } from "../redux/store";
+
 const cookies = new Cookies();
 
 const axiosApiInstance = axios.create({
@@ -45,33 +47,34 @@ axiosApiInstance.interceptors.response.use(
       return Promise.reject(error);
     }
     if (error?.response?.status === 401) {
-      console.log("Token expired!");
 
       let errorMessage = error?.response?.data?.error;
 
       if (errorMessage === API_ERROR.expiredAccessToken) {
+        console.log("accessToken expired!");
         const refreshToken = await cookies.get("refreshToken");
 
-        const data = await (
-          await axiosApiInstance.post(
-            CONSTANT.baseUrl + "/auth/refresh-token",
-            {
-              refreshToken,
-            }
-          )
-        ).data;
+        const newAccessToken = await (await axiosApiInstance.post(
+          CONSTANT.baseUrl + "/auth/refresh-token", refreshToken
+        )).data;
 
-        cookies.set("accessToken", data.newAccessToken);
+        if (!newAccessToken) {
+          return Promise.reject(error);
+        }
 
-        config.headers["x-access-token"] = data.newAccessToken;
-        console.log("new accessToken: ", data.newAccessToken);
+        cookies.set("accessToken", newAccessToken);
+
+        config.headers["x-access-token"] = newAccessToken;
+        console.log("resend api with new access token");
         return axiosApiInstance(config);
       }
       
       if (errorMessage === API_ERROR.expiredRefreshToken) {
+        console.log("refreshToken expired!");
         cookies.remove("accessToken");
         cookies.remove("refreshToken");
-        setSignOutDialogShowing(true);
+
+        store.dispatch(setSignOutDialogShowing({ isSignOutDialogShowing: true }));
       }
     }
     return Promise.reject(error);
