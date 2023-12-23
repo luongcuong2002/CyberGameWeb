@@ -35,8 +35,12 @@ const SignInPage = () => {
         }
       })
       .catch((error) => {
-        alert("Đã có lỗi xảy ra. Hãy thử lại sau ít phút!")
-        setWarning(error?.response?.data?.message);
+        const message = error?.response?.data?.message;
+        if (message) {
+          setWarning(message);
+        } else {
+          setWarning("Đã có lỗi xảy ra. Hãy thử lại sau ít phút!");
+        }
       })
       .finally(() => {
         setWaitingForServer(false);

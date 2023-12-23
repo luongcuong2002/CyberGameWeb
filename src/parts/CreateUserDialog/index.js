@@ -5,19 +5,20 @@ import CircleLoader from "../../components/CircleLoader";
 import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
 import InputChecker from "../../utils/input_checker";
+import moderatorAccountManagementService from "../../services/moderator_account_management.service";
 
 const CreateUserDialog = ({ setShowDialog }) => {
 
     const [isSendingRequest, setIsSendingRequest] = useState(false);
     const [warning, setWarning] = useState("");
-    const [name, setName] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [citizenIdentityCardImage, setCitizenIdentityCardImage] = useState(null);
+    const [citizenIdentityCard, setCitizenIdentityCard] = useState(null);
 
     const handleNameChange = (event) => {
         const value = event.target.value;
         if (InputChecker.isAlphanumeric(value)) {
-            setName(event.target.value.toUpperCase());
+            setUserName(event.target.value.toUpperCase());
         }
     };
 
@@ -43,12 +44,12 @@ const CreateUserDialog = ({ setShowDialog }) => {
                     setWarning(
                         `Hình ảnh quá nhỏ. Yêu cầu kích thước tối thiểu ${minDimension}x${minDimension}.`
                     );
-                    return setCitizenIdentityCardImage(null);
+                    return setCitizenIdentityCard(null);
                 } else if (width >= height * maxRatio || height >= width * maxRatio) {
                     setWarning(
                         `Hình ảnh quá dài. Một chiều không thể có kích thước gấp ${maxRatio} lần chiều còn lại.`
                     );
-                    return setCitizenIdentityCardImage(null);
+                    return setCitizenIdentityCard(null);
                 } else {
                     setWarning("");
                 }
@@ -72,7 +73,7 @@ const CreateUserDialog = ({ setShowDialog }) => {
 
                 const resizedImage = canvas.toDataURL("image/jpeg");
 
-                setCitizenIdentityCardImage(resizedImage);
+                setCitizenIdentityCard(resizedImage);
             };
 
             image.src = readerEvent.target.result;
@@ -86,7 +87,7 @@ const CreateUserDialog = ({ setShowDialog }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        if (!name) {
+        if (!userName) {
             return setWarning("Tên đăng nhập không được để trống!");
         }
 
@@ -97,9 +98,26 @@ const CreateUserDialog = ({ setShowDialog }) => {
         setWarning("");
 
         setIsSendingRequest(true);
-        setTimeout(() => {
-            setIsSendingRequest(false);
-        }, 1000)
+        moderatorAccountManagementService.createNewUser({ 
+            userName, 
+            password, 
+            citizenIdentityCard 
+        })
+            .then(() => {
+                setShowDialog(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                const message = err?.response?.data?.message;
+                if (message) {
+                    setWarning(message);
+                } else {
+                    setWarning("Đã có lỗi xảy ra. Hãy thử lại sau ít phút!");
+                }
+            })
+            .finally(() => {
+                setIsSendingRequest(false);
+            });
     };
 
     const closeDialog = () => {
@@ -132,7 +150,7 @@ const CreateUserDialog = ({ setShowDialog }) => {
                             type="text"
                             id="name"
                             placeholder="Nhập tên đăng nhập"
-                            value={name}
+                            value={userName}
                             onChange={handleNameChange}
                         />
                     </div>
@@ -159,11 +177,11 @@ const CreateUserDialog = ({ setShowDialog }) => {
                             onChange={handleImageChange}
                         />
                         {
-                            citizenIdentityCardImage &&
+                            citizenIdentityCard &&
                             <img 
-                                src={citizenIdentityCardImage} 
+                                src={citizenIdentityCard} 
                                 alt="Căn cước công dân" 
-                                className={styles.citizenIdentityCardImage}
+                                className={styles.citizenIdentityCard}
                             />
                         }
                     </div>
