@@ -6,10 +6,21 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function AlertDialog({ title, message, isOpen, onClick, closeWhenClickOutside = true }) {
+export default function AlertDialog({ 
+  title,
+  message, 
+  isOpen, 
+  onClickPositiveButton,
+  closeWhenClickOutside = true,
+  shouldShowNegativeButton = false,
+  onClickNegativeButton = () => {},
+  positiveButtonText = "Ok",
+  negativeButtonText = "Hủy",
+}) {
+
   const handleClose = () => {
     if (closeWhenClickOutside) {
-      onClick();
+      onClickNegativeButton();
     }
   };
 
@@ -28,8 +39,16 @@ export default function AlertDialog({ title, message, isOpen, onClick, closeWhen
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClick} autoFocus>
-            Ok
+          {
+            shouldShowNegativeButton &&
+            <Button onClick={() => {
+                onClickNegativeButton();
+            }}>
+              {negativeButtonText}
+            </Button>
+          }
+          <Button onClick={handleClose}>
+            {positiveButtonText}
           </Button>
         </DialogActions>
       </Dialog>

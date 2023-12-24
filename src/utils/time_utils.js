@@ -55,9 +55,15 @@ function formatDate(timestamp, currentTimestamp) {
   }
 }
 
+function formatTimestampToDateString(timestamp) {
+  const date = new Date(timestamp);
+  return format(date, "dd/MM/yyyy");
+}
+
 const TimeUtils = {
   haveSameDate,
   formatDate,
+  formatTimestampToDateString
 };
 
 export default TimeUtils;

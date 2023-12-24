@@ -43,6 +43,12 @@ class ModeratorAccountManagementService {
     async unblockUser(userId) {
         return axiosApiInstance.patch(API_URL + `unblock-user/${userId}`);
     }
+
+    async getUserInfo(userId) {
+        return axiosApiInstance.get(API_URL + `get-user-info/${userId}`).then((res) => {
+            return res.data;
+        });
+    }
 }
 
 export default new ModeratorAccountManagementService();

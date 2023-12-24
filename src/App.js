@@ -63,7 +63,7 @@ function App() {
             title={"Thông báo"}
             message={"Phiên đăng nhập hết hạn. Đăng nhập lại để tiếp tục!"}
             isOpen={modalAppearance.isSignOutDialogShowing}
-            onClick={() => {
+            onClickPositiveButton={() => {
               window.location.href = PATH.signIn;
               dispatch(setSignOutDialogShowing(false));
             }}
@@ -72,9 +72,9 @@ function App() {
 
           <AlertDialog
             title={"Thông báo"}
-            message={"Tài khoản của bạn đã bị khoá. Đăng nhập lại để biết thêm thông tin tại sao!"}
+            message={"Tài khoản của bạn đã bị khoá. Đăng nhập lại để biết thêm thông tin!"}
             isOpen={modalAppearance.isBlockUserDialogShowing}
-            onClick={() => {
+            onClickPositiveButton={() => {
               window.location.href = PATH.root;
               dispatch(setBlockUserDialogShowing(false));
             }}
