@@ -107,7 +107,6 @@ const CreateUserDialog = ({ setShowDialog }) => {
                 setShowDialog(false);
             })
             .catch((err) => {
-                console.log(err);
                 const message = err?.response?.data?.message;
                 if (message) {
                     setWarning(message);

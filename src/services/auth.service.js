@@ -26,13 +26,11 @@ class AuthService {
     }
 
     async signOut() {
-        return axiosApiInstance.get(API_URL + "sign-out")
-            .finally(() => {
-                cookies.remove("accessToken");
-                cookies.remove("refreshToken");
-                store.dispatch(setUser(null));
-            }
-        );
+        cookies.remove("accessToken");
+        cookies.remove("refreshToken");
+        console.log("sign out, remove cookies");
+        store.dispatch(setUser(null));
+        return axiosApiInstance.get(API_URL + "sign-out");
     }
 }
 

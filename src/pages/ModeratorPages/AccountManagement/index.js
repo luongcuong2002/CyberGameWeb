@@ -3,16 +3,23 @@ import styles from "./account_management.module.scss";
 import PagingTable from "../../../components/PagingTable";
 import MenuPopup from "../../../components/MenuPopup";
 import { IoIosSearch, IoMdPersonAdd } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
 import CreateUserDialog from "../../../parts/CreateUserDialog";
 import TopupDialog from "../../../parts/TopupDialog";
 import InputChecker from "../../../utils/input_checker";
 import ChangePasswordDialog from "../../../parts/ChangePasswordDialog";
 import BlockUserDialog from "../../../parts/BlockUserDialog";
 import UserInfoDialog from "../../../parts/UserInfoDialog";
+import { fetchUserTableData, selectUserTableData } from "../../../slices/user_table_data.slice";
+import moderator_account_managementService from "../../../services/moderator_account_management.service";
 
 const AccountManagement = () => {
-  const [isLoadingData, setIsLoadingData] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+
+  const dispatch = useDispatch();
+
+  const userTableData = useSelector(selectUserTableData);
+
+  const [searchTerm, setSearchTerm] = useState(userTableData.data?.searchTerm ?? "");
   const inputRef = useRef(null);
 
   const [showCreateNewUserDialog, setShowCreateNewUserDialog] = useState(false);
@@ -21,61 +28,31 @@ const AccountManagement = () => {
   const [showBlockUserDialog, setShowBlockUserDialog] = useState(false);
   const [showUserInfoDialog, setShowUserInfoDialog] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
 
   const onNextPage = () => {
-    if (currentPage < data.totalPages) {
-      setCurrentPage(currentPage + 1);
+    const currentPage = userTableData.data?.currentPage;
+    const totalPages = userTableData.data?.totalPages;
+    if (currentPage && totalPages && currentPage < totalPages) {
+      dispatch(fetchUserTableData(
+        {
+          pageNo: currentPage + 1,
+          searchTerm,
+        }
+      ));
     }
   };
 
   const onPrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    const currentPage = userTableData.data?.currentPage;
+    if (currentPage && currentPage > 1) {
+      dispatch(fetchUserTableData(
+        {
+          pageNo: currentPage - 1,
+          searchTerm,
+        }
+      ));
     }
-  };
-
-  const data = {
-    header: [
-      {
-        name: "ID",
-        hidden: true,
-      },
-      {
-        name: "Tên đăng nhập",
-      },
-      {
-        name: "Tên công khai",
-      },
-      {
-        name: "Số dư",
-      },
-      {
-        name: "Số nợ",
-        hidden: true,
-      },
-      {
-        name: "Tình trạng",
-      },
-      {
-        name: "Ngày tạo",
-        hidden: true,
-      },
-    ],
-    rows: [
-      {
-        userId: 1,
-        userName: "John Doe",
-        userPublicName: "John",
-        amount: 12345,
-        amountOwed: 10000,
-        disabledSession: "Active",
-        createdDate: "22/12/2023",
-      },
-    ],
-    totalPages: 15,
-    currentPage: 2,
   };
 
   const handleChange = (event) => {
@@ -91,15 +68,22 @@ const AccountManagement = () => {
       inputRef.current.blur();
     }
 
-    if (isLoadingData) {
+    if (userTableData.isLoading) {
       return;
     }
 
-    setIsLoadingData(true);
-    setTimeout(() => {
-      setIsLoadingData(false);
-    }, 2000);
+    dispatch(fetchUserTableData({
+      pageNo: 1,
+      searchTerm,
+    }));
   };
+
+  const refreshUserTableData = () => {
+    dispatch(fetchUserTableData({
+      pageNo: userTableData.data?.currentPage ?? 1,
+      searchTerm,
+    }));
+  }
 
   return (
     <div id={styles.root}>
@@ -114,7 +98,7 @@ const AccountManagement = () => {
             placeholder="Tìm kiếm..."
             value={searchTerm}
             onChange={handleChange}
-            disabled={isLoadingData}
+            disabled={userTableData.isLoading}
           />
           <div className={styles.searchIconBackground} onClick={handleSubmit}>
             <IoIosSearch size={20} />
@@ -126,9 +110,9 @@ const AccountManagement = () => {
       </span>
       <div id={styles.tableStyle}>
         <PagingTable
-          data={data}
-          isLoading={isLoadingData}
-          currentPage={currentPage}
+          data={userTableData.data}
+          isLoading={userTableData.isLoading}
+          errorMessage={userTableData.errorMessage}
           onNextPage={onNextPage}
           onPrevPage={onPrevPage}
           renderPopup={(selectedItem, handleClosePopup) => {
@@ -153,8 +137,24 @@ const AccountManagement = () => {
               },
               {
                 icon: null,
-                text: "Khóa tài khoản",
+                text: selectedItem.disabledSessionId >= 0 ? "Mở khoá tài khoản" : "Khóa tài khoản",
                 onClick: () => {
+                  if (selectedItem.disabledSessionId >= 0) {
+                    // unblock user
+                    moderator_account_managementService.unblockUser(selectedItem.userId)
+                      .then(() => {
+                        refreshUserTableData();
+                      })
+                      .catch((error) => {
+                        let errorMessage = error?.response.data.message;
+                        if (!errorMessage) {
+                          errorMessage = "Đã có lỗi xảy ra. Vui lòng thử lại sau!";
+                        }
+                        alert(errorMessage);
+                      })
+                    handleClosePopup();
+                    return;
+                  }
                   setShowBlockUserDialog(true);
                   setSelectedUser(selectedItem);
                   handleClosePopup();
@@ -205,7 +205,13 @@ const AccountManagement = () => {
       }
       {
         showBlockUserDialog && selectedUser &&
-        <BlockUserDialog setShowDialog={setShowBlockUserDialog} user={selectedUser} />
+        <BlockUserDialog 
+          setShowDialog={setShowBlockUserDialog} 
+          user={selectedUser}
+          onSuccess={() => {
+            refreshUserTableData();
+          }}
+        />
       }
       {
         showUserInfoDialog && selectedUser &&

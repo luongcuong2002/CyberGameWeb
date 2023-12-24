@@ -11,7 +11,7 @@ import "./App.css";
 import { selectUser, setUser } from "./slices/user.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectModalAppearance } from "./slices/modal_appearance.slice";
-import { setSignOutDialogShowing } from "./slices/modal_appearance.slice";
+import { setSignOutDialogShowing, setBlockUserDialogShowing } from "./slices/modal_appearance.slice";
 import AlertDialog from "./components/AlertDialog";
 import Cookies from "universal-cookie";
 import GoToHomePage from "./pages/GoToHome";
@@ -66,6 +66,17 @@ function App() {
             onClick={() => {
               window.location.href = PATH.signIn;
               dispatch(setSignOutDialogShowing(false));
+            }}
+            closeWhenClickOutside={false}
+          />
+
+          <AlertDialog
+            title={"Thông báo"}
+            message={"Tài khoản của bạn đã bị khoá. Đăng nhập lại để biết thêm thông tin tại sao!"}
+            isOpen={modalAppearance.isBlockUserDialogShowing}
+            onClick={() => {
+              window.location.href = PATH.root;
+              dispatch(setBlockUserDialogShowing(false));
             }}
             closeWhenClickOutside={false}
           />

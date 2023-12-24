@@ -6,8 +6,9 @@ import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moderatorAccountManagementService from "../../services/moderator_account_management.service";
 
-const BlockUserDialog = ({ setShowDialog, user }) => {
+const BlockUserDialog = ({ setShowDialog, user, onSuccess }) => {
     const [isSendingRequest, setIsSendingRequest] = useState(false);
     const [warning, setWarning] = useState("");
     const [reason, setReason] = useState('');
@@ -24,12 +25,40 @@ const BlockUserDialog = ({ setShowDialog, user }) => {
         if (unblockDate.getTime() < new Date().getTime() + 86400000) {
             return setWarning("Cần khoá ít nhất 1 ngày!");
         }
+
+        if (reason.trim().length == 0) {
+            return setWarning("Lý do không được để trống");
+        }
+
+        if (reason.trim().length > 100) {
+            return setWarning("Lý do không được quá 100 kí tự");
+        }
+
         setWarning("");
 
         setIsSendingRequest(true);
-        setTimeout(() => {
+
+        moderatorAccountManagementService.blockUser(
+            { 
+                userId: user.userId, 
+                reason: reason.trim(), 
+                unblockTime: unblockDate.getTime() 
+            }
+        ).then(() => {
+            setShowDialog(false);
+            onSuccess();
+        })
+        .catch((error) => {
+            let errorMessage = error?.response?.data?.message
+            if (errorMessage) {
+                setWarning(errorMessage);
+            } else {
+                setWarning("Đã có lỗi xảy ra!");
+            }
+        })
+        .finally(() => {
             setIsSendingRequest(false);
-        }, 1000)
+        });
     };
 
     const closeDialog = () => {
@@ -61,6 +90,7 @@ const BlockUserDialog = ({ setShowDialog, user }) => {
                     <div className={styles.inputWrapper}>
                         <DatePicker
                             selected={unblockDate}
+                            startOpen={false}
                             onChange={date => {
                                 setUnblockDate(date)
                             }}

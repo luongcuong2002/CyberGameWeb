@@ -4,6 +4,7 @@ import Popup from "reactjs-popup";
 import CircleLoader from "../../components/CircleLoader";
 import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
+import moderatorAccountManagementService from "../../services/moderator_account_management.service";
 
 const ChangePasswordDialog = ({ setShowDialog, user }) => {
     const [isSendingRequest, setIsSendingRequest] = useState(false);
@@ -22,9 +23,22 @@ const ChangePasswordDialog = ({ setShowDialog, user }) => {
         setWarning("");
 
         setIsSendingRequest(true);
-        setTimeout(() => {
-            setIsSendingRequest(false);
-        }, 1000)
+
+        moderatorAccountManagementService.changeUserPassword(user.userId, password)
+            .then(() => {
+                setShowDialog(false);
+            })
+            .catch((error) => {
+                let errorMessage = error?.response?.data?.message
+                if (errorMessage) {
+                    setWarning(errorMessage);
+                } else {
+                    setWarning("Đã có lỗi xảy ra!");
+                }
+            })
+            .finally(() => {
+                setIsSendingRequest(false);
+            });
     };
 
     const closeDialog = () => {

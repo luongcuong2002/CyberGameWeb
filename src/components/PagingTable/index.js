@@ -4,7 +4,7 @@ import { ReactComponent as IconArrowLeft } from "../../assets/icons/ic_arrow_lef
 import { ReactComponent as IconArrowRight } from "../../assets/icons/ic_arrow_right.svg";
 import Loader from "../Loader";
 
-const PagingTable = ({ data, onNextPage, onPrevPage, currentPage, renderPopup, isLoading }) => {
+const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, errorMessage }) => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
@@ -54,78 +54,97 @@ const PagingTable = ({ data, onNextPage, onPrevPage, currentPage, renderPopup, i
 
     return (
         <>
-            <div ref={tableRef} className={styles.tableContainer}>
-                <table className={styles.table}>
-                    <thead>
-                        <tr>
-                            {data.header.map((item, index) => {
-                                if (item.hidden) {
-                                    return null;
-                                }
-                                return <th key={index}>{item.name}</th>;
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.rows.map((item, index) => {
-                            const isSelected = selectedItem === item;
-                            return (
-                                <tr
-                                    key={index}
-                                    onContextMenu={(event) => handleContextMenu(event, item)}
-                                    className={isSelected ? styles.selected : ""}
-                                    onClick={() => handleSelectItem(item)}
-                                    onDoubleClick={() => handleDoubleClick(item)}
-                                >
-                                    {Object.keys(item).map((key, i) => {
-                                        if (data.header[i].hidden) {
+            {
+                data && (
+                    <div ref={tableRef} className={styles.tableContainer}>
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    {data.header.map((item, index) => {
+                                        if (item.hidden) {
                                             return null;
                                         }
-                                        return <td key={i}>{item[key]}</td>;
+                                        return <th key={index}>{item.name}</th>;
                                     })}
                                 </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
+                            </thead>
+                            <tbody>
+                                {data.rows.map((item, index) => {
+                                    const isSelected = selectedItem === item;
+                                    return (
+                                        <tr
+                                            key={index}
+                                            onContextMenu={(event) => handleContextMenu(event, item)}
+                                            className={isSelected ? styles.selected : ""}
+                                            onClick={() => handleSelectItem(item)}
+                                            onDoubleClick={() => handleDoubleClick(item)}
+                                        >
+                                            {Object.keys(item).map((key, i) => {
+                                                if (data.header[i].hidden) {
+                                                    return null;
+                                                }
+                                                return <td key={i}>{item[key]}</td>;
+                                            })}
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                )
+            }
             {
-                data.rows.length === 0 && (
+                data && data.rows.length === 0 && (
                     <span className={styles.noData}>Không có dữ liệu</span>
                 )
             }
-            {popupVisible && (
-                <div
-                    style={{
-                        position: "fixed",
-                        top: popupPosition.y,
-                        left: popupPosition.x,
-                    }}
-                    ref={popupRef}
-                >
-                    {renderPopup(selectedItem, handleClosePopup)}
-                </div>
-            )}
-            <div className={styles.pagination}>
-                <IconArrowLeft
-                    fill={currentPage > 1 ? "#509BF5" : "#CDCDCD"}
-                    className={styles.paginationButton}
-                    onClick={onPrevPage}
-                />
-                <span>
-                    {currentPage} / {data.totalPages}
-                </span>
-                <IconArrowRight
-                    fill={currentPage < data.totalPages ? "#509BF5" : "#CDCDCD"}
-                    className={styles.paginationButton}
-                    onClick={onNextPage}
-                />
-            </div>
+            {
+                popupVisible && (
+                    <div
+                        style={{
+                            position: "fixed",
+                            top: popupPosition.y,
+                            left: popupPosition.x,
+                        }}
+                        ref={popupRef}
+                    >
+                        {renderPopup(selectedItem, handleClosePopup)}
+                    </div>
+                )
+            }
+            {
+                data && (
+                    <div className={styles.pagination}>
+                        <IconArrowLeft
+                            fill={data.currentPage > 1 ? "#509BF5" : "#CDCDCD"}
+                            style={data.currentPage > 1 ? { cursor: "pointer" } : { cursor: "not-allowed" }}
+                            className={styles.paginationButton}
+                            onClick={onPrevPage}
+                        />
+                        <span>
+                            {data.currentPage} / {Math.max(data.totalPages, 1)}
+                        </span>
+                        <IconArrowRight
+                            fill={data.currentPage < data.totalPages ? "#509BF5" : "#CDCDCD"}
+                            style={data.currentPage < data.totalPages ? { cursor: "pointer" } : { cursor: "not-allowed"}}
+                            className={styles.paginationButton}
+                            onClick={onNextPage}
+                        />
+                    </div>
+                )
+            }
             {
                 isLoading && (
                     <div className={styles.loading}>
                         <Loader color="#535353" width="45px" />
                         <span className={styles.loadingText} >Đang lấy dữ liệu...</span>
+                    </div>
+                )
+            }
+            {
+                errorMessage && (
+                    <div className={styles.error}>
+                        <span className={styles.errorText}>{errorMessage}</span>
                     </div>
                 )
             }

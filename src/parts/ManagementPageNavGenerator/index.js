@@ -3,7 +3,6 @@ import styles from "./management_page_nav_generator.module.scss";
 import { NavLink, Navigate, Route, Routes } from "react-router-dom";
 import clsx from "clsx";
 import Converter from "../../utils/converter.js";
-import PATH from "../../enums/path.enum.js";
 
 const ManagementPageNavGenerator = ({ routes, parentRoute }) => {
   const NavLinkItem = (path, text, activeIcon, inactiveIcon) => {
@@ -50,7 +49,7 @@ const ManagementPageNavGenerator = ({ routes, parentRoute }) => {
       </nav>
       <div className={styles.routes}>
         <Routes>
-          {routes.map((route) => {
+          {routes.map((route, index) => {
             return (
               <Route
                 path={Converter.formatPath(parentRoute, route.path)}

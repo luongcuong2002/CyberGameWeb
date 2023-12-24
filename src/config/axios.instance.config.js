@@ -1,9 +1,10 @@
 import axios from "axios";
 import CONSTANT from "../utils/constant";
 import Cookies from 'universal-cookie';
-import { setSignOutDialogShowing } from "../slices/modal_appearance.slice";
+import { setSignOutDialogShowing, setBlockUserDialogShowing } from "../slices/modal_appearance.slice";
 import API_ERROR from "../enums/apierror.enum";
 import { store } from "../redux/store";
+import { setUser } from "../slices/user.slice";
 
 const cookies = new Cookies();
 let urlBeforeRefreshToken = "";
@@ -47,6 +48,8 @@ axiosApiInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    const errorMessage = error?.response?.data?.error;
+
     if (
       url.indexOf("/auth") >= 0 &&
       url.indexOf("/auth/refresh-token") < 0
@@ -54,10 +57,7 @@ axiosApiInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (error?.response?.status === 401) {
-
-      let errorMessage = error?.response?.data?.error;
-
+    if (error?.response?.status === 401 && errorMessage) {
       if (errorMessage === API_ERROR.expiredAccessToken) {
         console.log("accessToken expired!");
         const refreshToken = await cookies.get("refreshToken");
@@ -85,12 +85,24 @@ axiosApiInstance.interceptors.response.use(
         console.log("refreshToken expired!");
         cookies.remove("accessToken");
         cookies.remove("refreshToken");
+        
 
         if (urlBeforeRefreshToken.indexOf("/user/get-info") >= 0) {
           return;
         }
 
+        store.dispatch(setUser(null));
         store.dispatch(setSignOutDialogShowing({ isSignOutDialogShowing: true }));
+      }
+
+      // show dialog if user is blocked
+      if (errorMessage === API_ERROR.userIsBlocked) {
+        console.log("user is blocked!");
+        cookies.remove("accessToken");
+        cookies.remove("refreshToken");
+        store.dispatch(setUser(null));
+        store.dispatch(setBlockUserDialogShowing({ isBlockUserDialogShowing: true }));
+        return Promise.reject(error);
       }
     }
     return Promise.reject(error);

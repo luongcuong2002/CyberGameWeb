@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./moderator.module.scss";
 import PATH from "../../enums/path.enum";
 import ManagementPageHeader from "../../parts/ManagementPageHeader";
@@ -18,8 +18,20 @@ import TopupRequest from "./TopupRequest";
 import SendingNotification from "./SendingNotification";
 import ViewFeedback from "./ViewFeedback";
 import PlayedTime from "./PlayedTime";
+import { useDispatch } from "react-redux";
+import { fetchUserTableData } from "../../slices/user_table_data.slice";
 
 const ModeratorPages = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserTableData({
+      pageNo: 1,
+      searchTerm: '',
+    }));
+  }, [])
+
   return (
     <div id={styles.root}>
       <ManagementPageHeader onClickSignOut={() => {}} />
