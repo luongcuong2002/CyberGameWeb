@@ -8,20 +8,13 @@ h2 {
     font-size: 1.5rem;
     color: black;
     text-align: center;
-    margin: 10px 0px;
+    margin: 10px 30px;
     padding-bottom: 10px;
 }
 
-h3 {
-    width: 100%;
-    font-size: 1rem;
-    color: rgb(255, 111, 111);
-    text-align: center;
-    margin: 10px 0px;
-}
-
 .formContainer {
-    width: 400px;
+    width: fit-content;
+    min-width: 400px;
     margin: 0 auto;
     padding: 20px;
     background-color: #ffffff;

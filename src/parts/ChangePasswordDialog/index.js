@@ -53,8 +53,7 @@ const ChangePasswordDialog = ({ setShowDialog, user }) => {
         closeOnDocumentClick={false}
     >
         <div className={styles.formContainer}>
-            <h2>Đổi mật khẩu</h2>
-            <h3>{user.userName}</h3>
+            <h2>{`Đổi mật khẩu ( ${user.userName} )`}</h2>
             {
                 warning &&
                 <AlertError

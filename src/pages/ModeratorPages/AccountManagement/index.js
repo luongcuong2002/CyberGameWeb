@@ -12,6 +12,7 @@ import BlockUserDialog from "../../../parts/BlockUserDialog";
 import UserInfoDialog from "../../../parts/UserInfoDialog";
 import { fetchUserTableData, selectUserTableData } from "../../../slices/user_table_data.slice";
 import moderator_account_managementService from "../../../services/moderator_account_management.service";
+import DebtManagementDialog from "../../../parts/DebtManagementDialog";
 
 const AccountManagement = () => {
 
@@ -27,6 +28,7 @@ const AccountManagement = () => {
   const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
   const [showBlockUserDialog, setShowBlockUserDialog] = useState(false);
   const [showUserInfoDialog, setShowUserInfoDialog] = useState(false);
+  const [showDebtManagementDialog, setShowDebtManagementDialog] = useState(false);
 
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -171,15 +173,10 @@ const AccountManagement = () => {
               },
               {
                 icon: null,
-                text: "Lịch sử giao dịch",
-                onClick: () => {
-                  handleClosePopup();
-                },
-              },
-              {
-                icon: null,
                 text: "Quản lý nợ",
                 onClick: () => {
+                  setShowDebtManagementDialog(true);
+                  setSelectedUser(selectedItem);
                   handleClosePopup();
                 },
               },
@@ -216,6 +213,10 @@ const AccountManagement = () => {
       {
         showUserInfoDialog && selectedUser &&
         <UserInfoDialog setShowDialog={setShowUserInfoDialog} user={selectedUser} />
+      }
+      {
+        showDebtManagementDialog && selectedUser &&
+        <DebtManagementDialog setShowDialog={setShowDebtManagementDialog} user={selectedUser} />
       }
     </div>
   );

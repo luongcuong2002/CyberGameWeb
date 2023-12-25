@@ -73,8 +73,7 @@ const BlockUserDialog = ({ setShowDialog, user, onSuccess }) => {
         closeOnDocumentClick={false}
     >
         <div className={styles.formContainer}>
-            <h2>Khoá tài khoản</h2>
-            <h3>{user.userName}</h3>
+            <h2>{`Khoá tài khoản ( ${user.userName} )`}</h2>
             {
                 warning &&
                 <AlertError

@@ -11,7 +11,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import moderatorAccountManagementService from "../../services/moderator_account_management.service";
 import TimeUtils from "../../utils/time_utils";
 import GENDER from "../../enums/gender.enum";
-import is from "date-fns/locale/is";
 
 const UserInfoDialog = ({ setShowDialog, user }) => {
 
@@ -40,10 +39,8 @@ const UserInfoDialog = ({ setShowDialog, user }) => {
                 if (!errorMessage) {
                     errorMessage = "Đã có lỗi xảy ra. Vui lòng thử lại sau."
                 }
+                alert(errorMessage);
                 setShowDialog(false);
-                setTimeout(() => {
-                    alert(errorMessage);
-                }, 500);
             })
     }, []);
 
@@ -214,7 +211,7 @@ const UserInfoDialog = ({ setShowDialog, user }) => {
             shouldShowNegativeButton={true}
         />
         <div className={styles.container}>
-            <h2>Thông tin</h2>
+            <h2>{`Thông tin ( ${user.userName} )`}</h2>
             {
                 warning &&
                 <AlertError

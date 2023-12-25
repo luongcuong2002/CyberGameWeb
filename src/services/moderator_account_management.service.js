@@ -55,6 +55,24 @@ class ModeratorAccountManagementService {
             return res.data;
         });
     }
+
+    async getDebts(userId) {
+        return axiosApiInstance.get(API_URL + `get-debts/${userId}`).then((res) => {
+            return res.data;
+        });
+    }
+
+    async createNewDebt(data) {
+        return axiosApiInstance.post(API_URL + "create-new-debt", data).then((res) => {
+            return res.data;
+        });
+    }
+
+    async confirmDebtPayment(data) {
+        return axiosApiInstance.post(API_URL + "confirm-debt-payment", data).then((res) => {
+            return res.data;
+        });
+    }
 }
 
 export default new ModeratorAccountManagementService();

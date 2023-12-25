@@ -14,6 +14,9 @@ const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, err
     const handleContextMenu = (event, item) => {
         event.preventDefault();
         setSelectedItem(item);
+
+        if (!renderPopup) return;
+
         setPopupVisible(true);
 
         let position = {

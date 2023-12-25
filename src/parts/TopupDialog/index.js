@@ -36,8 +36,7 @@ const TopupDialog = ({ setShowDialog, user }) => {
         closeOnDocumentClick={false}
     >
         <div className={styles.formContainer}>
-            <h2>Nạp tiền</h2>
-            <h3>{user.userName}</h3>
+            <h2>{`Nạp tiền ( ${user.userName} )`}</h2>
             {
                 warning &&
                 <AlertError
