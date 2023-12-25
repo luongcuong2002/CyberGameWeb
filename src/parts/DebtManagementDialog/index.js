@@ -118,8 +118,7 @@ const DebtManagementDialog = ({ setShowDialog, user }) => {
         })
             .then(() => {
                 alert("Xác nhận thanh toán thành công!");
-                setDebtData(debtData.rows.filter((item) => selectedDebts.indexOf(item.debtId) < 0));
-                setSelectedDebts([]);
+                getDebts(); // refresh
             })
             .catch((err) => {
                 let errorMessage = err.response?.data?.message;
