@@ -49,6 +49,12 @@ class ModeratorAccountManagementService {
             return res.data;
         });
     }
+
+    async updateUserInfo(userId, data) {
+        return axiosApiInstance.patch(API_URL + `update-user-info/${userId}`, data).then((res) => {
+            return res.data;
+        });
+    }
 }
 
 export default new ModeratorAccountManagementService();

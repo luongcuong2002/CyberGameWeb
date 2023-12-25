@@ -199,12 +199,10 @@ h2 {
                     width: 120px;
                 }
 
-                input {
-                    font-size: 0.95rem;
+                .nameContent {
+                    font-size: 1rem;
                     color: #25a704;
                     font-weight: 600;
-                    border: none;
-                    padding: 0px;
                 }
 
                 button {
@@ -251,6 +249,10 @@ h2 {
 
         .owe {
             color: #ff0000;
+        }
+
+        .membershipClass {
+            color: #ff9900;
         }
     }
 }
