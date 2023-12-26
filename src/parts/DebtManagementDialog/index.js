@@ -7,8 +7,6 @@ import { NumericFormat } from 'react-number-format';
 import DatePicker from "react-datepicker";
 import Converter from "../../utils/converter";
 import moderatorAccountManagementService from "../../services/moderator_account_management.service";
-import { set } from "date-fns";
-import { de } from "date-fns/locale";
 
 const DebtManagementDialog = ({ setShowDialog, user }) => {
 

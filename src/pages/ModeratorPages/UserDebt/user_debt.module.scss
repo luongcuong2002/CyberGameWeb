@@ -22,15 +22,17 @@ h1 {
 }
 
 .filterRow {
+    height: 35px;
     display: flex;
     flex-direction: row;
     align-items: center;
     margin: 10px 0px;
     gap: 10px;
+    flex-wrap: wrap;
 
     select {
         width: fit-content;
-        height: 35px;
+        height: 100%;
         border: none;
         border-radius: 4px;
         background-color: #e6e6e6;
