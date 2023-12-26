@@ -30,7 +30,6 @@ const UserInfoDialog = ({ setShowDialog, user }) => {
     useEffect(() => {
         moderatorAccountManagementService.getUserInfo(user.userId)
             .then((data) => {
-                console.log(data);
                 setUserData(data);
                 setCitizenIdentityCardImage(data.citizenIdentityCard);
             })

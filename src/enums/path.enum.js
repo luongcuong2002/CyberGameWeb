@@ -10,6 +10,8 @@ const PATH = {
   deposit_money: "/nap-tien",
   moderator: "/moderator",
   account_management: "/moderator/quan-ly-tai-khoan",
+  user_debt: "/moderator/no-nguoi-dung",
+  transaction_history_manager: "/moderator/lich-su-giao-dich",
   approval_topup_request: "/moderator/duyet-yeu-cau-nap-tien",
   send_notification: "/moderator/gui-thong-bao",
   view_feedback: "/moderator/xem-gop-y",

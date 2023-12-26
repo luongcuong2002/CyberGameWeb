@@ -4,22 +4,20 @@ import PATH from "../../enums/path.enum";
 import ManagementPageHeader from "../../parts/ManagementPageHeader";
 import ManagementPageNavGenerator from "../../parts/ManagementPageNavGenerator";
 import AccountManagement from "./AccountManagement";
-import IconAccountManagementActive from "../../assets/icons/tab_account_management_icon_active.svg";
-import IconAccountManagementInactive from "../../assets/icons/tab_account_management_icon_inactive.svg";
-import IconApprovalTopUpRequestActive from "../../assets/icons/tab_topup_request_icon_active.svg";
-import IconApprovalTopUpRequestInactive from "../../assets/icons/tab_topup_request_icon_inactive.svg";
-import IconSendNotificationActive from "../../assets/icons/tab_send_notification_icon_active.svg";
-import IconSendNotificationInactive from "../../assets/icons/tab_send_notification_icon_inactive.svg";
-import IconViewFeedbackActive from "../../assets/icons/tab_view_feedback_icon_active.svg";
-import IconViewFeedbackInactive from "../../assets/icons/tab_view_feedback_icon_inactive.svg";
-import IconPlayedTimeActive from "../../assets/icons/tab_played_time_icon_active.svg";
-import IconPlayedTimeInactive from "../../assets/icons/tab_played_time_icon_inactive.svg";
+import { ReactComponent as IconAccountManagement } from "../../assets/icons/tab_account_management_icon.svg";
+import { ReactComponent as IconUserDebt } from "../../assets/icons/tab_user_debt_icon.svg";
+import { ReactComponent as IconTransactionHistory } from "../../assets/icons/tab_transaction_history_icon.svg";
+import { ReactComponent as IconApprovalTopUpRequest } from "../../assets/icons/tab_topup_request_icon.svg";
+import { ReactComponent as IconSendNotification } from "../../assets/icons/tab_send_notification_icon.svg";
+import { ReactComponent as IconViewFeedback } from "../../assets/icons/tab_view_feedback_icon.svg";
+import { ReactComponent as IconPlayedTime } from "../../assets/icons/tab_played_time_icon.svg";
 import TopupRequest from "./TopupRequest";
 import SendingNotification from "./SendingNotification";
 import ViewFeedback from "./ViewFeedback";
 import PlayedTime from "./PlayedTime";
 import { useDispatch } from "react-redux";
 import { fetchUserTableData } from "../../slices/user_table_data.slice";
+import UserDebt from "./UserDebt";
 
 const ModeratorPages = () => {
 
@@ -37,40 +35,49 @@ const ModeratorPages = () => {
       <ManagementPageHeader onClickSignOut={() => {}} />
       <ManagementPageNavGenerator
         parentRoute={PATH.moderator}
+        activeIconColor={"#FFFFFF"}
+        inactiveIconColor={"#919496"}
         routes={[
           {
             path: PATH.account_management,
             text: "Quản lý tài khoản",
-            activeIcon: IconAccountManagementActive,
-            inactiveIcon: IconAccountManagementInactive,
+            icon: IconAccountManagement,
             page: AccountManagement,
+          },
+          {
+            path: PATH.user_debt,
+            text: "Nợ người dùng",
+            icon: IconUserDebt,
+            page: UserDebt,
+          },
+          {
+            path: PATH.transaction_history_manager,
+            text: "Lịch sử giao dịch",
+            icon: IconTransactionHistory,
+            page: UserDebt,
           },
           {
             path: PATH.approval_topup_request,
             text: "Duyệt yêu cầu nạp tiền",
-            activeIcon: IconApprovalTopUpRequestActive,
-            inactiveIcon: IconApprovalTopUpRequestInactive,
+            icon: IconApprovalTopUpRequest,
             page: TopupRequest,
           },
           {
             path: PATH.send_notification,
             text: "Gửi thông báo",
-            activeIcon: IconSendNotificationActive,
-            inactiveIcon: IconSendNotificationInactive,
+            icon: IconSendNotification,
             page: SendingNotification,
           },
           {
             path: PATH.view_feedback,
             text: "Xem góp ý",
-            activeIcon: IconViewFeedbackActive,
-            inactiveIcon: IconViewFeedbackInactive,
+            icon: IconViewFeedback,
             page: ViewFeedback,
           },
           {
             path: PATH.played_time,
             text: "Thời gian chơi",
-            activeIcon: IconPlayedTimeActive,
-            inactiveIcon: IconPlayedTimeInactive,
+            icon: IconPlayedTime,
             page: PlayedTime,
           },
         ]}

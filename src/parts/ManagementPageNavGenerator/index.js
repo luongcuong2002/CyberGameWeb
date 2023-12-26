@@ -4,18 +4,17 @@ import { NavLink, Navigate, Route, Routes } from "react-router-dom";
 import clsx from "clsx";
 import Converter from "../../utils/converter.js";
 
-const ManagementPageNavGenerator = ({ routes, parentRoute }) => {
-  const NavLinkItem = (path, text, activeIcon, inactiveIcon) => {
+const ManagementPageNavGenerator = ({ routes, parentRoute, activeIconColor, inactiveIconColor }) => {
+  const NavLinkItem = (path, text, Icon) => {
     return (
       <li>
         <NavLink to={path} className={styles.navLink}>
           {({ isActive, isPending }) => (
             <>
               {isActive && <div className={styles.mark} />}
-              <img
+              <Icon
                 className={styles.navIcon}
-                alt=""
-                src={isActive ? activeIcon : inactiveIcon}
+                fill={isActive ? activeIconColor : inactiveIconColor}
               />
               <span
                 className={clsx(
@@ -41,8 +40,7 @@ const ManagementPageNavGenerator = ({ routes, parentRoute }) => {
             return NavLinkItem(
               route.path,
               route.text,
-              route.activeIcon,
-              route.inactiveIcon
+              route.icon,
             );
           })}
         </ul>

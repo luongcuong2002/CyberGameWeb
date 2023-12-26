@@ -266,6 +266,7 @@ const DebtManagementDialog = ({ setShowDialog, user }) => {
                                                         <input
                                                             type="checkbox"
                                                             checked={isSelected}
+                                                            defaultChecked={false}
                                                         />
                                                     </td>
                                                     {Object.keys(item).map((key, i) => {
