@@ -1,129 +1,135 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./user_debt.module.scss";
 import DatePicker from "react-datepicker";
 import { IoMdRefresh, IoIosSearch } from "react-icons/io";
-import moderatorDebtManagementService from "../../../services/moderator_debt_management_service";
-
-const dateFilterOptions = [
-    {
-        text: "Ngày nợ",
-        value: "owedDate"
-    },
-    {
-        text: "Ngày trả",
-        value: "payDate"
-    },
-    {
-        text: "Ngày nhập",
-        value: "importedDate"
-    }
-]
-const debtStatus = [
-    {
-        text: "Chưa trả",
-        value: "false",
-    },
-    {
-        text: "Đã trả",
-        value: "true",
-    }
-]
-const searchByOptions = [
-    {
-        text: "Người nợ",
-        value: "debtor"
-    },
-    {
-        text: "Người nhập",
-        value: "creator"
-    },
-    {
-        text: "Người thanh toán",
-        value: "confirmedByUser"
-    }
-]
+import { dateFilterOptions, debtStatus, searchByOptions } from "../../../slices/debt_table_data.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectDebtTableState, setByDate, setIsPaid, setStartDate, setEndDate, setSearchBy, setSearchTerm, fetchDebtTableState } from "../../../slices/debt_table_data.slice";
+import PagingTable from "../../../components/PagingTable";
+import InputChecker from "../../../utils/input_checker";
+import CONSTANT from "../../../utils/constant";
+import MenuPopup from "../../../components/MenuPopup";
 
 const UserDebt = () => {
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [byDate, setByDate] = useState(dateFilterOptions[0].value);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [isPaid, setIsPaid] = useState(debtStatus[0].value);
-    const [searchBy, setSearchBy] = useState(searchByOptions[0].value);
-    const [searchTerm, setSearchTerm] = useState("");
+    const isFilteringByRefresh = React.useRef(true);
 
-    useEffect(() => {
-        const start = new Date();
-        start.setHours(0, 0, 0, 0);
-        setStartDate(start);
+    const dispatch = useDispatch();
 
-        const end = new Date();
-        end.setHours(23, 59, 59, 999);
-        setEndDate(end);
-    }, [])
+    const debtTableState = useSelector(selectDebtTableState);
 
     const handleSelectDateChange = (event) => {
-        setByDate(event.target.value);
+        dispatch(setByDate(event.target.value));
     };
 
     const handleSelectStatusChange = (event) => {
-        setIsPaid(event.target.value === "true");
+        dispatch(setIsPaid(event.target.value === "true"));
     }
 
     const handleSelectSearchByChange = (event) => {
-        setSearchBy(event.target.value);
+        dispatch(setSearchBy(event.target.value));
     }
 
     const handleSearchTermChange = (event) => {
-        setSearchTerm(event.target.value);
+        const value = event.target.value;
+        if (InputChecker.isAlphanumeric(value)) {
+            dispatch(setSearchTerm(value.toUpperCase()));
+        }
     }
 
     const onClickRefresh = () => {
-        if (!isPaid && byDate == "payDate") {
+        if (!debtTableState.isPaid && debtTableState.byDate == "payDate") {
             alert("Không thể tìm kiếm theo ngày trả khi chưa trả nợ!");
             return;
         }
 
-        if (!isPaid && searchBy === "confirmedByUser") {
+        if (!debtTableState.isPaid && debtTableState.searchBy === "confirmedByUser") {
+            alert("Không thể tìm kiếm theo người thanh toán khi chưa trả nợ!")
+            return;
+        }
+
+        dispatch(setSearchTerm(""));
+
+        const params = {
+            byDate: debtTableState.byDate,
+            startDate: debtTableState.startDate,
+            endDate: debtTableState.endDate,
+            isPaid: debtTableState.isPaid,
+            pageNo: 1,
+            pageSize: CONSTANT.pageSize,
+        }
+        dispatch(fetchDebtTableState(params));
+    }
+
+    const onClickSearch = () => {
+        if (!debtTableState.isPaid && debtTableState.byDate == "payDate") {
+            alert("Không thể tìm kiếm theo ngày trả khi chưa trả nợ!");
+            return;
+        }
+
+        if (!debtTableState.isPaid && debtTableState.searchBy === "confirmedByUser") {
             alert("Không thể tìm kiếm theo người thanh toán khi chưa trả nợ!")
             return;
         }
 
         const params = {
-            byDate,
-            startDate: startDate.getTime(),
-            endDate: endDate.getTime(),
-            isPaid,
+            byDate: debtTableState.byDate,
+            startDate: debtTableState.startDate,
+            endDate: debtTableState.endDate,
+            isPaid: debtTableState.isPaid,
+            searchTerm: debtTableState.searchTerm,
+            searchBy: debtTableState.searchBy,
+            pageNo: 1,
+            pageSize: CONSTANT.pageSize,
         }
-
-        fetchDebts(params);
+        dispatch(fetchDebtTableState(params));
     }
 
-    const fetchDebts = (params) => {
-        setIsLoading(true);
-        moderatorDebtManagementService.getDebts(params)
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            })
+    const onNextPage = () => {
+        const currentPage = debtTableState.data?.currentPage;
+        const totalPages = debtTableState.data?.totalPages;
+        if (currentPage && totalPages && currentPage < totalPages) {
+            const params = {
+                byDate: debtTableState.byDate,
+                startDate: debtTableState.startDate,
+                endDate: debtTableState.endDate,
+                isPaid: debtTableState.isPaid,
+                searchTerm: isFilteringByRefresh ? null : debtTableState.searchTerm, // nếu là refresh thì không cần search term, search by
+                searchBy: isFilteringByRefresh ? null : debtTableState.searchBy,
+                pageNo: currentPage + 1,
+                pageSize: CONSTANT.pageSize,
+            }
+            dispatch(fetchDebtTableState(params));
+        }
+    }
+
+    const onPrevPage = () => {
+        const currentPage = debtTableState.data?.currentPage;
+        if (currentPage && currentPage > 1) {
+            const params = {
+                byDate: debtTableState.byDate,
+                startDate: debtTableState.startDate,
+                endDate: debtTableState.endDate,
+                isPaid: debtTableState.isPaid,
+                searchTerm: isFilteringByRefresh ? null : debtTableState.searchTerm, // nếu là refresh thì không cần search term, search by
+                searchBy: isFilteringByRefresh ? null : debtTableState.searchBy,
+                pageNo: currentPage - 1,
+                pageSize: CONSTANT.pageSize,
+            }
+            dispatch(fetchDebtTableState(params));
+        }
     }
 
     return <div id={styles.root}>
         <h1>Nợ người dùng</h1>
         <div className={styles.divider} />
         <div className={styles.filterRow}>
-            <select name="date" onChange={handleSelectDateChange}>
+            <select name="date" onChange={handleSelectDateChange} value={debtTableState.byDate}>
                 {
                     dateFilterOptions
                         .map((option, index) => {
-                            if (!isPaid && option.value === "payDate") {
-                                if (byDate === "payDate") setByDate(dateFilterOptions[0].value);
+                            if (!debtTableState.isPaid && option.value === "payDate") {
+                                if (debtTableState.byDate === "payDate") dispatch(setByDate(dateFilterOptions[0].value));
                                 return;
                             }
                             return <option key={index} value={option.value}>{option.text}</option>
@@ -133,32 +139,32 @@ const UserDebt = () => {
             <label>Từ</label>
             <div className={styles.inputWrapper}>
                 <DatePicker
-                    selected={startDate}
+                    selected={new Date(debtTableState.startDate)}
                     startOpen={false}
                     dateFormat="dd-MM-yyyy, HH:mm"
                     showTimeSelect
                     autoFocus={false}
                     onChange={(date) => {
-                        if (date.getTime() > endDate.getTime()) return;
-                        setStartDate(date);
+                        if (date.getTime() > debtTableState.endDate) return;
+                        dispatch(setStartDate(date.getTime()));
                     }}
                 />
             </div>
             <label>Đến</label>
             <div className={styles.inputWrapper}>
                 <DatePicker
-                    selected={endDate}
+                    selected={new Date(debtTableState.endDate)}
                     startOpen={false}
                     dateFormat="dd-MM-yyyy, HH:mm"
                     showTimeSelect
                     autoFocus={false}
                     onChange={(date) => {
-                        if (date.getTime() < startDate.getTime()) return;
-                        setEndDate(date);
+                        if (date.getTime() < debtTableState.startDate) return;
+                        dispatch(setEndDate(date.getTime()));
                     }}
                 />
             </div>
-            <select name="status" onChange={handleSelectStatusChange}>
+            <select name="status" onChange={handleSelectStatusChange} value={debtTableState.isPaid.toString()}>
                 {
                     debtStatus.map((option, index) => {
                         return <option key={index} value={option.value}>{option.text}</option>
@@ -169,11 +175,11 @@ const UserDebt = () => {
                 <IoMdRefresh size={20} />
             </div>
             <div style={{ height: "100%", width: 1, backgroundColor: "gray" }} />
-            <select name="searchBy" onChange={handleSelectSearchByChange}>
+            <select name="searchBy" onChange={handleSelectSearchByChange} value={debtTableState.searchBy}>
                 {
                     searchByOptions.map((option, index) => {
-                        if (!isPaid && option.value === "confirmedByUser") {
-                            if (searchBy === "confirmedByUser") setSearchBy(searchByOptions[0].value);
+                        if (!debtTableState.isPaid && option.value === "confirmedByUser") {
+                            if (debtTableState.searchBy === "confirmedByUser") dispatch(setSearchBy(searchByOptions[0].value));
                             return;
                         };
                         return <option key={index} value={option.value}>{option.text}</option>
@@ -181,17 +187,73 @@ const UserDebt = () => {
                 }
             </select>
             <input
-                // ref={inputRef}
                 className={styles.searchInput}
                 type="text"
                 placeholder="Tìm kiếm..."
-                value={""}
+                value={debtTableState.searchTerm}
                 onChange={handleSearchTermChange}
             />
-            <div className={styles.searchIconBackground}>
+            <div className={styles.searchIconBackground} onClick={onClickSearch}>
                 <IoIosSearch size={20} />
             </div>
             <div className={styles.divider} />
+        </div>
+        <div id={styles.tableStyle}>
+            <PagingTable
+                data={debtTableState.data}
+                isLoading={debtTableState.isLoading}
+                errorMessage={debtTableState.errorMessage}
+                onNextPage={onNextPage}
+                onPrevPage={onPrevPage}
+                renderPopup={(selectedItem, handleClosePopup) => {
+                    const isPaid = selectedItem.confirmedDate > 0;
+
+                    const menuButtons = isPaid ? [
+                        {
+                            icon: null,
+                            text: "Khôi phục nợ",
+                            onClick: () => {
+                                if (window.confirm("Bạn có chắc chắn khôi phục nợ này?") == true) {
+                                    console.log("restore debt");
+                                }
+                                handleClosePopup();
+                            },
+                        },
+                        {
+                            icon: null,
+                            text: "Xóa",
+                            onClick: () => {
+                                if (window.confirm("Bạn có chắc chắn muốn xóa nợ này?") == true) {
+                                    console.log("delete debt");
+                                }
+                                handleClosePopup();
+                            },
+                        },
+                    ] : [
+                            {
+                                icon: null,
+                                text: "Sửa",
+                                onClick: () => {
+                                    handleClosePopup();
+                                },
+                            },
+                            {
+                                icon: null,
+                                text: "Xóa",
+                                onClick: () => {
+                                    if (window.confirm("Bạn có chắc chắn muốn xóa nợ này!") == true) {
+                                        console.log("delete debt");
+                                    }
+                                    handleClosePopup();
+                                },
+                            },
+                    ]
+
+                    return (
+                        <MenuPopup menuButtons={menuButtons} />
+                    );
+                }}
+            />
         </div>
     </div>
 }

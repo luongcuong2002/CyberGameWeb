@@ -15,19 +15,44 @@ import TopupRequest from "./TopupRequest";
 import SendingNotification from "./SendingNotification";
 import ViewFeedback from "./ViewFeedback";
 import PlayedTime from "./PlayedTime";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUserTableData } from "../../slices/user_table_data.slice";
 import UserDebt from "./UserDebt";
+import { fetchDebtTableState, setEndDate, setStartDate, selectDebtTableState } from "../../slices/debt_table_data.slice";
+import CONSTANT from "../../utils/constant";
 
 const ModeratorPages = () => {
 
   const dispatch = useDispatch();
+
+  const debtTableState = useSelector(selectDebtTableState);
 
   useEffect(() => {
     dispatch(fetchUserTableData({
       pageNo: 1,
       searchTerm: '',
     }));
+
+    // load user table data
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    dispatch(setStartDate(start.getTime()));
+
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+    dispatch(setEndDate(end.getTime()));
+
+
+    const params = {
+      pageNo: 1,
+      pageSize: CONSTANT.pageSize,
+      byDate: debtTableState.byDate,
+      startDate: debtTableState.startDate,
+      endDate: debtTableState.endDate,
+      isPaid: debtTableState.isPaid,
+    }
+
+    dispatch(fetchDebtTableState(params));
   }, [])
 
   return (

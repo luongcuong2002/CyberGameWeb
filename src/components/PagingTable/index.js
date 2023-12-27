@@ -48,6 +48,16 @@ const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, err
         setSelectedItem(item);
     };
 
+    function filterOriginalValues(data) {
+        const filteredData = {};
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                filteredData[key] = data[key].originalValue;
+            }
+        }
+        return filteredData;
+    }
+
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
@@ -86,7 +96,7 @@ const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, err
                                                 if (data.header[i].hidden) {
                                                     return null;
                                                 }
-                                                return <td key={i}>{item[key]}</td>;
+                                                return <td key={i}>{item[key].formattedValue}</td>;
                                             })}
                                         </tr>
                                     );
@@ -111,7 +121,7 @@ const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, err
                         }}
                         ref={popupRef}
                     >
-                        {renderPopup(selectedItem, handleClosePopup)}
+                        {renderPopup(filterOriginalValues(selectedItem), handleClosePopup)}
                     </div>
                 )
             }
