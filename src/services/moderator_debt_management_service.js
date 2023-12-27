@@ -12,6 +12,26 @@ class ModeratorDebtManagementService {
             return res.data;
         });
     }
+
+    async deleteDebt(debtId) {
+        return axiosApiInstance.patch(API_URL + "delete-debt-by-id", {
+            params: {
+                debtId
+            }
+        }).then((res) => {
+            return res.data;
+        });
+    }
+
+    async restoreDebt(debtId) {
+        return axiosApiInstance.patch(API_URL + "restore-debt-by-id", {
+            params: {
+                debtId
+            }
+        }).then((res) => {
+            return res.data;
+        });
+    }
 }
 
 export default new ModeratorDebtManagementService();

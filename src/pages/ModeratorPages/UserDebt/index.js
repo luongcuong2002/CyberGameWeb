@@ -9,8 +9,12 @@ import PagingTable from "../../../components/PagingTable";
 import InputChecker from "../../../utils/input_checker";
 import CONSTANT from "../../../utils/constant";
 import MenuPopup from "../../../components/MenuPopup";
+import moderatorDebtManagementService from "../../../services/moderator_debt_management_service";
+import { is } from "date-fns/locale";
 
 const UserDebt = () => {
+
+    const [isSendingRequest, setIsSendingRequest] = React.useState(false);
 
     const isFilteringByRefresh = React.useRef(true);
 
@@ -120,11 +124,54 @@ const UserDebt = () => {
         }
     }
 
+    const deleteDebt = (debtId) => {
+        setIsSendingRequest(true);
+        moderatorDebtManagementService.deleteDebt(debtId)
+            .then(() => {
+                alert("Xóa nợ thành công!");
+                onClickRefresh();
+            })
+            .catch((err) => {
+                let errorMessage = err?.response.data.message;
+                if (!errorMessage) {
+                    errorMessage = "Đã có lỗi xảy ra. Vui lòng thử lại sau!";
+                }
+                alert(errorMessage);
+            })
+            .finally(() => {
+                setIsSendingRequest(false);
+            })
+    }
+
+    const restoreDebt = (debtId) => {
+        setIsSendingRequest(true);
+        moderatorDebtManagementService.restoreDebt(debtId)
+            .then(() => {
+                alert("Khôi phục nợ thành công!");
+                onClickRefresh();
+            })
+            .catch((err) => {
+                let errorMessage = err?.response.data.message;
+                if (!errorMessage) {
+                    errorMessage = "Đã có lỗi xảy ra. Vui lòng thử lại sau!";
+                }
+                alert(errorMessage);
+            })
+            .finally(() => {
+                setIsSendingRequest(false);
+            })
+    }
+
     return <div id={styles.root}>
         <h1>Nợ người dùng</h1>
         <div className={styles.divider} />
         <div className={styles.filterRow}>
-            <select name="date" onChange={handleSelectDateChange} value={debtTableState.byDate}>
+            <select 
+                name="date" 
+                onChange={handleSelectDateChange} 
+                value={debtTableState.byDate}
+                disabled={isSendingRequest}
+            >
                 {
                     dateFilterOptions
                         .map((option, index) => {
@@ -148,6 +195,7 @@ const UserDebt = () => {
                         if (date.getTime() > debtTableState.endDate) return;
                         dispatch(setStartDate(date.getTime()));
                     }}
+                    disabled={isSendingRequest}
                 />
             </div>
             <label>Đến</label>
@@ -162,20 +210,37 @@ const UserDebt = () => {
                         if (date.getTime() < debtTableState.startDate) return;
                         dispatch(setEndDate(date.getTime()));
                     }}
+                    disabled={isSendingRequest}
                 />
             </div>
-            <select name="status" onChange={handleSelectStatusChange} value={debtTableState.isPaid.toString()}>
+            <select 
+                name="status" 
+                onChange={handleSelectStatusChange} 
+                value={debtTableState.isPaid.toString()}
+                disabled={isSendingRequest}
+            >
                 {
                     debtStatus.map((option, index) => {
                         return <option key={index} value={option.value}>{option.text}</option>
                     })
                 }
             </select>
-            <div className={styles.refreshIconBackground} onClick={onClickRefresh}>
+            <div 
+                className={styles.refreshIconBackground} 
+                onClick={() => {
+                    if (isSendingRequest) return;
+                    onClickRefresh();
+                }}
+            >
                 <IoMdRefresh size={20} />
             </div>
             <div style={{ height: "100%", width: 1, backgroundColor: "gray" }} />
-            <select name="searchBy" onChange={handleSelectSearchByChange} value={debtTableState.searchBy}>
+            <select 
+                name="searchBy" 
+                onChange={handleSelectSearchByChange} 
+                value={debtTableState.searchBy}
+                disabled={isSendingRequest}
+            >
                 {
                     searchByOptions.map((option, index) => {
                         if (!debtTableState.isPaid && option.value === "confirmedByUser") {
@@ -192,8 +257,15 @@ const UserDebt = () => {
                 placeholder="Tìm kiếm..."
                 value={debtTableState.searchTerm}
                 onChange={handleSearchTermChange}
+                disabled={isSendingRequest}
             />
-            <div className={styles.searchIconBackground} onClick={onClickSearch}>
+            <div 
+                className={styles.searchIconBackground} 
+                onClick={() => {
+                    if (isSendingRequest) return;
+                    onClickSearch();
+                }}
+            >
                 <IoIosSearch size={20} />
             </div>
             <div className={styles.divider} />
@@ -214,7 +286,7 @@ const UserDebt = () => {
                             text: "Khôi phục nợ",
                             onClick: () => {
                                 if (window.confirm("Bạn có chắc chắn khôi phục nợ này?") == true) {
-                                    console.log("restore debt");
+                                    restoreDebt(selectedItem.debtId)
                                 }
                                 handleClosePopup();
                             },
@@ -224,7 +296,7 @@ const UserDebt = () => {
                             text: "Xóa",
                             onClick: () => {
                                 if (window.confirm("Bạn có chắc chắn muốn xóa nợ này?") == true) {
-                                    console.log("delete debt");
+                                    deleteDebt(selectedItem.debtId)
                                 }
                                 handleClosePopup();
                             },
@@ -242,7 +314,7 @@ const UserDebt = () => {
                                 text: "Xóa",
                                 onClick: () => {
                                     if (window.confirm("Bạn có chắc chắn muốn xóa nợ này!") == true) {
-                                        console.log("delete debt");
+                                        deleteDebt(selectedItem.debtId)
                                     }
                                     handleClosePopup();
                                 },
