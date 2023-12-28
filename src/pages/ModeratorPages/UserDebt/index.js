@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styles from "./user_debt.module.scss";
 import DatePicker from "react-datepicker";
 import { IoMdRefresh, IoIosSearch } from "react-icons/io";
@@ -10,13 +10,16 @@ import InputChecker from "../../../utils/input_checker";
 import CONSTANT from "../../../utils/constant";
 import MenuPopup from "../../../components/MenuPopup";
 import moderatorDebtManagementService from "../../../services/moderator_debt_management_service";
-import { is } from "date-fns/locale";
+import EditDebtDialog from "../../../parts/EditDebtDialog";
 
 const UserDebt = () => {
 
-    const [isSendingRequest, setIsSendingRequest] = React.useState(false);
+    const [isSendingRequest, setIsSendingRequest] = useState(false);
+    const [showEditDebtDialog, setShowEditDebtDialog] = useState(false);
 
-    const isFilteringByRefresh = React.useRef(true);
+    const [selectedDebt, setSelectedDebt] = useState(null);
+
+    const isFilteringByRefresh = useRef(true);
 
     const dispatch = useDispatch();
 
@@ -306,6 +309,8 @@ const UserDebt = () => {
                                 icon: null,
                                 text: "Sửa",
                                 onClick: () => {
+                                    setShowEditDebtDialog(true);
+                                    setSelectedDebt(selectedItem);
                                     handleClosePopup();
                                 },
                             },
@@ -327,6 +332,10 @@ const UserDebt = () => {
                 }}
             />
         </div>
+        {
+            showEditDebtDialog && selectedDebt &&
+            <EditDebtDialog setShowDialog={setShowEditDebtDialog} debt={selectedDebt} onUpdateSuccessfully={onClickRefresh} />
+        }
     </div>
 }
 
