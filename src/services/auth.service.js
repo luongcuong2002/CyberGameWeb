@@ -16,18 +16,18 @@ class AuthService {
           password,
         }).then((response) => {
             if (response.data && response.data.accessToken) {
-                cookies.set("accessToken", response.data.accessToken);
+                cookies.set("accessToken", response.data.accessToken, { path: "/" });
             }
             if (response.data && response.data.refreshToken) {
-                cookies.set("refreshToken", response.data.refreshToken);
+                cookies.set("refreshToken", response.data.refreshToken, { path: "/" });
             }
             return response;
         });
     }
 
     async signOut() {
-        cookies.remove("accessToken");
-        cookies.remove("refreshToken");
+        cookies.remove("accessToken", { path: "/" });
+        cookies.remove("refreshToken", { path: "/" });
         console.log("sign out, remove cookies");
         store.dispatch(setUser(null));
         return axiosApiInstance.get(API_URL + "sign-out");

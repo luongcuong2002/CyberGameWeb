@@ -50,7 +50,7 @@ const ManagementPageNavGenerator = ({ routes, parentRoute, activeIconColor, inac
           {routes.map((route, index) => {
             return (
               <Route
-                path={Converter.formatPath(parentRoute, route.path)}
+                path={`${Converter.formatPath(parentRoute, route.path) }/*`}
                 element={<route.page />}
               />
             );

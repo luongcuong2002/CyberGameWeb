@@ -74,7 +74,7 @@ axiosApiInstance.interceptors.response.use(
           return Promise.reject(error);
         }
 
-        cookies.set("accessToken", newAccessToken);
+        cookies.set("accessToken", newAccessToken, { path: "/" });
 
         config.headers["x-access-token"] = newAccessToken;
         console.log("resend api with new access token");
@@ -83,8 +83,8 @@ axiosApiInstance.interceptors.response.use(
       
       if (errorMessage === API_ERROR.expiredRefreshToken) {
         console.log("refreshToken expired!");
-        cookies.remove("accessToken");
-        cookies.remove("refreshToken");
+        cookies.remove("accessToken", { path: "/" });
+        cookies.remove("refreshToken", { path: "/" });
         
 
         if (urlBeforeRefreshToken.indexOf("/user/get-info") >= 0) {
@@ -98,8 +98,8 @@ axiosApiInstance.interceptors.response.use(
       // show dialog if user is blocked
       if (errorMessage === API_ERROR.userIsBlocked) {
         console.log("user is blocked!");
-        cookies.remove("accessToken");
-        cookies.remove("refreshToken");
+        cookies.remove("accessToken", { path: "/" });
+        cookies.remove("refreshToken", { path: "/" });
         store.dispatch(setUser(null));
         store.dispatch(setBlockUserDialogShowing({ isBlockUserDialogShowing: true }));
         return Promise.reject(error);
