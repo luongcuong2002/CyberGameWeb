@@ -4,8 +4,6 @@ import SignInPage from "./pages/SignIn";
 import PATH from "./enums/path.enum";
 import ModeratorPages from "./pages/ModeratorPages";
 import AdminPages from "./pages/AdminPages";
-import MainPages from "./pages/MainPages";
-import AccountPages from "./pages/AccountPages";
 import userService from "./services/user.service";
 import "./App.css";
 import { selectUser, setUser } from "./slices/user.slice";
@@ -17,6 +15,7 @@ import Cookies from "universal-cookie";
 import GoToHomePage from "./pages/GoToHome";
 import NeedSignInPage from "./pages/NeedSignIn";
 import ROLE from "./enums/role.enum";
+import HTRoadPage from "./pages/HTRoadPage";
 
 const cookies = new Cookies();
 
@@ -82,7 +81,8 @@ function App() {
           />
 
           <Routes>
-            <Route path={`${PATH.root}*`} element={<MainPages />} />
+            <Route path={`${PATH.root}*`} element={<HTRoadPage />} />
+            {/* <Route path={`${PATH.root}*`} element={<MainPages />} /> */}
             <Route 
               path={`${PATH.admin}/*`}
               element={
@@ -99,10 +99,10 @@ function App() {
                   : <NeedSignInPage />
               }
             />
-            <Route
+            {/* <Route
               path={`${PATH.account}/*`}
               element={user?.userId ? <AccountPages /> : <NeedSignInPage />}
-            />
+            /> */}
             <Route
               path={PATH.signIn}
               element={user?.userId ? <GoToHomePage /> : <SignInPage />}
