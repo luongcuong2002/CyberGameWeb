@@ -60,10 +60,16 @@ function formatTimestampToDateString(timestamp) {
   return format(date, "dd/MM/yyyy");
 }
 
+function formatTimestampToString(timestamp, pattern) {
+  const date = new Date(timestamp);
+  return format(date, pattern);
+}
+
 const TimeUtils = {
   haveSameDate,
   formatDate,
-  formatTimestampToDateString
+  formatTimestampToDateString,
+  formatTimestampToString,
 };
 
 export default TimeUtils;
