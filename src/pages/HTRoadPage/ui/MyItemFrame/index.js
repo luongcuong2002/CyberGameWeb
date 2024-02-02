@@ -21,6 +21,40 @@ const MyItemFrame = () => {
             }
         },
         {
+            id: 1,
+            iconUrl: "https://i.imgur.com/gtxUdnG.png",
+            name: "Thẻ khuyến mại",
+            description: "Khuyến mại x1.5 cho lần nạp từ 0 VNĐ",
+            quantity: 1,
+            type: ROAD_ITEM.voucher,
+            attribute: {
+                maxDiscount: 100000,
+                minDeposit: 0,
+                discountRate: 1.5
+            }
+        },
+        {
+            id: 1,
+            iconUrl: "https://i.imgur.com/gtxUdnG.png",
+            name: "Thẻ khuyến mại",
+            description: "Khuyến mại x1.5 cho lần nạp từ 0 VNĐ",
+            quantity: 1,
+            type: ROAD_ITEM.voucher,
+            attribute: {
+                maxDiscount: 100000,
+                minDeposit: 0,
+                discountRate: 1.5
+            }
+        },
+        {
+            id: 2,
+            iconUrl: "https://i.imgur.com/XFXAaIM.png",
+            name: "Vòng quay may mắn",
+            description: "Hãy thử vận may của bạn",
+            quantity: 3,
+            type: ROAD_ITEM.luckyWheel,
+        },
+        {
             id: 2,
             iconUrl: "https://i.imgur.com/XFXAaIM.png",
             name: "Vòng quay may mắn",
