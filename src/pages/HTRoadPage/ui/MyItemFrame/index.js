@@ -198,7 +198,7 @@ const MyItemFrame = () => {
         <div id={styles.root}>
             <div className={styles.header}>
                 <span className={styles.title}>
-                    Vật phẩm của tôi
+                    Vật phẩm
                 </span>
                 <img
                     className={styles.question_mark}

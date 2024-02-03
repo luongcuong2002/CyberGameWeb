@@ -27,14 +27,16 @@
     background-color: #1785BB;
     border-radius: 10px;
     border: 3px solid #3FB3E9;
-    width: 170px;
-    padding: 10px 0px;
+    width: 125px;
+    padding: 8px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1rem;
     font-weight: bold;
     color: #FFFFFF;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.6),
+            inset -3px -3px 7px rgba(255, 255, 255, 0.1);
 }
 
 .item_list {
