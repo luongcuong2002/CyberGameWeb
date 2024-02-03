@@ -394,7 +394,7 @@ const UserInfoDialog = ({ setShowDialog, user }) => {
                             <div className={styles.accountInfo}>
                                 <span className={styles.avatarAndName}>
                                     <div className={styles.avatarWrapper}>
-                                        <img src={"https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-20.jpg"} alt="Avatar" />
+                                        <img src={"https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/07/hinh-dep-20.jpg"} alt="Avatar" draggable={false} />
                                         <div className={styles.overlayView}>
                                             <button className={styles.textButton} onClick={showDeleteImageDialog}>
                                                 Xoá ảnh

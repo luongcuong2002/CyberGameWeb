@@ -11,8 +11,8 @@ const ItemRow = ({ item }) => {
             <div className={styles.layer2} />
 
             <div className={styles.itemImageContainer}>
-                <img src={ItemBackground} className={styles.itemBackground} />
-                <img src={item.iconUrl} className={styles.itemImage} />
+                <img src={ItemBackground} className={styles.itemBackground} draggable={false} />
+                <img src={item.iconUrl} className={styles.itemImage} draggable={false}  />
             </div>
 
             <span className={styles.coinAmount}>{Converter.formatCurrency(item.amount)}</span>

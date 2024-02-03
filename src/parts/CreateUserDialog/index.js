@@ -181,6 +181,7 @@ const CreateUserDialog = ({ setShowDialog }) => {
                                 src={citizenIdentityCard} 
                                 alt="Căn cước công dân" 
                                 className={styles.citizenIdentityCard}
+                                draggable={false}
                             />
                         }
                     </div>

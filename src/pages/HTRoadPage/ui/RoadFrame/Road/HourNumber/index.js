@@ -16,7 +16,7 @@ const HourNumber = ({ gifts, userTimedHours, widthItem }) => {
                                     className={styles.hourNumber}
                                     style={{ 
                                         backgroundColor: isReached ? "#FE923B" : "#0E3653",
-                                        color: isReached ? "#8C5529" : "#ffffff"
+                                        //color: isReached ? "#8C5529" : "#ffffff"
                                     }}
                                 >{gift.requireTimedHours}</span>
                             </li>

@@ -19,7 +19,10 @@ const Item = ({ gift, userTimedHours, index, widthItem }) => {
 
     return (
         <li key={index} className={styles.item} style={{ width: widthItem }}>
-            <img src={RingHighlight} className={styles.itemIcon} /> dsds
+            {
+                isReachedButNotClaimed &&
+                <img src={RingHighlight} className={styles.ringHighlight} draggable={false} />
+            }
             <div 
                 className={
                     clsx([
@@ -38,7 +41,7 @@ const Item = ({ gift, userTimedHours, index, widthItem }) => {
                 />
                 {
                     !isReached &&
-                    <img src={CardLock} className={styles.cardLock} />
+                    <img src={CardLock} className={styles.cardLock} draggable={false} />
                 }
                 <span 
                     className={
@@ -48,10 +51,10 @@ const Item = ({ gift, userTimedHours, index, widthItem }) => {
                         ])
                     } 
                 >{quantityText}</span>
-                <img src={gift.iconUrl} className={styles.itemIcon} />
+                <img src={gift.iconUrl} className={styles.itemIcon} draggable={false} />
                 {
                     isReached && gift.isClaimed &&
-                    <img src={ClaimBanner} className={styles.claimBanner} />
+                    <img src={ClaimBanner} className={styles.claimBanner} draggable={false} />
                 }
             </div>
         </li>

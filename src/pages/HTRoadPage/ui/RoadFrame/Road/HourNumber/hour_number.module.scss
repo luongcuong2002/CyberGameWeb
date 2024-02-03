@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: row;
     gap: 1px;
+    margin-bottom: 15px;
 }
 
 .item {
@@ -15,10 +16,9 @@
 }
 
 .hourNumber {
-    width: 30px;
-    height: 30px;
+    padding: 4px 8px 2px 8px;
     transform: translateX(50%);
-    border-radius: 50%;
+    border-radius: 5px;
     background-color: #0E3653;
     font-size: 0.875rem;
     font-weight: bold;
@@ -26,6 +26,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 2px;
     box-shadow: 0px 0px 5px 0px rgba(180, 180, 180, 0.534);
 }

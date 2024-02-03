@@ -5,6 +5,7 @@ import Scrollable from "../../../../../components/Scrollable";
 import HourNumber from "./HourNumber";
 import GiftList from "./GiftList";
 import ITEM from "../../../../../enums/item.enum";
+import Logo from "../../../../../assets/imgs/logo.jpeg";
 
 const widthItem = 200;
 
@@ -128,13 +129,19 @@ const Road = () => {
     }
 
     return (
-        <Scrollable orientation="horizontal">
-            <div id={styles.root}>
-                <GiftList gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
-                <RoadBar gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
-                <HourNumber gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
+        <div id={styles.root}>
+            <div className={styles.leftContent} >
+                <img src={Logo} alt="logo" className={styles.logo} />
+                <span className={styles.numberOfPlayedHoursText}>Số giờ chơi</span>
             </div>
-        </Scrollable>
+            <Scrollable orientation="horizontal">
+                <div className={styles.mainContent}>
+                    <GiftList gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
+                    <RoadBar gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
+                    <HourNumber gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
+                </div>
+            </Scrollable>
+        </div>
     );
 }
 

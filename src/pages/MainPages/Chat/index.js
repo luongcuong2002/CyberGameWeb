@@ -29,7 +29,7 @@ const ChatRouting = () => {
                 isActive ? { backgroundColor: "rgba(30, 64, 88, 0.5)" } : {}
               }
             >
-              <img src={avatar} className={styles.avatar} />
+              <img src={avatar} className={styles.avatar} draggable={false} />
               <div className={styles.nameAndMessage}>
                 <p
                   className={clsx(

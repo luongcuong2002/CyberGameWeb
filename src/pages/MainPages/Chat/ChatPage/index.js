@@ -417,7 +417,7 @@ const ChatPage = ({ chatChannel }) => {
           onClick={sendMessage}
           disabled={!draftText.trim() && isSending}
         >
-          <img src={SendIcon} sizes="24px" alt="" />
+          <img src={SendIcon} sizes="24px" draggable={false} />
         </button>
       </span>
     </div>

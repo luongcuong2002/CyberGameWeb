@@ -10,7 +10,7 @@ const MenuPopup = ({ menuButtons } ) => {
                         <div key={index} className={styles.menuButton} onClick={menuButton.onClick}>
                             {
                                 menuButton.icon && (
-                                    <img src={menuButton.icon} className={styles.menuIcon} />
+                                    <img src={menuButton.icon} className={styles.menuIcon} draggable={false} />
                                 )
                             }
                             <span className={styles.menuText} >{menuButton.text}</span>

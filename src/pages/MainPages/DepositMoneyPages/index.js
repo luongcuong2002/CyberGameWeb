@@ -22,7 +22,7 @@ const DepositMoneyPages = () => {
 
   return (
     <div id={styles.root}>
-      <img className={styles.background} src={backgroundImage} />
+      <img className={styles.background} src={backgroundImage} draggable={false} />
       <nav className={styles.navContainer}>
         {
           NavLinkItem("/deposit-money", "Deposit Money")

@@ -6,7 +6,7 @@ import PATH from "../../enums/path.enum";
 export default function NeedSignInPage() {
   return (
     <div className={styles.root}>
-      <img src={LargeWarningImage} className={styles.warningImage} />
+      <img src={LargeWarningImage} className={styles.warningImage} draggable={false} />
       <span className={styles.warningText}>
         Bạn cần{" "}
         <a href={PATH.signIn} className={styles.linkText}>

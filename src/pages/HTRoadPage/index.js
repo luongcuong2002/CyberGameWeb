@@ -14,6 +14,7 @@ const HTRoadPage = () => {
                 src={BackgroundImage} 
                 alt="background" 
                 className={styles.background_image}
+                draggable={false}
             />
 
             <div id={styles.content}>

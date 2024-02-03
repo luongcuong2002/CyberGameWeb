@@ -24,8 +24,8 @@ const ItemRow = ({ item }) => {
             <div className={styles.layer2} />
 
             <div className={styles.itemImageContainer}>
-                <img src={ItemBackground} className={styles.itemBackground} />
-                <img src={item.iconUrl} className={styles.itemImage} />
+                <img src={ItemBackground} className={styles.itemBackground} draggable={false} />
+                <img src={item.iconUrl} className={styles.itemImage} draggable={false} />
             </div>
 
             <div className={styles.itemInfo}>
@@ -49,7 +49,7 @@ const ItemRow = ({ item }) => {
             <span className={styles.itemQuantity}>x{item.quantity}</span>
 
             <div className = {styles.useButtonContainer}>
-                <img src={TrapezoidShape} className={styles.trapezoidImage} />
+                <img src={TrapezoidShape} className={styles.trapezoidImage} draggable={false} />
                 <div className={styles.useButtonLayer}>
                     <div className={styles.useButtonLayer1} />
                     <div className={styles.useButtonLayer2} />
