@@ -1,6 +1,7 @@
-const ROAD_ITEM = {
+const ITEM = {
     voucher: "voucher",
     luckyWheel: "luckyWheel",
+    money: "money",
 };
 
-export default ROAD_ITEM;
+export default ITEM;

@@ -3,6 +3,8 @@ import styles from "./road.module.scss";
 import RoadBar from "./RoadBar";
 import Scrollable from "../../../../../components/Scrollable";
 import HourNumber from "./HourNumber";
+import GiftList from "./GiftList";
+import ITEM from "../../../../../enums/item.enum";
 
 const widthItem = 200;
 
@@ -13,57 +15,73 @@ const Road = () => {
             {
                 id: 1,
                 requireTimedHours: 1,
-                iconUrl: "https://i.imgur.com/gtxUdnG.png",
-                type: "money",
+                iconUrl: "https://i.imgur.com/63ci3X9.png",
+                type: ITEM.money,
                 quantity: 100,
-                isClaimed: false
+                isClaimed: true
             },
             {
                 id: 2,
                 requireTimedHours: 2,
-                iconUrl: "https://i.imgur.com/gtxUdnG.png",
-                type: "luckyWheel",
-                quantity: 1,
-                isClaimed: false
+                iconUrl: "https://i.imgur.com/63ci3X9.png",
+                type: ITEM.money,
+                quantity: 1000,
+                isClaimed: true
             },
             {
                 id: 3,
                 requireTimedHours: 3,
-                iconUrl: "https://i.imgur.com/gtxUdnG.png",
-                type: "luckyWheel",
-                quantity: 1,
+                iconUrl: "https://i.imgur.com/wAGjnpP.png",
+                type: ITEM.money,
+                quantity: 2000,
                 isClaimed: false
             },
             {
                 id: 4,
                 requireTimedHours: 4,
-                iconUrl: "https://i.imgur.com/gtxUdnG.png",
-                type: "luckyWheel",
-                quantity: 1,
+                iconUrl: "https://i.imgur.com/wAGjnpP.png",
+                type: ITEM.money,
+                quantity: 3000,
                 isClaimed: false
             },
             {
                 id: 5,
                 requireTimedHours: 5,
-                iconUrl: "https://i.imgur.com/gtxUdnG.png",
-                type: "luckyWheel",
-                quantity: 1,
+                iconUrl: "https://i.imgur.com/QiOFRgz.png",
+                type: ITEM.money,
+                quantity: 5000,
+                isClaimed: true
+            },
+            {
+                id: 5,
+                requireTimedHours: 5,
+                iconUrl: "https://i.imgur.com/QiOFRgz.png",
+                type: ITEM.money,
+                quantity: 10000,
+                isClaimed: false
+            },
+            {
+                id: 5,
+                requireTimedHours: 5,
+                iconUrl: "https://i.imgur.com/QiOFRgz.png",
+                type: ITEM.money,
+                quantity: 15000,
                 isClaimed: false
             },
             {
                 id: 5,
                 requireTimedHours: 6,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
-                type: "luckyWheel",
+                type: ITEM.voucher,
                 quantity: 1,
                 isClaimed: false
             },
             {
                 id: 5,
                 requireTimedHours: 7,
-                iconUrl: "https://i.imgur.com/gtxUdnG.png",
-                type: "luckyWheel",
-                quantity: 1,
+                iconUrl: "https://i.imgur.com/XFXAaIM.png",
+                type: ITEM.luckyWheel,
+                quantity: 2,
                 isClaimed: false
             },
             {
@@ -76,8 +94,8 @@ const Road = () => {
             }, {
                 id: 5,
                 requireTimedHours: 9,
-                iconUrl: "https://i.imgur.com/gtxUdnG.png",
-                type: "luckyWheel",
+                iconUrl: "https://i.imgur.com/XFXAaIM.png",
+                type: ITEM.luckyWheel,
                 quantity: 1,
                 isClaimed: false
             },
@@ -112,6 +130,7 @@ const Road = () => {
     return (
         <Scrollable orientation="horizontal">
             <div id={styles.root}>
+                <GiftList gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
                 <RoadBar gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
                 <HourNumber gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
             </div>

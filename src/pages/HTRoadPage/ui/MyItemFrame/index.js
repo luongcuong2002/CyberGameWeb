@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./my_item_frame.module.scss";
 import QuestionMark from "../../../../assets/imgs/question_mark.png";
-import ROAD_ITEM from "../../../../enums/road_item.enum";
+import ITEM from "../../../../enums/item.enum";
 import ItemRow from "./ItemRow";
 import { set } from "date-fns";
 import Scrollable from "../../../../components/Scrollable";
@@ -15,7 +15,7 @@ const MyItemFrame = () => {
             name: "Thẻ khuyến mại",
             description: "Khuyến mại x1.5 cho lần nạp từ 0 VNĐ",
             quantity: 1,
-            type: ROAD_ITEM.voucher,
+            type: ITEM.voucher,
             attribute: {
                 maxDiscount: 100000,
                 minDeposit: 0,
@@ -28,7 +28,7 @@ const MyItemFrame = () => {
             name: "Thẻ khuyến mại",
             description: "Khuyến mại x1.5 cho lần nạp từ 0 VNĐ",
             quantity: 1,
-            type: ROAD_ITEM.voucher,
+            type: ITEM.voucher,
             attribute: {
                 maxDiscount: 100000,
                 minDeposit: 0,
@@ -41,7 +41,7 @@ const MyItemFrame = () => {
             name: "Thẻ khuyến mại",
             description: "Khuyến mại x1.5 cho lần nạp từ 0 VNĐ",
             quantity: 1,
-            type: ROAD_ITEM.voucher,
+            type: ITEM.voucher,
             attribute: {
                 maxDiscount: 100000,
                 minDeposit: 0,
@@ -54,7 +54,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -62,7 +62,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -70,7 +70,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -78,7 +78,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -86,7 +86,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -94,7 +94,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -102,7 +102,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -110,7 +110,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -118,7 +118,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -126,7 +126,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -134,7 +134,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -142,7 +142,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -150,7 +150,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -158,7 +158,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -166,7 +166,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -174,7 +174,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -182,7 +182,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         },
         {
             id: 2,
@@ -190,7 +190,7 @@ const MyItemFrame = () => {
             name: "Vòng quay may mắn",
             description: "Hãy thử vận may của bạn",
             quantity: 3,
-            type: ROAD_ITEM.luckyWheel,
+            type: ITEM.luckyWheel,
         }
     ]
 
