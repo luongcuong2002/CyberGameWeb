@@ -5,7 +5,7 @@ import Scrollable from "../../../../../components/Scrollable";
 import HourNumber from "./HourNumber";
 import GiftList from "./GiftList";
 import ITEM from "../../../../../enums/item.enum";
-import Logo from "../../../../../assets/imgs/logo.jpeg";
+import PresentGif from "../../../../../assets/imgs/present.gif";
 
 const widthItem = 200;
 
@@ -131,7 +131,7 @@ const Road = () => {
     return (
         <div id={styles.root}>
             <div className={styles.leftContent} >
-                <img src={Logo} alt="logo" className={styles.logo} />
+                <img src={PresentGif} alt="logo" className={styles.presentGif} />
                 <span className={styles.numberOfPlayedHoursText}>Số giờ chơi</span>
             </div>
             <Scrollable orientation="horizontal">
