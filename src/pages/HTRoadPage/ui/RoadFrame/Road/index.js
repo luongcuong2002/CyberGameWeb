@@ -55,7 +55,7 @@ const Road = () => {
             },
             {
                 id: 5,
-                requireTimedHours: 5,
+                requireTimedHours: 4,
                 iconUrl: "https://i.imgur.com/QiOFRgz.png",
                 type: ITEM.money,
                 quantity: 10000,
@@ -75,7 +75,7 @@ const Road = () => {
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: ITEM.voucher,
                 quantity: 1,
-                isClaimed: false
+                isClaimed: true
             },
             {
                 id: 5,
