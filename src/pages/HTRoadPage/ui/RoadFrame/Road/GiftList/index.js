@@ -5,6 +5,7 @@ import ClaimBanner from "../../../../../../assets/imgs/claim_banner.png";
 import ITEM from "../../../../../../enums/item.enum";
 import Converter from "../../../../../../utils/converter";
 import clsx from "clsx";
+import RingHighlight from "../../../../../../assets/imgs/ring_highlight.png";
 
 const Item = ({ gift, userTimedHours, index, widthItem }) => {
 
@@ -18,6 +19,7 @@ const Item = ({ gift, userTimedHours, index, widthItem }) => {
 
     return (
         <li key={index} className={styles.item} style={{ width: widthItem }}>
+            <img src={RingHighlight} className={styles.itemIcon} /> dsds
             <div 
                 className={
                     clsx([
