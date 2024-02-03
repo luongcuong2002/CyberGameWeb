@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./my_item_frame.module.scss";
 import QuestionMark from "../../../../assets/imgs/question_mark.png";
 import ROAD_ITEM from "../../../../enums/road_item.enum";
 import ItemRow from "./ItemRow";
+import { set } from "date-fns";
+import Scrollable from "../../../../components/Scrollable";
 
 const MyItemFrame = () => {
 
@@ -77,15 +79,17 @@ const MyItemFrame = () => {
                 />
             </div>
 
-            <ul className={styles.item_list}>
-                {items.map((item, index) => {
-                    return (
-                        <li key={index}>
-                            <ItemRow item={item} />
-                        </li>
-                    );
-                })}
-            </ul>
+            <Scrollable>
+                <ul className={styles.item_list}>
+                    {items.map((item, index) => {
+                        return (
+                            <li key={index}>
+                                <ItemRow item={item} />
+                            </li>
+                        );
+                    })}
+                </ul>
+            </Scrollable>
         </div>
     );
 }

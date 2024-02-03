@@ -3,6 +3,7 @@ import styles from "./withdraw_money_frame.module.scss";
 import QuestionMark from "../../../../assets/imgs/question_mark.png";
 import { NumericFormat } from 'react-number-format';
 import Keyboard from "./Keyboard";
+import SendRequestButton from "./SendRequestButton";
 
 const WithdrawMoneyFrame = () => {
 
@@ -35,6 +36,11 @@ const WithdrawMoneyFrame = () => {
             setAmount(parseInt(newAmount));
             return;
         }
+
+        if (amount.toString().length >= 7) {
+            return;
+        }
+
         let newAmount = amount.toString() + value;
         setAmount(parseInt(newAmount));
     }
@@ -72,6 +78,8 @@ const WithdrawMoneyFrame = () => {
             </div>
 
             <Keyboard onClick={handleKeyboardClick} />
+
+            <SendRequestButton onClick={() => {}} isSendingRequest={isSendingRequest} />
         </div>
     );
 }

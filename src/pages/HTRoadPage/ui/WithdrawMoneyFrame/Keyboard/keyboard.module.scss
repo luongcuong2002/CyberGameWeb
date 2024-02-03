@@ -1,18 +1,16 @@
 #root {
-    width: 100%;
+    width: calc(100% - 24px);
     flex: 1;
-    padding: 0px 12px;
-}
-
-.container {
-    width: 60%;
+    margin: 0px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
 }
 
 .wrapper {
     width: 100%;
-    border-radius: 10px;
-    //background: #dde1e7;
-    background: rgba(255, 255, 255, 0.2);
 }
 
 .wrapper .keys {
@@ -38,7 +36,7 @@
     font-size: 1.5rem;
     border-radius: 5px;
     font-weight: bold;
-    cursor: default;
+    cursor: pointer;
 }
 
 .wrapper .keys input:active {

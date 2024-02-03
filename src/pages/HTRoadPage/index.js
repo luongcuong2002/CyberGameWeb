@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ht_road.module.scss";
 import BackgroundImage from "../../assets/imgs/bg_home.jpg";
 import AppBar from "./ui/AppBar";
-import Road from "./ui/Road";
+import RoadFrame from "./ui/RoadFrame";
 import MyItemFrame from "./ui/MyItemFrame";
 import WithdrawMoneyFrame from "./ui/WithdrawMoneyFrame";
 import TopupRequestPendingFrame from "./ui/TopupRequestPendingFrame";
@@ -18,7 +18,7 @@ const HTRoadPage = () => {
 
             <div id={styles.content}>
                 <AppBar />
-                <Road />
+                <RoadFrame />
 
                 <div className={styles.bottomLayouts}>
                     <MyItemFrame />
