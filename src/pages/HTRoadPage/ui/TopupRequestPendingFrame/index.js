@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./topup_request_pending.module.scss";
 import QuestionMark from "../../../../assets/imgs/question_mark.png";
 import ItemRow from "./ItemRow";
+import Scrollable from "../../../../components/Scrollable";
 
 const TopupRequestPendingFrame = () => {
 
@@ -45,15 +46,17 @@ const TopupRequestPendingFrame = () => {
                 />
             </div>
 
-            <ul className={styles.item_list}>
-                {items.map((item, index) => {
-                    return (
-                        <li key={index}>
-                            <ItemRow item={item} />
-                        </li>
-                    );
-                })}
-            </ul>
+            <Scrollable>
+                <ul className={styles.item_list}>
+                    {items.map((item, index) => {
+                        return (
+                            <li key={index}>
+                                <ItemRow item={item} />
+                            </li>
+                        );
+                    })}
+                </ul>
+            </Scrollable>
         </div>
     );
 }

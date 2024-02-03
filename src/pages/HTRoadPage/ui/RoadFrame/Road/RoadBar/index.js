@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import styles from "./road_bar.module.scss";
 
-const BarItem = ({ gift, index, percentProgress }) => {
+const BarItem = ({ widthItem, index, percentProgress }) => {
 
     const progressLayer = useRef(null);
 
@@ -16,7 +16,7 @@ const BarItem = ({ gift, index, percentProgress }) => {
     );
 
     return (
-        <li key={index} className={styles.item}>
+        <li key={index} className={styles.item} style={{ width: widthItem }}>
             <div className={styles.staticLayer} />
             <div style={{width: "0%"}} ref={progressLayer} className={styles.progressLayer} />
         </li>
@@ -24,7 +24,7 @@ const BarItem = ({ gift, index, percentProgress }) => {
 
 }
 
-const RoadBar = ({ gifts, userTimedHours }) => {
+const RoadBar = ({ gifts, userTimedHours, widthItem }) => {
     return (
         <ul className={styles.list}>
             {
@@ -46,7 +46,7 @@ const RoadBar = ({ gifts, userTimedHours }) => {
                         }
 
                         console.log(percentProgress);
-                        return <BarItem gift={gift} index={index} percentProgress={percentProgress} />
+                        return <BarItem index={index} percentProgress={percentProgress} widthItem={widthItem} />
                     }
                 )
             }

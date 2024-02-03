@@ -1,6 +1,10 @@
 import React from "react";
 import styles from "./road.module.scss";
 import RoadBar from "./RoadBar";
+import Scrollable from "../../../../../components/Scrollable";
+import HourNumber from "./HourNumber";
+
+const widthItem = 200;
 
 const Road = () => {
 
@@ -48,7 +52,7 @@ const Road = () => {
             },
             {
                 id: 5,
-                requireTimedHours: 5,
+                requireTimedHours: 6,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
                 quantity: 1,
@@ -56,7 +60,7 @@ const Road = () => {
             },
             {
                 id: 5,
-                requireTimedHours: 5,
+                requireTimedHours: 7,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
                 quantity: 1,
@@ -64,14 +68,14 @@ const Road = () => {
             },
             {
                 id: 5,
-                requireTimedHours: 5,
+                requireTimedHours: 8,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
                 quantity: 1,
                 isClaimed: false
             }, {
                 id: 5,
-                requireTimedHours: 5,
+                requireTimedHours: 9,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
                 quantity: 1,
@@ -79,7 +83,7 @@ const Road = () => {
             },
             {
                 id: 5,
-                requireTimedHours: 5,
+                requireTimedHours: 10,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
                 quantity: 1,
@@ -87,20 +91,31 @@ const Road = () => {
             },
             {
                 id: 5,
-                requireTimedHours: 5,
+                requireTimedHours: 11,
+                iconUrl: "https://i.imgur.com/gtxUdnG.png",
+                type: "luckyWheel",
+                quantity: 1,
+                isClaimed: false
+            },
+            {
+                id: 5,
+                requireTimedHours: 12,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
                 quantity: 1,
                 isClaimed: false
             }
         ],
-        userTimedHours: 5.2
+        userTimedHours: 8.2
     }
 
     return (
-        <div id={styles.root}>
-            <RoadBar gifts={data.gifts} userTimedHours={data.userTimedHours} />
-        </div>
+        <Scrollable orientation="horizontal">
+            <div id={styles.root}>
+                <RoadBar gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
+                <HourNumber gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
+            </div>
+        </Scrollable>
     );
 }
 
