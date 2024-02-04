@@ -18,7 +18,7 @@ const GiftItem = ({ gift, userTimedHours, index, widthItem }) => {
 
     useEffect(() => {
         // Prevent scrolling on road frame when receiver gift dialog is shown
-        dispatch(setAllowScrollOnRoadFrame({ allowScrollOnRoadFrame: !showReceiverGiftDialog }));
+        dispatch(setAllowScrollOnRoadFrame(!showReceiverGiftDialog));
     }, [showReceiverGiftDialog]);
 
     const isReached = userTimedHours >= gift.requireTimedHours;

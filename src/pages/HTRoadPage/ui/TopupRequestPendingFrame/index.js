@@ -3,6 +3,8 @@ import styles from "./topup_request_pending.module.scss";
 import QuestionMark from "../../../../assets/imgs/question_mark.png";
 import ItemRow from "./ItemRow";
 import Scrollable from "../../../../components/Scrollable";
+import { selectScrollableManagement } from "../../../../slices/scrollable_management.slice";
+import { useSelector } from "react-redux";
 
 const TopupRequestPendingFrame = () => {
 
@@ -33,6 +35,8 @@ const TopupRequestPendingFrame = () => {
         }
     ]
 
+    const scrollableManagement = useSelector(selectScrollableManagement);
+
     return (
         <div id={styles.root}>
             <div className={styles.header}>
@@ -46,7 +50,9 @@ const TopupRequestPendingFrame = () => {
                 />
             </div>
 
-            <Scrollable>
+            <Scrollable
+                allowScroll={scrollableManagement.allowScrollOnTopupRequestPendingFrame}
+            >
                 <ul className={styles.item_list}>
                     {items.map((item, index) => {
                         return (

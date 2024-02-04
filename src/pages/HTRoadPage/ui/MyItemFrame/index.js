@@ -3,8 +3,9 @@ import styles from "./my_item_frame.module.scss";
 import QuestionMark from "../../../../assets/imgs/question_mark.png";
 import ITEM from "../../../../enums/item.enum";
 import ItemRow from "./ItemRow";
-import { set } from "date-fns";
 import Scrollable from "../../../../components/Scrollable";
+import { selectScrollableManagement } from "../../../../slices/scrollable_management.slice";
+import { useSelector } from "react-redux";
 
 const MyItemFrame = () => {
 
@@ -194,6 +195,10 @@ const MyItemFrame = () => {
         }
     ]
 
+    const scrollManagement = useSelector(selectScrollableManagement);
+    
+    console.log(scrollManagement);
+
     return (
         <div id={styles.root}>
             <div className={styles.header}>
@@ -207,7 +212,9 @@ const MyItemFrame = () => {
                 />
             </div>
 
-            <Scrollable>
+            <Scrollable
+                allowScroll={scrollManagement.allowScrollOnMyItems}
+            >
                 <ul className={styles.item_list}>
                     {items.map((item, index) => {
                         return (

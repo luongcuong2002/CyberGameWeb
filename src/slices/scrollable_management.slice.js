@@ -9,13 +9,13 @@ export const scrollableManagementSlice = createSlice({
     },
     reducers: {
         setAllowScrollOnRoadFrame: (state, action) => {
-            state.allowScrollOnRoadFrame = action.payload.allowScrollOnRoadFrame;
+            state.allowScrollOnRoadFrame = action.payload;
         },
         setAllowScrollOnMyItems: (state, action) => {
-            state.allowScrollOnMyItems = action.payload.allowScrollOnMyItems;
+            state.allowScrollOnMyItems = action.payload;
         },
         setAllowScrollOnTopupRequestPendingFrame: (state, action) => {
-            state.allowScrollOnTopupRequestPendingFrame = action.payload.allowScrollOnTopupRequestPendingFrame;
+            state.allowScrollOnTopupRequestPendingFrame = action.payload;
         },
     },
 });
