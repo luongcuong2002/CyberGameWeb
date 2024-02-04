@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./lucky_wheel_popup.module.scss";
 import Popup from "reactjs-popup";
+import Wheel from "./Wheel";
 
 const LuckyWheelPopup = ({ setShowDialog }) => {
 
@@ -17,6 +18,7 @@ const LuckyWheelPopup = ({ setShowDialog }) => {
             closeOnDocumentClick={false}
         >
             <div className={styles.container}>
+                <Wheel />
             </div>
         </Popup>
     );
