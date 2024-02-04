@@ -18,6 +18,7 @@ const Road = () => {
                 requireTimedHours: 1,
                 iconUrl: "https://i.imgur.com/63ci3X9.png",
                 type: ITEM.money,
+                name: "Tiền",
                 quantity: 100,
                 isClaimed: true
             },
@@ -26,6 +27,7 @@ const Road = () => {
                 requireTimedHours: 2,
                 iconUrl: "https://i.imgur.com/63ci3X9.png",
                 type: ITEM.money,
+                name: "Tiền",
                 quantity: 1000,
                 isClaimed: true
             },
@@ -34,6 +36,7 @@ const Road = () => {
                 requireTimedHours: 3,
                 iconUrl: "https://i.imgur.com/wAGjnpP.png",
                 type: ITEM.money,
+                name: "Tiền",
                 quantity: 2000,
                 isClaimed: false
             },
@@ -42,6 +45,7 @@ const Road = () => {
                 requireTimedHours: 4,
                 iconUrl: "https://i.imgur.com/wAGjnpP.png",
                 type: ITEM.money,
+                name: "Tiền",
                 quantity: 3000,
                 isClaimed: false
             },
@@ -50,6 +54,7 @@ const Road = () => {
                 requireTimedHours: 5,
                 iconUrl: "https://i.imgur.com/QiOFRgz.png",
                 type: ITEM.money,
+                name: "Tiền",
                 quantity: 5000,
                 isClaimed: true
             },
@@ -58,6 +63,7 @@ const Road = () => {
                 requireTimedHours: 4,
                 iconUrl: "https://i.imgur.com/QiOFRgz.png",
                 type: ITEM.money,
+                name: "Tiền",
                 quantity: 10000,
                 isClaimed: false
             },
@@ -66,6 +72,7 @@ const Road = () => {
                 requireTimedHours: 5,
                 iconUrl: "https://i.imgur.com/QiOFRgz.png",
                 type: ITEM.money,
+                name: "Tiền",
                 quantity: 15000,
                 isClaimed: false
             },
@@ -74,6 +81,7 @@ const Road = () => {
                 requireTimedHours: 6,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: ITEM.voucher,
+                name: "Thẻ khuyến mại",
                 quantity: 1,
                 isClaimed: true
             },
@@ -82,6 +90,7 @@ const Road = () => {
                 requireTimedHours: 7,
                 iconUrl: "https://i.imgur.com/XFXAaIM.png",
                 type: ITEM.luckyWheel,
+                name: "Thẻ khuyến mại",
                 quantity: 2,
                 isClaimed: false
             },
@@ -90,6 +99,7 @@ const Road = () => {
                 requireTimedHours: 8,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
+                name: "Thẻ khuyến mại",
                 quantity: 1,
                 isClaimed: false
             }, {
@@ -97,6 +107,7 @@ const Road = () => {
                 requireTimedHours: 9,
                 iconUrl: "https://i.imgur.com/XFXAaIM.png",
                 type: ITEM.luckyWheel,
+                name: "Thẻ khuyến mại",
                 quantity: 1,
                 isClaimed: false
             },
@@ -105,6 +116,7 @@ const Road = () => {
                 requireTimedHours: 10,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
+                name: "Thẻ khuyến mại",
                 quantity: 1,
                 isClaimed: false
             },
@@ -113,6 +125,7 @@ const Road = () => {
                 requireTimedHours: 11,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
+                name: "Thẻ khuyến mại",
                 quantity: 1,
                 isClaimed: false
             },
@@ -121,6 +134,7 @@ const Road = () => {
                 requireTimedHours: 12,
                 iconUrl: "https://i.imgur.com/gtxUdnG.png",
                 type: "luckyWheel",
+                name: "Thẻ khuyến mại",
                 quantity: 1,
                 isClaimed: false
             }
