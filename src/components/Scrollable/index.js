@@ -1,7 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Scrollable = ({ children, orientation = 'vertical' }) => {
+const Scrollable = ({ 
+    children, 
+    allowScroll = true,
+    orientation = 'vertical' 
+}) => {
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
@@ -19,6 +23,9 @@ const Scrollable = ({ children, orientation = 'vertical' }) => {
     }, []);
 
     const handleMouseDown = (e) => {
+        if (!allowScroll) {
+            return;
+        }
         setIsDragging(true);
         setStartX(e.pageX - e.currentTarget.offsetLeft);
         setStartY(e.pageY - e.currentTarget.offsetTop);

@@ -6,6 +6,8 @@ import HourNumber from "./HourNumber";
 import GiftList from "./GiftList";
 import ITEM from "../../../../../enums/item.enum";
 import PresentGif from "../../../../../assets/imgs/present.gif";
+import { selectScrollableManagement } from "../../../../../slices/scrollable_management.slice";
+import { useSelector } from "react-redux";
 
 const widthItem = 200;
 
@@ -142,13 +144,18 @@ const Road = () => {
         userTimedHours: 8.2
     }
 
+    const scrollManagement = useSelector(selectScrollableManagement);
+
     return (
         <div id={styles.root}>
             <div className={styles.leftContent} >
                 <img src={PresentGif} alt="logo" className={styles.presentGif} />
                 <span className={styles.numberOfPlayedHoursText}>Số giờ chơi</span>
             </div>
-            <Scrollable orientation="horizontal">
+            <Scrollable 
+                allowScroll={scrollManagement.allowScrollOnRoadFrame}
+                orientation="horizontal"
+            >
                 <div className={styles.mainContent}>
                     <GiftList gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
                     <RoadBar gifts={data.gifts} userTimedHours={data.userTimedHours} widthItem={widthItem} />
