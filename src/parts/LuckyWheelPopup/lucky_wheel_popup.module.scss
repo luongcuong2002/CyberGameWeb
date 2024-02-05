@@ -8,3 +8,10 @@
     position: relative;
     user-select: none;
 }
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin-top: 30px;
+}
