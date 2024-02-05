@@ -1,7 +1,8 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import styles from "./wheel.module.scss";
-import LuckyWheelBackground from "../../../assets/imgs/bg_lucky_wheel.png";
 import WheelNeedle from "../../../assets/imgs/wheel_needle.png";
+import BackgroundLuckyWheelBottomLayer from "../../../assets/imgs/bg_lucky_wheel_1.png";
+import BackgroundLuckyWheelRotatableLayer from "../../../assets/imgs/bg_lucky_wheel_2.png";
 import Converter from "../../../utils/converter";
 import CoinIcon from "../../../assets/imgs/img_one_coin.png";
 
@@ -64,16 +65,23 @@ const Wheel = forwardRef(
 
         return (
             <div className={styles.container}>
+                <img 
+                    src={BackgroundLuckyWheelBottomLayer} 
+                    className={styles.backgroundLayer1}
+                    draggable={false}
+                />
                 <img
                     src={WheelNeedle}
-                    className={styles.wheelNeedle} />
+                    className={styles.wheelNeedle}
+                    draggable={false} 
+                />
                 <div
                     style={{
                         "--seg": wheelContent.length
                     }}
                     className={styles.wheel}
                 >
-                    <img src={LuckyWheelBackground} draggable="false" />
+                    <img src={BackgroundLuckyWheelRotatableLayer} draggable="false" />
                     {
                         wheelContent.map((amount, i) => (
                             <div
