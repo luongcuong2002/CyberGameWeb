@@ -5,24 +5,59 @@ import BackgroundLuckyWheelBottomLayer from "../../../assets/imgs/bg_lucky_wheel
 import BackgroundLuckyWheelRotatableLayer from "../../../assets/imgs/bg_lucky_wheel_2.png";
 import Converter from "../../../utils/converter";
 import CoinIcon from "../../../assets/imgs/img_one_coin.png";
+import LuckyWheelReceiveGiftPopup from "../../LuckyWheelReceiveGiftPopup";
 
 const Wheel = forwardRef(
     (props, ref) => {
         
         const wheelContent = [
-            100,
-            200,
-            500,
-            1000,
-            5000,
-            10000,
-            20000,
-            50000,
+            {
+                name: "Tiền",
+                quantity: 100,
+                iconUrl: CoinIcon,
+            },
+            {
+                name: "Tiền",
+                quantity: 200,
+                iconUrl: CoinIcon,
+            },
+            {
+                name: "Tiền",
+                quantity: 500,
+                iconUrl: CoinIcon,
+            },
+            {
+                name: "Tiền",
+                quantity: 1000,
+                iconUrl: CoinIcon,
+            },
+            {
+                name: "Tiền",
+                quantity: 5000,
+                iconUrl: CoinIcon,
+            },
+            {
+                name: "Tiền",
+                quantity: 10000,
+                iconUrl: CoinIcon,
+            },
+            {
+                name: "Tiền",
+                quantity: 20000,
+                iconUrl: CoinIcon,
+            },
+            {
+                name: "Tiền",
+                quantity: 50000,
+                iconUrl: CoinIcon,
+            },
         ]
 
         const minLoops = 4;
         const spinDuration = 3000;
 
+        const [showDialogReceiveGift, setShowDialogReceiveGift] = useState(false);
+        const [gift, setGift] = useState(null);
         const [spinning, setSpinning] = useState(false);
 
         useImperativeHandle(ref, () => ({
@@ -55,8 +90,8 @@ const Wheel = forwardRef(
                         wheel.style.transform = `rotate(${finalDeg % 360}deg)`;
                         setSpinning(false);
 
-                        alert(`You won ${Converter.formatCurrency(wheelContent[targetIndex])}`);
-
+                        setShowDialogReceiveGift(true);
+                        setGift(wheelContent[targetIndex]);
                     }, spinDuration);
 
                 }, 500);
@@ -83,7 +118,7 @@ const Wheel = forwardRef(
                 >
                     <img src={BackgroundLuckyWheelRotatableLayer} draggable="false" />
                     {
-                        wheelContent.map((amount, i) => (
+                        wheelContent.map((gift, i) => (
                             <div
                                 key={i}
                                 className={styles.number}
@@ -97,13 +132,21 @@ const Wheel = forwardRef(
                                         "--seg": wheelContent.length
                                     }}
                                 >
-                                    {Converter.formatCurrency(amount)}
+                                    {Converter.formatCurrency(gift.quantity)}
                                     <img src={CoinIcon} />
                                 </span>
                             </div>
                         ))
                     }
                 </div>
+
+                {
+                    showDialogReceiveGift && gift &&
+                    <LuckyWheelReceiveGiftPopup
+                        gift={gift}
+                        setShowDialog={setShowDialogReceiveGift}
+                    />
+                }
             </div>
         );
     }

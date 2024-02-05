@@ -149,7 +149,7 @@ const Road = () => {
     return (
         <div id={styles.root}>
             <div className={styles.leftContent} >
-                <img src={PresentGif} alt="logo" className={styles.presentGif} />
+                <img src={PresentGif} className={styles.presentGif} />
                 <span className={styles.numberOfPlayedHoursText}>Số giờ chơi</span>
             </div>
             <Scrollable 
