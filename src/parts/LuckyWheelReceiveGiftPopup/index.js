@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./lucky_wheel_receive_gift.module.scss";
 import Popup from "reactjs-popup";
 import FloatingButton from "../../components/FloatingButton";
-import Gift from "../../assets/imgs/present.gif";
+import DuckMoney from "../../assets/imgs/duck_money.gif";
 import Converter from "../../utils/converter";
+import clsx from "clsx";
 
 const LuckyWheelReceiveGiftPopup = ({ gift, setShowDialog }) => {
+
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsVisible(true);
+        }, 100);
+    }, []);
 
     const closeDialog = () => {
         setShowDialog(false);
@@ -15,14 +24,18 @@ const LuckyWheelReceiveGiftPopup = ({ gift, setShowDialog }) => {
         <Popup
             modal
             open
-            overlayStyle={{ background: "rgba(0,0,0,0.95)" }}
+            overlayStyle={{ 
+                background: "rgba(0,0,0,0.95)", 
+                transition: "all 0.3s ease-in-out",
+                opacity: isVisible ? 1 : 0,
+            }}
             onClose={closeDialog}
             closeOnDocumentClick={false}
         >
-            <div className={styles.container}>
+            <div className={clsx([styles.container, isVisible && styles.visible])}>
                 <div className={styles.claimedContainer}>
                     <label className={styles.claimedText}>Nhận quà</label>
-                    <img src={Gift} className={styles.gift} draggable={false} />
+                    <img src={DuckMoney} className={styles.gift} draggable={false} />
                     <label className={styles.giftName}>{gift.name}</label>
                     <label className={styles.giftQuantity}>x {Converter.formatCurrency(gift.quantity)}</label>
                     <div className={styles.closeButton}>
@@ -38,8 +51,6 @@ const LuckyWheelReceiveGiftPopup = ({ gift, setShowDialog }) => {
                         />
                     </div>
                 </div>
-                {/* <img src={RingHighlight} className={styles.ringHighlight} draggable={false} />
-                <img src={gift.iconUrl} className={styles.giftIcon} draggable={false} /> */}
             </div>
         </Popup>
     );

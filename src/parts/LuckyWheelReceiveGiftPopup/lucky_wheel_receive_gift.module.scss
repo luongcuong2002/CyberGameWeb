@@ -9,6 +9,14 @@ $ringHighlightSize: 350px;
     width: 100vw;
     position: relative;
     user-select: none;
+    opacity: 0;
+    scale: 0.5;
+    transition: all 0.3s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
+    scale: 1;
 }
 
 .loading {
