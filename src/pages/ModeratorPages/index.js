@@ -69,12 +69,12 @@ const ModeratorPages = () => {
             icon: IconAccountManagement,
             page: AccountManagement,
           },
-          {
-            path: PATH.user_debt,
-            text: "Nợ người dùng",
-            icon: IconUserDebt,
-            page: UserDebt,
-          },
+          // {
+          //   path: PATH.user_debt,
+          //   text: "Nợ người dùng",
+          //   icon: IconUserDebt,
+          //   page: UserDebt,
+          // },
           {
             path: PATH.transaction_history_manager,
             text: "Lịch sử giao dịch",
@@ -87,18 +87,18 @@ const ModeratorPages = () => {
             icon: IconApprovalTopUpRequest,
             page: TopupRequest,
           },
-          {
-            path: PATH.send_notification,
-            text: "Gửi thông báo",
-            icon: IconSendNotification,
-            page: SendingNotification,
-          },
-          {
-            path: PATH.view_feedback,
-            text: "Xem góp ý",
-            icon: IconViewFeedback,
-            page: ViewFeedback,
-          },
+          // {
+          //   path: PATH.send_notification,
+          //   text: "Gửi thông báo",
+          //   icon: IconSendNotification,
+          //   page: SendingNotification,
+          // },
+          // {
+          //   path: PATH.view_feedback,
+          //   text: "Xem góp ý",
+          //   icon: IconViewFeedback,
+          //   page: ViewFeedback,
+          // },
           {
             path: PATH.played_time,
             text: "Thời gian chơi",

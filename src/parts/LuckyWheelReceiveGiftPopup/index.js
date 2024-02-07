@@ -25,7 +25,7 @@ const LuckyWheelReceiveGiftPopup = ({ gift, setShowDialog }) => {
             modal
             open
             overlayStyle={{ 
-                background: "rgba(0,0,0,0.95)", 
+                background: "rgba(0,0,0,0.7)", 
                 transition: "all 0.3s ease-in-out",
                 opacity: isVisible ? 1 : 0,
             }}
