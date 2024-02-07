@@ -6,6 +6,7 @@ import Converter from "../../../../utils/converter";
 import { ReactComponent as IconArrowLeft } from "../../../../assets/icons/ic_arrow_left.svg";
 import { ReactComponent as IconArrowRight } from "../../../../assets/icons/ic_arrow_right.svg";
 import RejectTopupRequestDialog from "../../../../parts/RejectTopupRequestDialog";
+import ApproveTopupRequestDialog from "../../../../parts/ApproveTopupRequestDialog copy";
 
 const WaitingTopupRequest = () => {
 
@@ -14,7 +15,7 @@ const WaitingTopupRequest = () => {
     const [showRejectDialog, setShowRejectDialog] = useState(false);
     const [showApproveDialog, setShowApproveDialog] = useState(false);
 
-    const [selectedTopupRequest, setSelectedTopupRequest] = useState(null);
+    const [selectedTopupRequests, setSelectedTopupRequests] = useState(null);
     const [selectedUserName, setSelectedUserName] = useState(null);
 
     const inputRef = useRef(null);
@@ -35,9 +36,27 @@ const WaitingTopupRequest = () => {
     };
 
     const handleReject = (topupRequest, userName) => {
-        setSelectedTopupRequest(topupRequest);
+        setSelectedTopupRequests([topupRequest]);
         setSelectedUserName(userName);
         setShowRejectDialog(true);
+    }
+
+    const handleRejectAll = (topupRequests, userName) => {
+        setSelectedTopupRequests(topupRequests);
+        setSelectedUserName(userName);
+        setShowRejectDialog(true);
+    }
+
+    const handleApprove = (topupRequest, userName) => {
+        setSelectedTopupRequests([topupRequest]);
+        setSelectedUserName(userName);
+        setShowApproveDialog(true);
+    }
+
+    const handleApproveAll = (topupRequests, userName) => {
+        setSelectedTopupRequests(topupRequests);
+        setSelectedUserName(userName);
+        setShowApproveDialog(true);
     }
 
     return <div id={styles.root}>
@@ -61,10 +80,8 @@ const WaitingTopupRequest = () => {
                     <tr>
                         <th>Tài khoản</th>
                         <th>Ngày yêu cầu</th>
-                        <th>Gốc</th>
-                        <th>Khuyến mại</th>
-                        <th>Tiền</th>
-                        <th>Tổng</th>
+                        <th>Số tiền</th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -73,11 +90,6 @@ const WaitingTopupRequest = () => {
                 <tbody>
                     {
                         sampleData.data.map((group) => {
-
-                            const totalAmount = group.topupRequests.reduce((accumulator, currentValue) => {
-                                return accumulator + currentValue.finalAmount.originalValue;
-                            }, 0);
-
                             return <>
                                 {
                                     group.topupRequests.map((item, index) => {
@@ -95,13 +107,6 @@ const WaitingTopupRequest = () => {
                                                 }
                                                 <td>{item.createdDate.formattedValue}</td>
                                                 <td>{item.amount.formattedValue}</td>
-                                                <td>{item.voucher.formattedValue}</td>
-                                                <td>{item.finalAmount.formattedValue}</td>
-                                                {
-                                                    index == 0 && (
-                                                        <td rowSpan={group.totalRequests} >{Converter.formatCurrency(totalAmount)}</td>
-                                                    )
-                                                }
                                                 <td>
                                                     <button 
                                                         className={styles.rejectButtonStyle}
@@ -110,15 +115,33 @@ const WaitingTopupRequest = () => {
                                                         Từ chối
                                                     </button>
                                                 </td>
+                                                {
+                                                    index == 0 && (
+                                                        <td rowSpan={group.totalRequests} >
+                                                            <button 
+                                                                className={styles.approveAllButtonStyle}
+                                                                onClick={() => handleRejectAll(group.topupRequests, group.userName)}
+                                                            >
+                                                                Từ chối hết
+                                                            </button>
+                                                        </td>
+                                                    )
+                                                }
                                                 <td>
-                                                    <button className={styles.approveButtonStyle}>
+                                                    <button 
+                                                        className={styles.approveButtonStyle}
+                                                        onClick={() => handleApprove(item, group.userName)}
+                                                    >
                                                         Duyệt
                                                     </button>
                                                 </td>
                                                 {
                                                     index == 0 && (
                                                         <td rowSpan={group.totalRequests} >
-                                                            <button className={styles.approveAllButtonStyle}>
+                                                            <button 
+                                                                className={styles.approveAllButtonStyle}
+                                                                onClick={() => handleApproveAll(group.topupRequests, group.userName)}
+                                                            >
                                                                 Duyệt hết
                                                             </button>
                                                         </td>
@@ -154,12 +177,22 @@ const WaitingTopupRequest = () => {
             )
         }
         {
-            showRejectDialog && selectedTopupRequest && selectedUserName && (
+            showRejectDialog && selectedTopupRequests && selectedUserName && (
                 <RejectTopupRequestDialog 
-                    topupRequest={selectedTopupRequest} 
+                    topupRequests={selectedTopupRequests} 
                     userName={selectedUserName}
                     setShowDialog={setShowRejectDialog} 
                     onSuccess={() => {}}
+                />
+            )
+        }
+        {
+            showApproveDialog && selectedTopupRequests && selectedUserName && (
+                <ApproveTopupRequestDialog
+                    topupRequests={selectedTopupRequests}
+                    userName={selectedUserName}
+                    setShowDialog={setShowApproveDialog}
+                    onSuccess={() => { }}
                 />
             )
         }
@@ -186,17 +219,9 @@ const sampleData = {
                         formattedValue: "100.000",
                         originalValue: 100000,
                     },
-                    finalAmount: {
-                        formattedValue: "200.000",
-                        originalValue: 200000,
-                    },
                     createdDate: {
                         formattedValue: "29-12-2023, 10:55",
                         originalValue: new Date().getTime(),
-                    },
-                    voucher: {
-                        formattedValue: "x2",
-                        originalValue: 1,
                     }
                 },
                 {
@@ -208,18 +233,10 @@ const sampleData = {
                         formattedValue: "100.000",
                         originalValue: 100000,
                     },
-                    finalAmount: {
-                        formattedValue: "150.000",
-                        originalValue: 150000,
-                    },
                     createdDate: {
                         formattedValue: "29-12-2023, 10:35",
                         originalValue: new Date().getTime(),
                     },
-                    voucher: {
-                        formattedValue: "x2 , tối đa 50k",
-                        originalValue: 2,
-                    }
                 },
             ]
         },
@@ -236,18 +253,10 @@ const sampleData = {
                         formattedValue: "60.000",
                         originalValue: 60000,
                     },
-                    finalAmount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
                     createdDate: {
                         formattedValue: "29-12-2023, 10:55",
                         originalValue: new Date().getTime(),
                     },
-                    voucher: {
-                        formattedValue: "",
-                        originalValue: -1,
-                    }
                 },
             ]
         },
@@ -264,18 +273,10 @@ const sampleData = {
                         formattedValue: "60.000",
                         originalValue: 60000,
                     },
-                    finalAmount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
                     createdDate: {
                         formattedValue: "29-12-2023, 10:55",
                         originalValue: new Date().getTime(),
                     },
-                    voucher: {
-                        formattedValue: "",
-                        originalValue: -1,
-                    }
                 },
                 {
                     id: {
@@ -286,18 +287,10 @@ const sampleData = {
                         formattedValue: "60.000",
                         originalValue: 60000,
                     },
-                    finalAmount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
                     createdDate: {
                         formattedValue: "29-12-2023, 10:55",
                         originalValue: new Date().getTime(),
                     },
-                    voucher: {
-                        formattedValue: "",
-                        originalValue: -1,
-                    }
                 },
                 {
                     id: {
@@ -308,18 +301,10 @@ const sampleData = {
                         formattedValue: "60.000",
                         originalValue: 60000,
                     },
-                    finalAmount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
                     createdDate: {
                         formattedValue: "29-12-2023, 10:55",
                         originalValue: new Date().getTime(),
                     },
-                    voucher: {
-                        formattedValue: "",
-                        originalValue: -1,
-                    }
                 },
                 {
                     id: {
@@ -330,18 +315,10 @@ const sampleData = {
                         formattedValue: "60.000",
                         originalValue: 60000,
                     },
-                    finalAmount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
                     createdDate: {
                         formattedValue: "29-12-2023, 10:55",
                         originalValue: new Date().getTime(),
                     },
-                    voucher: {
-                        formattedValue: "",
-                        originalValue: -1,
-                    }
                 },
             ]
         },

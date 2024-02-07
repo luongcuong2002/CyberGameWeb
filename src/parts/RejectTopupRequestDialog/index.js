@@ -5,9 +5,9 @@ import CircleLoader from "../../components/CircleLoader";
 import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
 import "react-datepicker/dist/react-datepicker.css";
-import moderatorAccountManagementService from "../../services/moderator_account_management.service";
+import Converter from "../../utils/converter";
 
-const RejectTopupRequestDialog = ({ setShowDialog, topupRequest, userName, onSuccess }) => {
+const RejectTopupRequestDialog = ({ setShowDialog, topupRequests, userName, onSuccess }) => {
     const [isSendingRequest, setIsSendingRequest] = useState(false);
     const [warning, setWarning] = useState("");
     const [reason, setReason] = useState('');
@@ -59,6 +59,8 @@ const RejectTopupRequestDialog = ({ setShowDialog, topupRequest, userName, onSuc
         //     });
     };
 
+    const totalMoney = topupRequests.reduce((acc, cur) => acc + cur.amount.originalValue, 0);
+
     const closeDialog = () => {
         setShowDialog(false);
     }
@@ -71,7 +73,7 @@ const RejectTopupRequestDialog = ({ setShowDialog, topupRequest, userName, onSuc
         closeOnDocumentClick={false}
     >
         <div className={styles.formContainer}>
-            <h2>Xác nhận</h2>
+            <h2>Từ chối</h2>
             {
                 warning &&
                 <AlertError
@@ -82,7 +84,7 @@ const RejectTopupRequestDialog = ({ setShowDialog, topupRequest, userName, onSuc
                 />
             }
             <form onSubmit={handleSubmit}>
-                <label>Bạn có chắc chắn muốn từ chối yêu cầu nạp <i>{topupRequest.finalAmount.formattedValue}</i> của <b>{userName}</b> không?</label>
+                <label>Bạn có chắc chắn muốn <b style={{ color: "red" }}>từ chối</b> yêu cầu nạp <i>{Converter.formatCurrency(totalMoney)}</i> của <b>{userName}</b> không?</label>
                 <div className={styles.formGroup}>
                     <label htmlFor="name">Lý do</label>
                     <div className={styles.inputWrapper}>
