@@ -162,24 +162,6 @@ const AccountManagement = () => {
                   handleClosePopup();
                 },
               },
-              // {
-              //   icon: null,
-              //   text: "Xem thông tin",
-              //   onClick: () => {
-              //     setShowUserInfoDialog(true);
-              //     setSelectedUser(selectedItem);
-              //     handleClosePopup();
-              //   },
-              // },
-              // {
-              //   icon: null,
-              //   text: "Quản lý nợ",
-              //   onClick: () => {
-              //     setShowDebtManagementDialog(true);
-              //     setSelectedUser(selectedItem);
-              //     handleClosePopup();
-              //   },
-              // },
             ]
 
             return (

@@ -20,6 +20,7 @@ import { fetchUserTableData } from "../../slices/user_table_data.slice";
 import UserDebt from "./UserDebt";
 import { fetchDebtTableState, setEndDate, setStartDate, selectDebtTableState } from "../../slices/debt_table_data.slice";
 import CONSTANT from "../../utils/constant";
+import { fetchTopupRequestTableData } from "../../slices/topup_request_table_data.slice";
 
 const ModeratorPages = () => {
 
@@ -28,31 +29,42 @@ const ModeratorPages = () => {
   const debtTableState = useSelector(selectDebtTableState);
 
   useEffect(() => {
+
+    // fetch mọi thứ ở đây
+
+    // load user table data
     dispatch(fetchUserTableData({
       pageNo: 1,
       searchTerm: '',
     }));
 
-    // load user table data
-    const start = new Date();
-    start.setHours(0, 0, 0, 0);
-    dispatch(setStartDate(start.getTime()));
+    // // load user table data
+    // const start = new Date();
+    // start.setHours(0, 0, 0, 0);
+    // dispatch(setStartDate(start.getTime()));
 
-    const end = new Date();
-    end.setHours(23, 59, 59, 999);
-    dispatch(setEndDate(end.getTime()));
+    // const end = new Date();
+    // end.setHours(23, 59, 59, 999);
+    // dispatch(setEndDate(end.getTime()));
 
 
-    const params = {
+    // const params = {
+    //   pageNo: 1,
+    //   pageSize: CONSTANT.pageSize,
+    //   byDate: debtTableState.byDate,
+    //   startDate: debtTableState.startDate,
+    //   endDate: debtTableState.endDate,
+    //   isPaid: debtTableState.isPaid,
+    // }
+
+    // dispatch(fetchDebtTableState(params));
+
+    // load topup request table data
+    dispatch(fetchTopupRequestTableData({
       pageNo: 1,
-      pageSize: CONSTANT.pageSize,
-      byDate: debtTableState.byDate,
-      startDate: debtTableState.startDate,
-      endDate: debtTableState.endDate,
-      isPaid: debtTableState.isPaid,
-    }
+      searchTerm: '',
+    }));
 
-    dispatch(fetchDebtTableState(params));
   }, [])
 
   return (

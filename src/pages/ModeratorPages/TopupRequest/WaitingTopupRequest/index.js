@@ -2,13 +2,20 @@ import React, { useState, useRef } from "react";
 import styles from "./waiting_topup_request.module.scss";
 import { IoIosSearch } from "react-icons/io";
 import InputChecker from "../../../../utils/input_checker";
-import Converter from "../../../../utils/converter";
 import { ReactComponent as IconArrowLeft } from "../../../../assets/icons/ic_arrow_left.svg";
 import { ReactComponent as IconArrowRight } from "../../../../assets/icons/ic_arrow_right.svg";
 import RejectTopupRequestDialog from "../../../../parts/RejectTopupRequestDialog";
-import ApproveTopupRequestDialog from "../../../../parts/ApproveTopupRequestDialog copy";
+import ApproveTopupRequestDialog from "../../../../parts/ApproveTopupRequestDialog";
+import { useDispatch } from "react-redux";
+import { fetchTopupRequestTableData, selectTopupRequestTableData } from "../../../../slices/topup_request_table_data.slice";
+import { useSelector } from "react-redux";
+import Loader from "../../../../components/Loader";
 
 const WaitingTopupRequest = () => {
+
+    const dispatch = useDispatch();
+
+    const topupRequestTableData = useSelector(selectTopupRequestTableData);
 
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -33,6 +40,15 @@ const WaitingTopupRequest = () => {
         if (inputRef.current) {
             inputRef.current.blur();
         }
+
+        if (topupRequestTableData.isLoading) {
+            return;
+        }
+
+        dispatch(fetchTopupRequestTableData({
+            pageNo: 1,
+            searchTerm,
+        }));
     };
 
     const handleReject = (topupRequest, userName) => {
@@ -59,6 +75,31 @@ const WaitingTopupRequest = () => {
         setShowApproveDialog(true);
     }
 
+    const onNextPage = () => {
+        const currentPage = topupRequestTableData.data?.currentPage;
+        const totalPages = topupRequestTableData.data?.totalPages;
+        if (currentPage && totalPages && currentPage < totalPages) {
+            dispatch(fetchTopupRequestTableData(
+                {
+                    pageNo: currentPage + 1,
+                    searchTerm,
+                }
+            ));
+        }
+    };
+
+    const onPrevPage = () => {
+        const currentPage = topupRequestTableData.data?.currentPage;
+        if (currentPage && currentPage > 1) {
+            dispatch(fetchTopupRequestTableData(
+                {
+                    pageNo: currentPage - 1,
+                    searchTerm,
+                }
+            ));
+        }
+    };
+
     return <div id={styles.root}>
         <form onSubmit={handleSubmit} className={styles.searchBar}>
             <input
@@ -74,105 +115,131 @@ const WaitingTopupRequest = () => {
                 <IoIosSearch size={20} />
             </div>
         </form>
-        <div ref={tableRef} className={styles.tableContainer}>
-            <table className={styles.table}>
-                <thead>
-                    <tr>
-                        <th>Tài khoản</th>
-                        <th>Ngày yêu cầu</th>
-                        <th>Số tiền</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        sampleData.data.map((group) => {
-                            return <>
-                                {
-                                    group.topupRequests.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                {
-                                                    index == 0 && (
-                                                        <td 
-                                                            rowSpan={group.totalRequests} 
-                                                            style={{borderLeft: "none"}}
-                                                        >
-                                                            {group.userName}
-                                                        </td>
-                                                    )
-                                                }
-                                                <td>{item.createdDate.formattedValue}</td>
-                                                <td>{item.amount.formattedValue}</td>
-                                                <td>
-                                                    <button 
-                                                        className={styles.rejectButtonStyle}
-                                                        onClick={() => handleReject(item, group.userName)}
-                                                    >
-                                                        Từ chối
-                                                    </button>
-                                                </td>
-                                                {
-                                                    index == 0 && (
-                                                        <td rowSpan={group.totalRequests} >
-                                                            <button 
-                                                                className={styles.approveAllButtonStyle}
-                                                                onClick={() => handleRejectAll(group.topupRequests, group.userName)}
-                                                            >
-                                                                Từ chối hết
-                                                            </button>
-                                                        </td>
-                                                    )
-                                                }
-                                                <td>
-                                                    <button 
-                                                        className={styles.approveButtonStyle}
-                                                        onClick={() => handleApprove(item, group.userName)}
-                                                    >
-                                                        Duyệt
-                                                    </button>
-                                                </td>
-                                                {
-                                                    index == 0 && (
-                                                        <td rowSpan={group.totalRequests} >
-                                                            <button 
-                                                                className={styles.approveAllButtonStyle}
-                                                                onClick={() => handleApproveAll(group.topupRequests, group.userName)}
-                                                            >
-                                                                Duyệt hết
-                                                            </button>
-                                                        </td>
-                                                    )
-                                                }
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </>
-                        })
-                    }
-                </tbody>
-            </table>
-        </div>
         {
-            sampleData && (
+            topupRequestTableData.data && (
+                <div ref={tableRef} className={styles.tableContainer}>
+                    <table className={styles.table}>
+                        <thead>
+                            <tr>
+                                <th>Tài khoản</th>
+                                <th>Ngày yêu cầu</th>
+                                <th>Số tiền</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                topupRequestTableData.data.data.map((group) => {
+                                    return <>
+                                        {
+                                            group.topupRequests.map((item, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        {
+                                                            index == 0 && (
+                                                                <td
+                                                                    rowSpan={group.totalRequests}
+                                                                    style={{ borderLeft: "none" }}
+                                                                >
+                                                                    {group.userName}
+                                                                </td>
+                                                            )
+                                                        }
+                                                        <td>{item.createdDate.formattedValue}</td>
+                                                        <td>{item.amount.formattedValue}</td>
+                                                        <td>
+                                                            <button
+                                                                className={styles.rejectButtonStyle}
+                                                                onClick={() => handleReject(item, group.userName)}
+                                                            >
+                                                                Từ chối
+                                                            </button>
+                                                        </td>
+                                                        {
+                                                            index == 0 && (
+                                                                <td rowSpan={group.totalRequests} >
+                                                                    <button
+                                                                        className={styles.approveAllButtonStyle}
+                                                                        onClick={() => handleRejectAll(group.topupRequests, group.userName)}
+                                                                    >
+                                                                        Từ chối hết
+                                                                    </button>
+                                                                </td>
+                                                            )
+                                                        }
+                                                        <td>
+                                                            <button
+                                                                className={styles.approveButtonStyle}
+                                                                onClick={() => handleApprove(item, group.userName)}
+                                                            >
+                                                                Duyệt
+                                                            </button>
+                                                        </td>
+                                                        {
+                                                            index == 0 && (
+                                                                <td rowSpan={group.totalRequests} >
+                                                                    <button
+                                                                        className={styles.approveAllButtonStyle}
+                                                                        onClick={() => handleApproveAll(group.topupRequests, group.userName)}
+                                                                    >
+                                                                        Duyệt hết
+                                                                    </button>
+                                                                </td>
+                                                            )
+                                                        }
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                    </>
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+        {
+            topupRequestTableData.data && (
                 <div className={styles.pagination}>
                     <IconArrowLeft
-                        fill={sampleData.currentPage > 1 ? "#509BF5" : "#CDCDCD"}
-                        style={sampleData.currentPage > 1 ? { cursor: "pointer" } : { cursor: "not-allowed" }}
+                        fill={topupRequestTableData.data.currentPage > 1 ? "#509BF5" : "#CDCDCD"}
+                        style={topupRequestTableData.data.currentPage > 1 ? { cursor: "pointer" } : { cursor: "not-allowed" }}
                         className={styles.paginationButton}
+                        onClick={onPrevPage}
                     />
                     <span>
-                        {sampleData.currentPage} / {Math.max(sampleData.totalPages, 1)}
+                        {topupRequestTableData.data.currentPage} / {Math.max(topupRequestTableData.data.totalPages, 1)}
                     </span>
                     <IconArrowRight
-                        fill={sampleData.currentPage < sampleData.totalPages ? "#509BF5" : "#CDCDCD"}
-                        style={sampleData.currentPage < sampleData.totalPages ? { cursor: "pointer" } : { cursor: "not-allowed" }}
+                        fill={topupRequestTableData.data.currentPage < topupRequestTableData.data.totalPages ? "#509BF5" : "#CDCDCD"}
+                        style={topupRequestTableData.data.currentPage < topupRequestTableData.data.totalPages ? { cursor: "pointer" } : { cursor: "not-allowed" }}
                         className={styles.paginationButton}
+                        onClick={onNextPage}
                     />
+                </div>
+            )
+        }
+        {
+            topupRequestTableData.isLoading && (
+                <div className={styles.loading}>
+                    <Loader color="#535353" width="45px" />
+                    <span className={styles.loadingText} >Đang lấy dữ liệu...</span>
+                </div>
+            )
+        }
+        {
+            topupRequestTableData.data && topupRequestTableData.data.data.length === 0 && (
+                <span className={styles.noData}>Không có yêu cầu nào</span>
+            )
+        }
+        {
+            topupRequestTableData.errorMessage && (
+                <div className={styles.error}>
+                    {topupRequestTableData.errorMessage}
                 </div>
             )
         }
