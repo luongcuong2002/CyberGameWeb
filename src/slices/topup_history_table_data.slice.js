@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import moderatorDebtManagementService from "../services/moderator_debt_management_service";
+import moderatorTopupRequestManagementService from "../services/moderator_topup_request_management_service";
 
 export const topupRequestStatus = [
     {
@@ -24,7 +24,7 @@ export const searchByOptions = [
 
 export const fetchTopupRequestHistoryTableState = createAsyncThunk("fetchTopupRequestHistoryTableState", async (params, { rejectWithValue }) => {
     try {
-        const response = await moderatorDebtManagementService.getDebts(params);
+        const response = await moderatorTopupRequestManagementService.getTopupRequestHistory(params);
         return response;
     } catch (error) {
         let errorMessage = error?.response?.data?.message;

@@ -11,9 +11,12 @@ import {
     searchByOptions,
     setSearchTerm,
     setSearchBy,
+    fetchTopupRequestHistoryTableState,
 } from "../../../../slices/topup_history_table_data.slice";
 import DatePicker from "react-datepicker";
 import InputChecker from "../../../../utils/input_checker";
+import PagingTable from "../../../../components/PagingTable";
+import CONSTANT from "../../../../utils/constant";
 
 const TopupRequestHistory = () => {
 
@@ -26,8 +29,6 @@ const TopupRequestHistory = () => {
     const dispatch = useDispatch();
 
     const topupRequestHistoryTableState = useSelector(selectTopupRequestHistoryTableState);
-
-    console.log("topupRequestHistoryTableState: ", topupRequestHistoryTableState);
 
     const handleSelectStatusChange = (event) => {
        // dispatch(setIsPaid(event.target.value === "true"));
@@ -69,63 +70,52 @@ const TopupRequestHistory = () => {
     }
 
     const onClickSearch = () => {
-        // if (!debtTableState.isPaid && debtTableState.byDate == "payDate") {
-        //     alert("Không thể tìm kiếm theo ngày trả khi chưa trả nợ!");
-        //     return;
-        // }
-
-        // if (!debtTableState.isPaid && debtTableState.searchBy === "confirmedByUser") {
-        //     alert("Không thể tìm kiếm theo người thanh toán khi chưa trả nợ!")
-        //     return;
-        // }
-
-        // const params = {
-        //     byDate: debtTableState.byDate,
-        //     startDate: debtTableState.startDate,
-        //     endDate: debtTableState.endDate,
-        //     isPaid: debtTableState.isPaid,
-        //     searchTerm: debtTableState.searchTerm,
-        //     searchBy: debtTableState.searchBy,
-        //     pageNo: 1,
-        //     pageSize: CONSTANT.pageSize,
-        // }
-        // dispatch(fetchDebtTableState(params));
+        const params = {
+            startDate: topupRequestHistoryTableState.startDate,
+            endDate: topupRequestHistoryTableState.endDate,
+            status: topupRequestHistoryTableState.status,
+            searchTerm: topupRequestHistoryTableState.searchTerm,
+            searchBy: topupRequestHistoryTableState.searchBy,
+            pageNo: 1,
+            pageSize: CONSTANT.pageSize,
+        }
+        dispatch(fetchTopupRequestHistoryTableState(params));
     }
 
-    // const onNextPage = () => {
-    //     const currentPage = debtTableState.data?.currentPage;
-    //     const totalPages = debtTableState.data?.totalPages;
-    //     if (currentPage && totalPages && currentPage < totalPages) {
-    //         const params = {
-    //             byDate: debtTableState.byDate,
-    //             startDate: debtTableState.startDate,
-    //             endDate: debtTableState.endDate,
-    //             isPaid: debtTableState.isPaid,
-    //             searchTerm: isFilteringByRefresh ? null : debtTableState.searchTerm, // nếu là refresh thì không cần search term, search by
-    //             searchBy: isFilteringByRefresh ? null : debtTableState.searchBy,
-    //             pageNo: currentPage + 1,
-    //             pageSize: CONSTANT.pageSize,
-    //         }
-    //         dispatch(fetchDebtTableState(params));
-    //     }
-    // }
+    const onNextPage = () => {
+        const currentPage = topupRequestHistoryTableState.data?.currentPage;
+        const totalPages = topupRequestHistoryTableState.data?.totalPages;
+        if (currentPage && totalPages && currentPage < totalPages) {
+            // const params = {
+            //     byDate: debtTableState.byDate,
+            //     startDate: debtTableState.startDate,
+            //     endDate: debtTableState.endDate,
+            //     isPaid: debtTableState.isPaid,
+            //     searchTerm: isFilteringByRefresh ? null : debtTableState.searchTerm, // nếu là refresh thì không cần search term, search by
+            //     searchBy: isFilteringByRefresh ? null : debtTableState.searchBy,
+            //     pageNo: currentPage + 1,
+            //     pageSize: CONSTANT.pageSize,
+            // }
+            // dispatch(fetchDebtTableState(params));
+        }
+    }
 
-    // const onPrevPage = () => {
-    //     const currentPage = debtTableState.data?.currentPage;
-    //     if (currentPage && currentPage > 1) {
-    //         const params = {
-    //             byDate: debtTableState.byDate,
-    //             startDate: debtTableState.startDate,
-    //             endDate: debtTableState.endDate,
-    //             isPaid: debtTableState.isPaid,
-    //             searchTerm: isFilteringByRefresh ? null : debtTableState.searchTerm, // nếu là refresh thì không cần search term, search by
-    //             searchBy: isFilteringByRefresh ? null : debtTableState.searchBy,
-    //             pageNo: currentPage - 1,
-    //             pageSize: CONSTANT.pageSize,
-    //         }
-    //         dispatch(fetchDebtTableState(params));
-    //     }
-    // }
+    const onPrevPage = () => {
+        const currentPage = topupRequestHistoryTableState.data?.currentPage;
+        if (currentPage && currentPage > 1) {
+            // const params = {
+            //     byDate: debtTableState.byDate,
+            //     startDate: debtTableState.startDate,
+            //     endDate: debtTableState.endDate,
+            //     isPaid: debtTableState.isPaid,
+            //     searchTerm: isFilteringByRefresh ? null : debtTableState.searchTerm, // nếu là refresh thì không cần search term, search by
+            //     searchBy: isFilteringByRefresh ? null : debtTableState.searchBy,
+            //     pageNo: currentPage - 1,
+            //     pageSize: CONSTANT.pageSize,
+            // }
+            // dispatch(fetchDebtTableState(params));
+        }
+    }
 
     return <div id={styles.root}>
         <div className={styles.filterRow}>
@@ -211,6 +201,15 @@ const TopupRequestHistory = () => {
                 <IoIosSearch size={20} />
             </div>
             <div className={styles.divider} />
+        </div>
+        <div id={styles.tableStyle}>
+            <PagingTable
+                data={topupRequestHistoryTableState.data}
+                isLoading={topupRequestHistoryTableState.isLoading}
+                errorMessage={topupRequestHistoryTableState.errorMessage}
+                onNextPage={onNextPage}
+                onPrevPage={onPrevPage}
+            />
         </div>
     </div>
 };

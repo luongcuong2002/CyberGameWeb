@@ -44,26 +44,28 @@ const ModeratorPages = () => {
       searchTerm: '',
     }));
 
-    // // load topup history table data
+    // load topup history table data
 
-    // const start = new Date();
-    // start.setHours(0, 0, 0, 0);
-    // dispatch(setStartDate(start.getTime()));
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    dispatch(setStartDate(start.getTime()));
 
-    // const end = new Date();
-    // end.setHours(23, 59, 59, 999);
-    // dispatch(setEndDate(end.getTime()));
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+    dispatch(setEndDate(end.getTime()));
 
 
-    // const params = {
-    //   pageNo: 1,
-    //   pageSize: CONSTANT.pageSize,
-    //   startDate: topupRequestHistoryState.startDate,
-    //   endDate: topupRequestHistoryState.endDate,
-    //   status: topupRequestHistoryState.status,
-    // }
+    const params = {
+      startDate: topupRequestHistoryState.startDate,
+      endDate: topupRequestHistoryState.endDate,
+      status: topupRequestHistoryState.status,
+      searchTerm: topupRequestHistoryState.searchTerm,
+      searchBy: topupRequestHistoryState.searchBy,
+      pageNo: 1,
+      pageSize: CONSTANT.pageSize,
+    }
 
-    // dispatch(fetchTopupRequestHistoryTableState(params))
+    dispatch(fetchTopupRequestHistoryTableState(params))
 
   }, [])
 
