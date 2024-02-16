@@ -81,8 +81,12 @@ function App() {
           />
 
           <Routes>
-            <Route path={`${PATH.root}*`} element={<HTRoadPage />} />
-            {/* <Route path={`${PATH.root}*`} element={<MainPages />} /> */}
+            <Route 
+              path={`${PATH.root}*`} 
+              element={
+                user?.userId ? <HTRoadPage /> : <SignInPage />
+              } 
+            />
             <Route 
               path={`${PATH.admin}/*`}
               element={

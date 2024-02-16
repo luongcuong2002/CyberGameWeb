@@ -4,6 +4,7 @@ import { NavLink, Routes, Route, Navigate } from "react-router-dom";
 import PATH from "../../../enums/path.enum";
 import Converter from "../../../utils/converter";
 import WaitingTopupRequest from "./WaitingTopupRequest";
+import TopupRequestHistory from "./TopupRequestHistory";
 
 const routes = [
     {
@@ -12,9 +13,9 @@ const routes = [
         page: WaitingTopupRequest,
     },
     {
-        path: PATH.approved_topup_request,
-        text: "Đã duyệt",
-        page: () => <div>Đã duyệt</div>,
+        path: PATH.topup_request_history,
+        text: "Lịch sử",
+        page: TopupRequestHistory,
     }
 ]
 

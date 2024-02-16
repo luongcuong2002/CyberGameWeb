@@ -5,9 +5,6 @@ import CONSTANT from "../utils/constant";
 export const fetchTopupRequestTableData = createAsyncThunk("fetchTopupRequestTableData", async ({ pageNo, searchTerm }, { rejectWithValue }) => {
     try {
         const response = await moderatorTopupRequestManagementService.getTopupRequests(pageNo, CONSTANT.pageSize, searchTerm);
-
-        console.log("fetchTopupRequestTableData: ", response);
-
         return response;
     } catch (error) {
         let errorMessage = error?.response?.data?.message;

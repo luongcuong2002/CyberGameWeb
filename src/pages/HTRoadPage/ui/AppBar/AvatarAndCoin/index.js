@@ -4,6 +4,8 @@ import Converter from "../../../../../utils/converter";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../../slices/user.slice";
 import ProfileInactiveIcon from "../../../../../assets/icons/ic_profile_inactive.svg";
+import authService from "../../../../../services/auth.service";
+import PATH from "../../../../../enums/path.enum";
 
 const AvatarAndCoin = () => {
 
@@ -39,19 +41,19 @@ const AvatarAndCoin = () => {
 
     const onSignOut = () => {
         setOpenPopup(false);
-        // authService.signOut()
-        //     .catch((err) => {
-        //         console.log(err);
-        //     })
-        //     .finally(() => {
-        //         navigate(PATH.root);
-        //     });
+        authService.signOut()
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                window.location.href = PATH.root;
+            });
     };
 
     return (
         <div className={styles.userInfoContainer}>
             <button className={styles.coinButton}>
-                {Converter.formatMoney(10000)}
+                {Converter.formatMoney(user.amount)}
             </button>
             <div className={styles.userAvatarAndPopupMenu} ref={wrapperRef}>
                 {openPopup && (

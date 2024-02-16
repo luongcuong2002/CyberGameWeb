@@ -18,7 +18,7 @@ import PlayedTime from "./PlayedTime";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserTableData } from "../../slices/user_table_data.slice";
 import UserDebt from "./UserDebt";
-import { fetchDebtTableState, setEndDate, setStartDate, selectDebtTableState } from "../../slices/debt_table_data.slice";
+import { fetchTopupRequestHistoryTableState, setEndDate, setStartDate, selectTopupRequestHistoryTableState } from "../../slices/topup_history_table_data.slice";
 import CONSTANT from "../../utils/constant";
 import { fetchTopupRequestTableData } from "../../slices/topup_request_table_data.slice";
 
@@ -26,7 +26,7 @@ const ModeratorPages = () => {
 
   const dispatch = useDispatch();
 
-  const debtTableState = useSelector(selectDebtTableState);
+  const topupRequestHistoryState = useSelector(selectTopupRequestHistoryTableState);
 
   useEffect(() => {
 
@@ -38,7 +38,14 @@ const ModeratorPages = () => {
       searchTerm: '',
     }));
 
-    // // load user table data
+    // load topup request table data
+    dispatch(fetchTopupRequestTableData({
+      pageNo: 1,
+      searchTerm: '',
+    }));
+
+    // // load topup history table data
+
     // const start = new Date();
     // start.setHours(0, 0, 0, 0);
     // dispatch(setStartDate(start.getTime()));
@@ -51,19 +58,12 @@ const ModeratorPages = () => {
     // const params = {
     //   pageNo: 1,
     //   pageSize: CONSTANT.pageSize,
-    //   byDate: debtTableState.byDate,
-    //   startDate: debtTableState.startDate,
-    //   endDate: debtTableState.endDate,
-    //   isPaid: debtTableState.isPaid,
+    //   startDate: topupRequestHistoryState.startDate,
+    //   endDate: topupRequestHistoryState.endDate,
+    //   status: topupRequestHistoryState.status,
     // }
 
-    // dispatch(fetchDebtTableState(params));
-
-    // load topup request table data
-    dispatch(fetchTopupRequestTableData({
-      pageNo: 1,
-      searchTerm: '',
-    }));
+    // dispatch(fetchTopupRequestHistoryTableState(params))
 
   }, [])
 

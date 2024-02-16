@@ -4,12 +4,13 @@ import ROLE from "../enums/role.enum";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    userId: null,
-    userName: null,
+    userId: null, // sử dụng
+    userName: null,  // sử dụng
     userPublicName: null,
     avatar: null,
-    role: ROLE.moderator,
-    amount: null,
+    role: ROLE.moderator,  // sử dụng
+    amount: null,  // sử dụng
+    luckyWheelSpin: null, // sử dụng
     membershipClass: null,
     realName: null,
     dateOfBirth: null,
@@ -28,6 +29,7 @@ export const userSlice = createSlice({
       state.avatar = action.payload?.avatar;
       state.role = action.payload?.role;
       state.amount = action.payload?.amount;
+      state.luckyWheelSpin = action.payload?.luckyWheelSpin;
       state.membershipClass = action.payload?.membershipClass;
       state.realName = action.payload?.realName;
       state.dateOfBirth = action.payload?.dateOfBirth;
@@ -83,6 +85,7 @@ export const {
   setUserPublicName,
   setAvatar,
   setMoney,
+  setLuckyWheelSpin,
   setMembershipClass,
   setRealName,
   setDateOfBirth,
