@@ -16,6 +16,18 @@ class ModeratorTopupRequestManagementService {
             return res.data;
         });
     }
+
+    async rejectTopupRequest(params) {
+        return axiosApiInstance.post(API_URL + "reject-topup-requests", params).then((res) => {
+            return res.data;
+        });
+    }
+
+    async approveTopupRequest(topupRequestIds) {
+        return axiosApiInstance.patch(API_URL + "approve-topup-requests", topupRequestIds).then((res) => {
+            return res.data;
+        });
+    }
 }
 
 export default new ModeratorTopupRequestManagementService();

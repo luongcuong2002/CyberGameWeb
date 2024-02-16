@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import moderatorTopupRequestManagementService from "../services/moderator_topup_request_management.service";
+import moderatorTopupRequestManagementService from "../services/moderator_topup_request_management_service";
 import CONSTANT from "../utils/constant";
 
 export const fetchTopupRequestTableData = createAsyncThunk("fetchTopupRequestTableData", async ({ pageNo, searchTerm }, { rejectWithValue }) => {

@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { fetchTopupRequestTableData, selectTopupRequestTableData } from "../../../../slices/topup_request_table_data.slice";
 import { useSelector } from "react-redux";
 import Loader from "../../../../components/Loader";
+import Converter from "../../../../utils/converter";
 
 const WaitingTopupRequest = () => {
 
@@ -124,6 +125,7 @@ const WaitingTopupRequest = () => {
                                 <th>Tài khoản</th>
                                 <th>Ngày yêu cầu</th>
                                 <th>Số tiền</th>
+                                <th>Tổng tiền</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -133,6 +135,11 @@ const WaitingTopupRequest = () => {
                         <tbody>
                             {
                                 topupRequestTableData.data.data.map((group) => {
+
+                                    const totalAmount = group.topupRequests.reduce((acc, item) => {
+                                        return acc + item.amount.originalValue;
+                                    }, 0);
+
                                     return <>
                                         {
                                             group.topupRequests.map((item, index) => {
@@ -150,6 +157,11 @@ const WaitingTopupRequest = () => {
                                                         }
                                                         <td>{item.createdDate.formattedValue}</td>
                                                         <td>{item.amount.formattedValue}</td>
+                                                        {
+                                                            index == 0 && (
+                                                                <td rowSpan={group.totalRequests} >{Converter.formatCurrency(totalAmount)}</td>
+                                                            )
+                                                        }
                                                         <td>
                                                             <button
                                                                 className={styles.rejectButtonStyle}
@@ -268,126 +280,126 @@ const WaitingTopupRequest = () => {
 
 export default WaitingTopupRequest;
 
-const sampleData = {
-    currentPage: 1,
-    totalPages: 2,
-    totalElements: 2,
-    data: [
-        {
-            userName: "CUONG",
-            totalRequests: 2,
-            topupRequests: [
-                {
-                    id: {
-                        formattedValue: "1",
-                        originalValue: 1,
-                    },
-                    amount: {
-                        formattedValue: "100.000",
-                        originalValue: 100000,
-                    },
-                    createdDate: {
-                        formattedValue: "29-12-2023, 10:55",
-                        originalValue: new Date().getTime(),
-                    }
-                },
-                {
-                    id: {
-                        formattedValue: "2",
-                        originalValue: 2,
-                    },
-                    amount: {
-                        formattedValue: "100.000",
-                        originalValue: 100000,
-                    },
-                    createdDate: {
-                        formattedValue: "29-12-2023, 10:35",
-                        originalValue: new Date().getTime(),
-                    },
-                },
-            ]
-        },
-        {
-            userName: "TEST",
-            totalRequests: 1,
-            topupRequests: [
-                {
-                    id: {
-                        formattedValue: "1",
-                        originalValue: 1,
-                    },
-                    amount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
-                    createdDate: {
-                        formattedValue: "29-12-2023, 10:55",
-                        originalValue: new Date().getTime(),
-                    },
-                },
-            ]
-        },
-        {
-            userName: "TEST2",
-            totalRequests: 4,
-            topupRequests: [
-                {
-                    id: {
-                        formattedValue: "1",
-                        originalValue: 1,
-                    },
-                    amount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
-                    createdDate: {
-                        formattedValue: "29-12-2023, 10:55",
-                        originalValue: new Date().getTime(),
-                    },
-                },
-                {
-                    id: {
-                        formattedValue: "1",
-                        originalValue: 1,
-                    },
-                    amount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
-                    createdDate: {
-                        formattedValue: "29-12-2023, 10:55",
-                        originalValue: new Date().getTime(),
-                    },
-                },
-                {
-                    id: {
-                        formattedValue: "1",
-                        originalValue: 1,
-                    },
-                    amount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
-                    createdDate: {
-                        formattedValue: "29-12-2023, 10:55",
-                        originalValue: new Date().getTime(),
-                    },
-                },
-                {
-                    id: {
-                        formattedValue: "1",
-                        originalValue: 1,
-                    },
-                    amount: {
-                        formattedValue: "60.000",
-                        originalValue: 60000,
-                    },
-                    createdDate: {
-                        formattedValue: "29-12-2023, 10:55",
-                        originalValue: new Date().getTime(),
-                    },
-                },
-            ]
-        },
-    ]
-}
+// const sampleData = {
+//     currentPage: 1,
+//     totalPages: 2,
+//     totalElements: 2,
+//     data: [
+//         {
+//             userName: "CUONG",
+//             totalRequests: 2,
+//             topupRequests: [
+//                 {
+//                     id: {
+//                         formattedValue: "1",
+//                         originalValue: 1,
+//                     },
+//                     amount: {
+//                         formattedValue: "100.000",
+//                         originalValue: 100000,
+//                     },
+//                     createdDate: {
+//                         formattedValue: "29-12-2023, 10:55",
+//                         originalValue: new Date().getTime(),
+//                     }
+//                 },
+//                 {
+//                     id: {
+//                         formattedValue: "2",
+//                         originalValue: 2,
+//                     },
+//                     amount: {
+//                         formattedValue: "100.000",
+//                         originalValue: 100000,
+//                     },
+//                     createdDate: {
+//                         formattedValue: "29-12-2023, 10:35",
+//                         originalValue: new Date().getTime(),
+//                     },
+//                 },
+//             ]
+//         },
+//         {
+//             userName: "TEST",
+//             totalRequests: 1,
+//             topupRequests: [
+//                 {
+//                     id: {
+//                         formattedValue: "1",
+//                         originalValue: 1,
+//                     },
+//                     amount: {
+//                         formattedValue: "60.000",
+//                         originalValue: 60000,
+//                     },
+//                     createdDate: {
+//                         formattedValue: "29-12-2023, 10:55",
+//                         originalValue: new Date().getTime(),
+//                     },
+//                 },
+//             ]
+//         },
+//         {
+//             userName: "TEST2",
+//             totalRequests: 4,
+//             topupRequests: [
+//                 {
+//                     id: {
+//                         formattedValue: "1",
+//                         originalValue: 1,
+//                     },
+//                     amount: {
+//                         formattedValue: "60.000",
+//                         originalValue: 60000,
+//                     },
+//                     createdDate: {
+//                         formattedValue: "29-12-2023, 10:55",
+//                         originalValue: new Date().getTime(),
+//                     },
+//                 },
+//                 {
+//                     id: {
+//                         formattedValue: "1",
+//                         originalValue: 1,
+//                     },
+//                     amount: {
+//                         formattedValue: "60.000",
+//                         originalValue: 60000,
+//                     },
+//                     createdDate: {
+//                         formattedValue: "29-12-2023, 10:55",
+//                         originalValue: new Date().getTime(),
+//                     },
+//                 },
+//                 {
+//                     id: {
+//                         formattedValue: "1",
+//                         originalValue: 1,
+//                     },
+//                     amount: {
+//                         formattedValue: "60.000",
+//                         originalValue: 60000,
+//                     },
+//                     createdDate: {
+//                         formattedValue: "29-12-2023, 10:55",
+//                         originalValue: new Date().getTime(),
+//                     },
+//                 },
+//                 {
+//                     id: {
+//                         formattedValue: "1",
+//                         originalValue: 1,
+//                     },
+//                     amount: {
+//                         formattedValue: "60.000",
+//                         originalValue: 60000,
+//                     },
+//                     createdDate: {
+//                         formattedValue: "29-12-2023, 10:55",
+//                         originalValue: new Date().getTime(),
+//                     },
+//                 },
+//             ]
+//         },
+//     ]
+// }

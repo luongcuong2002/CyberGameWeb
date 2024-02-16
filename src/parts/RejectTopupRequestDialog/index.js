@@ -6,8 +6,14 @@ import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
 import "react-datepicker/dist/react-datepicker.css";
 import Converter from "../../utils/converter";
+import moderatorTopupRequestManagementService from "../../services/moderator_topup_request_management_service";
+import { useDispatch } from "react-redux";
+import { fetchTopupRequestTableData } from "../../slices/topup_request_table_data.slice";
 
 const RejectTopupRequestDialog = ({ setShowDialog, topupRequests, userName, onSuccess }) => {
+
+    const dispatch = useDispatch();
+
     const [isSendingRequest, setIsSendingRequest] = useState(false);
     const [warning, setWarning] = useState("");
     const [reason, setReason] = useState('');
@@ -19,44 +25,45 @@ const RejectTopupRequestDialog = ({ setShowDialog, topupRequests, userName, onSu
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // // block topupRequest at least 1 day
-        // if (unblockDate.getTime() < new Date().getTime() + 86400000) {
-        //     return setWarning("Cần khoá ít nhất 1 ngày!");
-        // }
+        if (!reason.trim()) {
+            setWarning("Vui lòng nhập lý do từ chối!");
+            return;
+        }
 
-        // if (reason.trim().length == 0) {
-        //     return setWarning("Lý do không được để trống");
-        // }
+        if (isSendingRequest) {
+            return;
+        }
 
-        // if (reason.trim().length > 100) {
-        //     return setWarning("Lý do không được quá 100 kí tự");
-        // }
+        const params = {
+            topupRequestIds: topupRequests.map((request) => request.id.originalValue),
+            reason: reason.trim()
+        };
 
-        // setWarning("");
+        console.log(params);
 
-        // setIsSendingRequest(true);
-
-        // moderatorAccountManagementService.blockUser(
-        //     {
-        //         topupRequestId: topupRequest.topupRequestId,
-        //         reason: reason.trim(),
-        //         unblockTime: unblockDate.getTime()
-        //     }
-        // ).then(() => {
-        //     setShowDialog(false);
-        //     onSuccess();
-        // })
-        //     .catch((error) => {
-        //         let errorMessage = error?.response?.data?.message
-        //         if (errorMessage) {
-        //             setWarning(errorMessage);
-        //         } else {
-        //             setWarning("Đã có lỗi xảy ra!");
-        //         }
-        //     })
-        //     .finally(() => {
-        //         setIsSendingRequest(false);
-        //     });
+        setWarning("");
+        setIsSendingRequest(true);
+        moderatorTopupRequestManagementService.rejectTopupRequest(params)
+            .then(() => {
+                setShowDialog(false);
+                onSuccess();
+                // Refresh topup request table
+                dispatch(fetchTopupRequestTableData({
+                    pageNo: 1,
+                    searchTerm: '',
+                }));
+            })
+            .catch((error) => {
+                let errorMessage = error?.response?.data?.message
+                if (errorMessage) {
+                    setWarning(errorMessage);
+                } else {
+                    setWarning("Đã có lỗi xảy ra!");
+                }
+            })
+            .finally(() => {
+                setIsSendingRequest(false);
+            });
     };
 
     const totalMoney = topupRequests.reduce((acc, cur) => acc + cur.amount.originalValue, 0);
@@ -91,9 +98,10 @@ const RejectTopupRequestDialog = ({ setShowDialog, topupRequests, userName, onSu
                         <input
                             type="text"
                             id="reason"
-                            placeholder="Nhập lý do ( không bắt buộc )"
+                            placeholder="Nhập lý do"
                             value={reason}
                             onChange={handleReasonChange}
+                            disabled={isSendingRequest}
                         />
                     </div>
                 </div>

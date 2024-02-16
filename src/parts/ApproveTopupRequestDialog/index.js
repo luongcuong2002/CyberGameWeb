@@ -6,13 +6,49 @@ import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
 import "react-datepicker/dist/react-datepicker.css";
 import Converter from "../../utils/converter";
+import moderatorTopupRequestManagementService from "../../services/moderator_topup_request_management_service";
+import { useDispatch } from "react-redux";
+import { fetchTopupRequestTableData } from "../../slices/topup_request_table_data.slice";
 
 const ApproveTopupRequestDialog = ({ setShowDialog, topupRequests, userName, onSuccess }) => {
+
+    const dispatch = useDispatch();
+
     const [isSendingRequest, setIsSendingRequest] = useState(false);
     const [warning, setWarning] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (isSendingRequest) return;
+
+        if (topupRequests.length === 0) {
+            setWarning("Không có yêu cầu nạp tiền nào được chọn");
+            return;
+        }
+
+        setWarning("");
+        setIsSendingRequest(true);
+        moderatorTopupRequestManagementService.approveTopupRequest(topupRequests.map((item) => item.id.originalValue))
+            .then(() => {
+                setShowDialog(false);
+                onSuccess();
+                // Refresh topup request table
+                dispatch(fetchTopupRequestTableData({
+                    pageNo: 1,
+                    searchTerm: '',
+                }));
+            })
+            .catch((err) => {
+                let errorMessage = err?.response?.data?.message
+                if (errorMessage) {
+                    setWarning(errorMessage);
+                } else {
+                    setWarning("Đã có lỗi xảy ra!");
+                }
+            })
+            .finally(() => {
+                setIsSendingRequest(false);
+            });
     };
 
     const totalMoney = topupRequests.reduce((acc, cur) => acc + cur.amount.originalValue, 0);
