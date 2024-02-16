@@ -14,6 +14,19 @@ class UserService {
       }
     });
   }
+
+  async getTopupRequests() {
+    return axiosApiInstance.get(API_URL + "get-topup-requests").then((res) => {
+      return res.data;
+    });
+  }
+
+  async createTopupRequest(amount) {
+    return axiosApiInstance.post(API_URL + "create-topup-request", amount).then((res) => {
+      return res.data;
+    });
+  }
+
 }
 
 export default new UserService();

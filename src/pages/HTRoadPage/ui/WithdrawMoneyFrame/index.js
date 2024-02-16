@@ -4,45 +4,93 @@ import QuestionMark from "../../../../assets/imgs/question_mark.png";
 import { NumericFormat } from 'react-number-format';
 import Keyboard from "./Keyboard";
 import SendRequestButton from "./SendRequestButton";
+import userService from "../../../../services/user.service";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, setMoney } from "../../../../slices/user.slice";
+import { fetchTopupRequestDataForUser } from "../../../../slices/topup_request_data_for_user.slide";
 
 const WithdrawMoneyFrame = () => {
 
-    const [isSendingRequest, setIsSendingRequest] = useState(false);
-    const [amount, setAmount] = useState("");
+    const user = useSelector(selectUser);
+    const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!Number.isInteger(amount)) {
+    const [isSendingRequest, setIsSendingRequest] = useState(false);
+    const [amountInput, setAmountInput] = useState("");
+
+    const handleSubmit = () => {
+
+        const amountToWithdraw = amountInput;
+
+        if (!Number.isInteger(amountToWithdraw)) {
             alert("Số tiền không hợp lệ!");
             return;
         }
 
+        // check if user has enough money
+        if (amountToWithdraw > user.amount) {
+            alert("Số dư không đủ!");
+            return;
+        }
+
+        if (amountToWithdraw < 10000) {
+            alert("Số tiền phải lớn hơn 10.000đ!");
+            return;
+        }
+
+        if (amountToWithdraw > 10000000) {
+            alert("Số tiền phải nhỏ hơn 10.000.000đ!");
+            return;
+        }
+
         setIsSendingRequest(true);
-        setTimeout(() => {
-            setIsSendingRequest(false);
-        }, 1000)
+        userService.createTopupRequest(amountToWithdraw)
+            .then((res) => {
+                alert("Yêu cầu rút tiền thành công!");
+
+                // update user info
+                dispatch(setMoney(user.amount - amountToWithdraw));
+                // update topup request data
+                dispatch(fetchTopupRequestDataForUser());
+            }).catch((err) => {
+                const message = err?.response?.data?.message;
+                console.log(err);
+                if (message) {
+                    alert(message);
+                } else {
+                    alert("Lỗi không xác định!");
+                }
+            }).finally(() => {
+                setIsSendingRequest(false);
+                // clear input
+                setAmountInput("");
+            });
     };
 
     const handleKeyboardClick = (value) => {
+
+        if (isSendingRequest) {
+            return;
+        }
+
         if (value === "C") {
-            if (!amount) {
+            if (!amountInput) {
                 return;
             }
-            let newAmount = amount.toString().slice(0, -1);
+            let newAmount = amountInput.toString().slice(0, -1);
             if (newAmount === "") {
-                setAmount("");
+                setAmountInput("");
                 return;
             }
-            setAmount(parseInt(newAmount));
+            setAmountInput(parseInt(newAmount));
             return;
         }
 
-        if (amount.toString().length >= 7) {
+        if (amountInput.toString().length >= 7) {
             return;
         }
 
-        let newAmount = amount.toString() + value;
-        setAmount(parseInt(newAmount));
+        let newAmount = amountInput.toString() + value;
+        setAmountInput(parseInt(newAmount));
     }
 
     return (
@@ -63,7 +111,11 @@ const WithdrawMoneyFrame = () => {
                     thousandSeparator="."
                     decimalSeparator=","
                     onValueChange={(values) => {
-                        setAmount(parseInt(values.value));
+                        if (values.value === "") {
+                            setAmountInput("");
+                            return;
+                        }
+                        setAmountInput(parseInt(values.value));
                     }}
                     decimalScale={0}
                     allowNegative={true}
@@ -71,15 +123,14 @@ const WithdrawMoneyFrame = () => {
                     format="#.###,##"
                     mask="_"
                     placeholder="Nhập số tiền cần rút"
-                    onSubmit={handleSubmit}
-                    value={amount}
+                    value={amountInput}
                     disabled={true}
                 />
             </div>
 
-            <Keyboard onClick={handleKeyboardClick} />
+            <Keyboard onClick={handleKeyboardClick} disable={isSendingRequest} />
 
-            <SendRequestButton onClick={() => {}} isSendingRequest={isSendingRequest} />
+            <SendRequestButton onClick={handleSubmit} isSendingRequest={isSendingRequest} />
         </div>
     );
 }

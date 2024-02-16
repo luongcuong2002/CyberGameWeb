@@ -7,6 +7,7 @@ import debtTableStateReducer from '../slices/debt_table_data.slice';
 import scrollableManagementSlice from '../slices/scrollable_management.slice';
 import topupRequestTableDataSlice from '../slices/topup_request_table_data.slice';
 import topupHistoryTableDataSlice from '../slices/topup_history_table_data.slice';
+import topupRequestDataForUserSlice from "../slices/topup_request_data_for_user.slide";
 
 export const store = configureStore({
     reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
         topupRequestTableData: topupRequestTableDataSlice,
         topupRequestHistoryTableState: topupHistoryTableDataSlice,
         scrollableManagement: scrollableManagementSlice,
+        topupRequestDataForUser: topupRequestDataForUserSlice,
     },
 });

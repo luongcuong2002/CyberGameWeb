@@ -58,3 +58,45 @@
     display: none;
     /* Safari and Chrome */
 }
+
+.no_item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 50px;
+    right: 50px;
+    bottom: 50px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    letter-spacing: 0.1px;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+}
+
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgb(203, 239, 255);
+    letter-spacing: 0.1px;
+}

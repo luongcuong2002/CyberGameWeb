@@ -47,7 +47,7 @@ export const userSlice = createSlice({
       state.avatar = action.payload.avatar;
     },
     setMoney: (state, action) => {
-      state.amount = action.payload.amount;
+      state.amount = action.payload;
     },
     setMembershipClass: (state, action) => {
       state.membershipClass = action.payload.membershipClass;

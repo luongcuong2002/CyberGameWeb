@@ -18,8 +18,8 @@ const ItemRow = ({ item }) => {
             <span className={styles.coinAmount}>{Converter.formatCurrency(item.amount)}</span>
 
             <div className={styles.timeContainer}>
-                <span className={styles.time}>{TimeUtils.formatTimestampToString(item.timestamp, "HH:mm")}</span>
-                <span className={styles.time}>{TimeUtils.formatTimestampToString(item.timestamp, "dd/MM/yyyy")}</span>
+                <span className={styles.time}>{TimeUtils.formatTimestampToString(item.createdDate, "HH:mm")}</span>
+                <span className={styles.time}>{TimeUtils.formatTimestampToString(item.createdDate, "dd/MM/yyyy")}</span>
             </div>
         </div>
     );
