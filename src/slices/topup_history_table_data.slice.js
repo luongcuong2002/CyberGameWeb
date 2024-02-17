@@ -58,7 +58,7 @@ export const topupRequestHistoryTableStateSlice = createSlice({
             state.endDate = action.payload;
         },
         setStatus: (state, action) => {
-            state.isPaid = action.payload;
+            state.status = action.payload;
         },
         setSearchBy: (state, action) => {
             state.searchBy = action.payload;

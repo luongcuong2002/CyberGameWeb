@@ -56,8 +56,8 @@ const ModeratorPages = () => {
 
 
     const params = {
-      startDate: topupRequestHistoryState.startDate,
-      endDate: topupRequestHistoryState.endDate,
+      startDate: start.getTime(),
+      endDate: end.getTime(),
       status: topupRequestHistoryState.status,
       searchTerm: topupRequestHistoryState.searchTerm,
       searchBy: topupRequestHistoryState.searchBy,

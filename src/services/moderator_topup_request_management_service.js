@@ -33,7 +33,6 @@ class ModeratorTopupRequestManagementService {
         return axiosApiInstance.get(API_URL + "get-topup-request-history", {
             params
         }).then((res) => {
-            console.log(res.data);
             return res.data;
         });
     }
