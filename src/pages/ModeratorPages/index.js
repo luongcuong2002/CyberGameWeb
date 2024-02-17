@@ -89,12 +89,12 @@ const ModeratorPages = () => {
           //   icon: IconUserDebt,
           //   page: UserDebt,
           // },
-          {
-            path: PATH.transaction_history_manager,
-            text: "Lịch sử giao dịch",
-            icon: IconTransactionHistory,
-            page: UserDebt,
-          },
+          // {
+          //   path: PATH.transaction_history_manager,
+          //   text: "Lịch sử giao dịch",
+          //   icon: IconTransactionHistory,
+          //   page: UserDebt,
+          // },
           {
             path: PATH.approval_topup_request,
             text: "Duyệt yêu cầu nạp tiền",
