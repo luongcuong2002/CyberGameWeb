@@ -4,7 +4,7 @@ import { ReactComponent as IconArrowLeft } from "../../assets/icons/ic_arrow_lef
 import { ReactComponent as IconArrowRight } from "../../assets/icons/ic_arrow_right.svg";
 import Loader from "../Loader";
 
-const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, errorMessage }) => {
+const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, errorMessage, turnOnPagingMode = true }) => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
@@ -126,7 +126,7 @@ const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, err
                 )
             }
             {
-                data && (
+                data && turnOnPagingMode && (
                     <div className={styles.pagination}>
                         <IconArrowLeft
                             fill={data.currentPage > 1 ? "#509BF5" : "#CDCDCD"}
