@@ -10,6 +10,12 @@ class ModeratorPlayedTimeManagementService {
             return res.data;
         });
     }
+
+    async updatePlayedTime(requestBody) {
+        return axiosApiInstance.post(API_URL + "update-played-time", requestBody).then((res) => {
+            return res.data;
+        });
+    }
 }
 
 export default new ModeratorPlayedTimeManagementService();

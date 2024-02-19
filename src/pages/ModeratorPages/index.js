@@ -5,22 +5,16 @@ import ManagementPageHeader from "../../parts/ManagementPageHeader";
 import ManagementPageNavGenerator from "../../parts/ManagementPageNavGenerator";
 import AccountManagement from "./AccountManagement";
 import { ReactComponent as IconAccountManagement } from "../../assets/icons/tab_account_management_icon.svg";
-import { ReactComponent as IconUserDebt } from "../../assets/icons/tab_user_debt_icon.svg";
-import { ReactComponent as IconTransactionHistory } from "../../assets/icons/tab_transaction_history_icon.svg";
 import { ReactComponent as IconApprovalTopUpRequest } from "../../assets/icons/tab_topup_request_icon.svg";
-import { ReactComponent as IconSendNotification } from "../../assets/icons/tab_send_notification_icon.svg";
-import { ReactComponent as IconViewFeedback } from "../../assets/icons/tab_view_feedback_icon.svg";
 import { ReactComponent as IconPlayedTime } from "../../assets/icons/tab_played_time_icon.svg";
 import TopupRequest from "./TopupRequest";
-import SendingNotification from "./SendingNotification";
-import ViewFeedback from "./ViewFeedback";
 import PlayedTime from "./PlayedTime";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserTableData } from "../../slices/user_table_data.slice";
-import UserDebt from "./UserDebt";
 import { fetchTopupRequestHistoryTableState, setEndDate, setStartDate, selectTopupRequestHistoryTableState } from "../../slices/topup_history_table_data.slice";
 import CONSTANT from "../../utils/constant";
 import { fetchTopupRequestTableData } from "../../slices/topup_request_table_data.slice";
+import { fetchPlayedTimeTableData } from "../../slices/played_time_data.slice";
 
 const ModeratorPages = () => {
 
@@ -66,6 +60,15 @@ const ModeratorPages = () => {
     }
 
     dispatch(fetchTopupRequestHistoryTableState(params))
+
+    // load played time table data
+
+    const playedTimeParams = {
+      date: new Date().getTime(),
+      searchTerm: '',
+    }
+
+    dispatch(fetchPlayedTimeTableData(playedTimeParams));
 
   }, [])
 
