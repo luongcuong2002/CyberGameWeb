@@ -9,6 +9,7 @@ import topupRequestTableDataSlice from '../slices/topup_request_table_data.slice
 import topupHistoryTableDataSlice from '../slices/topup_history_table_data.slice';
 import topupRequestDataForUserSlice from "../slices/topup_request_data_for_user.slide";
 import playedTimeTableDataSlice from "../slices/played_time_data.slice";
+import moderatorAccountTableDataSlice from "../slices/moderator_account_table_data.slice";
 
 export const store = configureStore({
     reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
         scrollableManagement: scrollableManagementSlice,
         topupRequestDataForUser: topupRequestDataForUserSlice,
         playedTimeTableData: playedTimeTableDataSlice,
+        moderatorAccountTableData: moderatorAccountTableDataSlice,
     },
 });

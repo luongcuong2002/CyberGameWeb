@@ -37,10 +37,12 @@ export const playedTimeTableDataSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchPlayedTimeTableData.pending, (state, action) => {
             state.isLoading = true;
+            state.errorMessage = null;
         });
         builder.addCase(fetchPlayedTimeTableData.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
+            state.errorMessage = null;
         });
         builder.addCase(fetchPlayedTimeTableData.rejected, (state, action) => {
             state.isLoading = false;

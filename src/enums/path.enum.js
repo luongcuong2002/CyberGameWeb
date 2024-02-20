@@ -24,6 +24,7 @@ const PATH = {
   debt_detail: "/account/chi-tiet-so-no",
   change_password: "/account/doi-mat-khau",
   feedback: "/account/gop-y",
+  moderator_account_management: "/admin/quan-ly-tai-khoan",
 };
 
 export default PATH;

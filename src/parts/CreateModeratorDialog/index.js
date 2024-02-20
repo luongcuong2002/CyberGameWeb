@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import styles from "./create_user_dialog.module.scss";
+import styles from "./create_moderator_dialog.module.scss";
 import Popup from "reactjs-popup";
 import CircleLoader from "../../components/CircleLoader";
 import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
 import InputChecker from "../../utils/input_checker";
-import moderatorAccountManagementService from "../../services/moderator_account_management.service";
+import adminAccountManagementService from "../../services/admin_account_management.service";
+import { fetchModeratorAccountTableData } from "../../slices/moderator_account_table_data.slice";
+import { useDispatch } from "react-redux";
 
-const CreateUserDialog = ({ setShowDialog }) => {
+const CreateModeratorDialog = ({ setShowDialog }) => {
+
+    const dispatch = useDispatch();
 
     const [isSendingRequest, setIsSendingRequest] = useState(false);
     const [warning, setWarning] = useState("");
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    // const [citizenIdentityCard, setCitizenIdentityCard] = useState(null);
 
     const handleNameChange = (event) => {
         const value = event.target.value;
@@ -25,64 +28,6 @@ const CreateUserDialog = ({ setShowDialog }) => {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
-
-    // const handleImageChange = (e) => {
-    //     const file = e.target.files[0];
-
-    //     const image = new Image();
-
-    //     const reader = new FileReader();
-    //     reader.onload = function (readerEvent) {
-    //         image.onload = function () {
-    //             const width = image.width;
-    //             const height = image.height;
-
-    //             const minDimension = 400;
-    //             const maxRatio = 4;
-
-    //             if (width < minDimension || height < minDimension) {
-    //                 setWarning(
-    //                     `Hình ảnh quá nhỏ. Yêu cầu kích thước tối thiểu ${minDimension}x${minDimension}.`
-    //                 );
-    //                 return setCitizenIdentityCard(null);
-    //             } else if (width >= height * maxRatio || height >= width * maxRatio) {
-    //                 setWarning(
-    //                     `Hình ảnh quá dài. Một chiều không thể có kích thước gấp ${maxRatio} lần chiều còn lại.`
-    //                 );
-    //                 return setCitizenIdentityCard(null);
-    //             } else {
-    //                 setWarning("");
-    //             }
-
-    //             let newWidth, newHeight;
-
-    //             if (width > height) {
-    //                 newHeight = minDimension;
-    //                 newWidth = Math.floor((width / height) * minDimension);
-    //             } else {
-    //                 newWidth = minDimension;
-    //                 newHeight = Math.floor((height / width) * minDimension);
-    //             }
-
-    //             const canvas = document.createElement("canvas");
-    //             canvas.width = newWidth;
-    //             canvas.height = newHeight;
-
-    //             const ctx = canvas.getContext("2d");
-    //             ctx.drawImage(image, 0, 0, newWidth, newHeight);
-
-    //             const resizedImage = canvas.toDataURL("image/jpeg");
-
-    //             setCitizenIdentityCard(resizedImage);
-    //         };
-
-    //         image.src = readerEvent.target.result;
-    //     };
-
-    //     if (file) {
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -98,13 +43,16 @@ const CreateUserDialog = ({ setShowDialog }) => {
         setWarning("");
 
         setIsSendingRequest(true);
-        moderatorAccountManagementService.createNewUser({ 
+        adminAccountManagementService.createNewUser({ 
             userName,
             password,
-            // citizenIdentityCard
         })
             .then(() => {
                 setShowDialog(false);
+                dispatch(fetchModeratorAccountTableData({
+                    pageNo: 1,
+                    searchTerm: '',
+                }));
             })
             .catch((err) => {
                 const message = err?.response?.data?.message;
@@ -166,26 +114,6 @@ const CreateUserDialog = ({ setShowDialog }) => {
                         />
                     </div>
                 </div>
-                {/* <div className={styles.formGroup}>
-                    <label htmlFor="image">Căn cước công dân</label>
-                    <div className={styles.inputWrapper}>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            id="image"
-                            onChange={handleImageChange}
-                        />
-                        {
-                            citizenIdentityCard &&
-                            <img 
-                                src={citizenIdentityCard} 
-                                alt="Căn cước công dân" 
-                                className={styles.citizenIdentityCard}
-                                draggable={false}
-                            />
-                        }
-                    </div>
-                </div> */}
                 <div className={styles.confirmButton} onClick={handleSubmit}>
                     {
                         isSendingRequest
@@ -201,4 +129,4 @@ const CreateUserDialog = ({ setShowDialog }) => {
     </Popup>
 }
 
-export default CreateUserDialog;
+export default CreateModeratorDialog;

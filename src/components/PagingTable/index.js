@@ -155,7 +155,7 @@ const PagingTable = ({ data, onNextPage, onPrevPage, renderPopup, isLoading, err
                 )
             }
             {
-                errorMessage && (
+                errorMessage && !isLoading && (
                     <div className={styles.error}>
                         <span className={styles.errorText}>{errorMessage}</span>
                     </div>
