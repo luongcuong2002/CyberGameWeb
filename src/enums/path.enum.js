@@ -25,6 +25,7 @@ const PATH = {
   change_password: "/account/doi-mat-khau",
   feedback: "/account/gop-y",
   moderator_account_management: "/admin/quan-ly-tai-khoan",
+  voucher_management: "/admin/quan-ly-voucher",
 };
 
 export default PATH;

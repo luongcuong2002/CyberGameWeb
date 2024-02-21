@@ -7,6 +7,7 @@ import { ReactComponent as IconAccountManagement } from "../../assets/icons/tab_
 import ModeratorAccount from "./ModeratorAccount";
 import { fetchModeratorAccountTableData } from "../../slices/moderator_account_table_data.slice";
 import { useDispatch } from "react-redux";
+import VoucherManagement from "./VoucherManagement";
 
 const AdminPages = () => {
 
@@ -36,6 +37,12 @@ const AdminPages = () => {
             text: "Quản lý tài khoản",
             icon: IconAccountManagement,
             page: ModeratorAccount,
+          },
+          {
+            path: PATH.voucher_management,
+            text: "Quản lý voucher",
+            icon: IconAccountManagement,
+            page: VoucherManagement,
           },
         ]}
       />
