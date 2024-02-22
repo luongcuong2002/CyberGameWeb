@@ -6,11 +6,7 @@ import { IoIosSearch, IoMdPersonAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import InputChecker from "../../../utils/input_checker";
 import { fetchModeratorAccountTableData, selectModeratorAccountTableData } from "../../../slices/moderator_account_table_data.slice";
-import moderator_account_managementService from "../../../services/moderator_account_management.service";
-import CreateModeratorDialog from "../../../parts/CreateModeratorDialog";
-import ChangeModeratorPasswordDialog from "../../../parts/ChangeModeratorPasswordDialog";
-import BlockModeratorDialog from "../../../parts/BlockModeratorDialog";
-import ModeratorPermissionDialog from "../../../parts/ModeratorPermissionDialog";
+import CreateVoucherDialog from "../../../parts/CreateVoucherDialog";
 
 const VoucherManagement = () => {
 
@@ -21,10 +17,7 @@ const VoucherManagement = () => {
     const [searchTerm, setSearchTerm] = useState(moderatorAccountTableData.data?.searchTerm ?? "");
     const inputRef = useRef(null);
 
-    const [showCreateNewModeratorDialog, setShowCreateNewModeratorDialog] = useState(false);
-    const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
-    const [showBlockUserDialog, setShowBlockUserDialog] = useState(false);
-    const [showModeratorPermissionDialog, setShowModeratorPermissionDialog] = useState(false);
+    const [showCreateVoucherDialog, setShowCreateVoucherDialog] = useState(false);
 
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -61,31 +54,12 @@ const VoucherManagement = () => {
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        if (inputRef.current) {
-            inputRef.current.blur();
-        }
-
-        if (moderatorAccountTableData.isLoading) {
-            return;
-        }
-
-        dispatch(fetchModeratorAccountTableData({
-            pageNo: 1,
-            searchTerm,
-        }));
+        
     };
-
-    const refreshUserTableData = () => {
-        dispatch(fetchModeratorAccountTableData({
-            pageNo: moderatorAccountTableData.data?.currentPage ?? 1,
-            searchTerm,
-        }));
-    }
 
     return (
         <div id={styles.root}>
-            <h1>Quản lý nhân viên</h1>
+            <h1>Quản lý voucher</h1>
             <div className={styles.divider} />
             <span className={styles.actions}>
                 <form onSubmit={handleSubmit} className={styles.searchBar}>
@@ -102,7 +76,7 @@ const VoucherManagement = () => {
                         <IoIosSearch size={20} />
                     </div>
                 </form>
-                <div className={styles.addUserIconBackground} onClick={() => setShowCreateNewModeratorDialog(true)}>
+                <div className={styles.addUserIconBackground} onClick={() => setShowCreateVoucherDialog(true)}>
                     <IoMdPersonAdd size={20} />
                 </div>
             </span>
@@ -117,45 +91,11 @@ const VoucherManagement = () => {
                         const menuButtons = [
                             {
                                 icon: null,
-                                text: "Đổi mật khẩu",
+                                text: "Sửa",
                                 onClick: () => {
-                                    setShowChangePasswordDialog(true);
-                                    setSelectedUser(selectedItem);
-                                    handleClosePopup();
-                                },
-                            },
-                            {
-                                icon: null,
-                                text: selectedItem.disabledSessionId >= 0 ? "Mở khoá tài khoản" : "Khóa tài khoản",
-                                onClick: () => {
-                                    if (selectedItem.disabledSessionId >= 0) {
-                                        // unblock user
-                                        moderator_account_managementService.unblockUser(selectedItem.userId)
-                                            .then(() => {
-                                                refreshUserTableData();
-                                            })
-                                            .catch((error) => {
-                                                let errorMessage = error?.response.data.message;
-                                                if (!errorMessage) {
-                                                    errorMessage = "Đã có lỗi xảy ra. Vui lòng thử lại sau!";
-                                                }
-                                                alert(errorMessage);
-                                            })
-                                        handleClosePopup();
-                                        return;
-                                    }
-                                    setShowBlockUserDialog(true);
-                                    setSelectedUser(selectedItem);
-                                    handleClosePopup();
-                                },
-                            },
-                            {
-                                icon: null,
-                                text: "Cấp quyền",
-                                onClick: () => {
-                                    setShowModeratorPermissionDialog(true);
-                                    setSelectedUser(selectedItem);
-                                    handleClosePopup();
+                                    // setShowChangePasswordDialog(true);
+                                    // setSelectedUser(selectedItem);
+                                    // handleClosePopup();
                                 },
                             },
                         ]
@@ -167,26 +107,8 @@ const VoucherManagement = () => {
                 />
             </div>
             {
-                showCreateNewModeratorDialog &&
-                <CreateModeratorDialog setShowDialog={setShowCreateNewModeratorDialog} />
-            }
-            {
-                showChangePasswordDialog && selectedUser &&
-                <ChangeModeratorPasswordDialog setShowDialog={setShowChangePasswordDialog} user={selectedUser} />
-            }
-            {
-                showBlockUserDialog && selectedUser &&
-                <BlockModeratorDialog
-                    setShowDialog={setShowBlockUserDialog}
-                    user={selectedUser}
-                    onSuccess={() => {
-                        refreshUserTableData();
-                    }}
-                />
-            }
-            {
-                showModeratorPermissionDialog && selectedUser &&
-                <ModeratorPermissionDialog setShowDialog={setShowModeratorPermissionDialog} user={selectedUser} />
+                showCreateVoucherDialog &&
+                <CreateVoucherDialog setShowDialog={setShowCreateVoucherDialog} />
             }
         </div>
     );
