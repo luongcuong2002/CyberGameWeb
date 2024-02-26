@@ -27,6 +27,8 @@ const PATH = {
   moderator_account_management: "/admin/quan-ly-tai-khoan",
   voucher_management: "/admin/quan-ly-voucher",
   ht_road_event: "/admin/su-kien-ht-road",
+  ht_road_event_ongoing: "/admin/su-kien-ht-road/dang-dien-ra",
+  ht_road_event_history: "/admin/su-kien-ht-road/lich-su",
 };
 
 export default PATH;

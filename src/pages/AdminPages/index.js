@@ -9,6 +9,7 @@ import { fetchModeratorAccountTableData } from "../../slices/moderator_account_t
 import { fetchVoucherTableData } from "../../slices/voucher_table_data.slice";
 import { useDispatch } from "react-redux";
 import VoucherManagement from "./VoucherManagement";
+import HTRoadEventManagement from "./HTRoadEventManagement";
 
 const AdminPages = () => {
 
@@ -53,7 +54,7 @@ const AdminPages = () => {
             path: PATH.ht_road_event,
             text: "Sự kiện HT Road",
             icon: IconAccountManagement,
-            page: VoucherManagement,
+            page: HTRoadEventManagement,
           },
         ]}
       />
