@@ -5,16 +5,15 @@ import MenuPopup from "../../../components/MenuPopup";
 import { IoIosSearch, IoMdPersonAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import InputChecker from "../../../utils/input_checker";
-import { fetchModeratorAccountTableData, selectModeratorAccountTableData } from "../../../slices/moderator_account_table_data.slice";
+import { fetchVoucherTableData, selectVoucherTableData } from "../../../slices/voucher_table_data.slice";
 import CreateVoucherDialog from "../../../parts/CreateVoucherDialog";
 
 const VoucherManagement = () => {
 
     const dispatch = useDispatch();
 
-    const moderatorAccountTableData = useSelector(selectModeratorAccountTableData);
+    const voucherTableData = useSelector(selectVoucherTableData);
 
-    const [searchTerm, setSearchTerm] = useState(moderatorAccountTableData.data?.searchTerm ?? "");
     const inputRef = useRef(null);
 
     const [showCreateVoucherDialog, setShowCreateVoucherDialog] = useState(false);
@@ -22,39 +21,26 @@ const VoucherManagement = () => {
     const [selectedUser, setSelectedUser] = useState(null);
 
     const onNextPage = () => {
-        const currentPage = moderatorAccountTableData.data?.currentPage;
-        const totalPages = moderatorAccountTableData.data?.totalPages;
+        const currentPage = voucherTableData.data?.currentPage;
+        const totalPages = voucherTableData.data?.totalPages;
         if (currentPage && totalPages && currentPage < totalPages) {
-            dispatch(fetchModeratorAccountTableData(
+            dispatch(fetchVoucherTableData(
                 {
                     pageNo: currentPage + 1,
-                    searchTerm,
                 }
             ));
         }
     };
 
     const onPrevPage = () => {
-        const currentPage = moderatorAccountTableData.data?.currentPage;
+        const currentPage = voucherTableData.data?.currentPage;
         if (currentPage && currentPage > 1) {
-            dispatch(fetchModeratorAccountTableData(
+            dispatch(fetchVoucherTableData(
                 {
                     pageNo: currentPage - 1,
-                    searchTerm,
                 }
             ));
         }
-    };
-
-    const handleChange = (event) => {
-        const value = event.target.value;
-        if (InputChecker.isAlphanumeric(value)) {
-            setSearchTerm(event.target.value.toUpperCase());
-        }
-    };
-
-    const handleSubmit = (event) => {
-        
     };
 
     return (
@@ -62,7 +48,7 @@ const VoucherManagement = () => {
             <h1>Quản lý voucher</h1>
             <div className={styles.divider} />
             <span className={styles.actions}>
-                <form onSubmit={handleSubmit} className={styles.searchBar}>
+                {/* <form onSubmit={handleSubmit} className={styles.searchBar}>
                     <input
                         ref={inputRef}
                         className={styles.searchInput}
@@ -75,16 +61,16 @@ const VoucherManagement = () => {
                     <div className={styles.searchIconBackground} onClick={handleSubmit}>
                         <IoIosSearch size={20} />
                     </div>
-                </form>
+                </form> */}
                 <div className={styles.addUserIconBackground} onClick={() => setShowCreateVoucherDialog(true)}>
                     <IoMdPersonAdd size={20} />
                 </div>
             </span>
             <div id={styles.tableStyle}>
                 <PagingTable
-                    data={moderatorAccountTableData.data}
-                    isLoading={moderatorAccountTableData.isLoading}
-                    errorMessage={moderatorAccountTableData.errorMessage}
+                    data={voucherTableData.data}
+                    isLoading={voucherTableData.isLoading}
+                    errorMessage={voucherTableData.errorMessage}
                     onNextPage={onNextPage}
                     onPrevPage={onPrevPage}
                     renderPopup={(selectedItem, handleClosePopup) => {

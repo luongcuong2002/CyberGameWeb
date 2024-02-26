@@ -11,7 +11,6 @@ import { ReactComponent as IconArrowRight } from "../../../assets/icons/ic_arrow
 import * as XLSX from 'xlsx';
 import Converter from "../../../utils/converter";
 import moderatorPlayedTimeManagementService from "../../../services/moderator_played_time_management_service";
-import { set } from "date-fns";
 
 const PlayedTime = () => {
 

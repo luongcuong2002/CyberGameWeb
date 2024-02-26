@@ -6,6 +6,7 @@ import ManagementPageNavGenerator from "../../parts/ManagementPageNavGenerator";
 import { ReactComponent as IconAccountManagement } from "../../assets/icons/tab_account_management_icon.svg";
 import ModeratorAccount from "./ModeratorAccount";
 import { fetchModeratorAccountTableData } from "../../slices/moderator_account_table_data.slice";
+import { fetchVoucherTableData } from "../../slices/voucher_table_data.slice";
 import { useDispatch } from "react-redux";
 import VoucherManagement from "./VoucherManagement";
 
@@ -21,6 +22,10 @@ const AdminPages = () => {
       pageNo: 1,
       searchTerm: '',
     }));
+
+    dispatch(fetchVoucherTableData({
+      pageNo: 1,
+    }))
 
   }, []);
 
@@ -41,6 +46,12 @@ const AdminPages = () => {
           {
             path: PATH.voucher_management,
             text: "Quản lý voucher",
+            icon: IconAccountManagement,
+            page: VoucherManagement,
+          },
+          {
+            path: PATH.ht_road_event,
+            text: "Sự kiện HT Road",
             icon: IconAccountManagement,
             page: VoucherManagement,
           },

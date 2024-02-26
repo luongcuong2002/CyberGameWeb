@@ -4,10 +4,11 @@ import Popup from "reactjs-popup";
 import CircleLoader from "../../components/CircleLoader";
 import AlertError from "../../components/AlertError";
 import { IoCloseOutline } from "react-icons/io5";
-import InputChecker from "../../utils/input_checker";
 import { useDispatch } from "react-redux";
 import { NumericFormat } from "react-number-format";
 import DatePicker from "react-datepicker";
+import adminVoucherManagementService from "../../services/admin_voucher_management.service";
+import { fetchVoucherTableData } from "../../slices/voucher_table_data.slice";
 
 const CreateVoucherDialog = ({ setShowDialog }) => {
 
@@ -85,28 +86,32 @@ const CreateVoucherDialog = ({ setShowDialog }) => {
         setWarning("");
 
         setIsSendingRequest(true);
-        // adminAccountManagementService.createNewUser({ 
-        //     voucherName,
-        //     description,
-        // })
-        //     .then(() => {
-        //         setShowDialog(false);
-        //         dispatch(fetchModeratorAccountTableData({
-        //             pageNo: 1,
-        //             searchTerm: '',
-        //         }));
-        //     })
-        //     .catch((err) => {
-        //         const message = err?.response?.data?.message;
-        //         if (message) {
-        //             setWarning(message);
-        //         } else {
-        //             setWarning("Đã có lỗi xảy ra. Hãy thử lại sau ít phút!");
-        //         }
-        //     })
-        //     .finally(() => {
-        //         setIsSendingRequest(false);
-        //     });
+        adminVoucherManagementService.createNewVoucher({ 
+            voucherName,
+            description,
+            imageURL,
+            maxDiscount,
+            discountFactor,
+            minTopupAmount,
+            expiredDate,
+        })
+            .then(() => {
+                setShowDialog(false);
+                dispatch(fetchVoucherTableData({
+                    pageNo: 1
+                }));
+            })
+            .catch((err) => {
+                const message = err?.response?.data?.message;
+                if (message) {
+                    setWarning(message);
+                } else {
+                    setWarning("Đã có lỗi xảy ra. Hãy thử lại sau ít phút!");
+                }
+            })
+            .finally(() => {
+                setIsSendingRequest(false);
+            });
     };
 
     const closeDialog = () => {

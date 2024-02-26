@@ -26,6 +26,7 @@ const PATH = {
   feedback: "/account/gop-y",
   moderator_account_management: "/admin/quan-ly-tai-khoan",
   voucher_management: "/admin/quan-ly-voucher",
+  ht_road_event: "/admin/su-kien-ht-road",
 };
 
 export default PATH;
