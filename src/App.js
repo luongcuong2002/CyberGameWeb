@@ -16,6 +16,8 @@ import GoToHomePage from "./pages/GoToHome";
 import NeedSignInPage from "./pages/NeedSignIn";
 import ROLE from "./enums/role.enum";
 import HTRoadPage from "./pages/HTRoadPage";
+import MainPages from "./pages/MainPages";
+import MainPages2 from "./pages/MainPages2";
 
 const cookies = new Cookies();
 
@@ -81,10 +83,12 @@ function App() {
           />
 
           <Routes>
+            {/* <Route path={`${PATH.root}*`} element={<MainPages />} /> */}
+            <Route path={`${PATH.root}*`} element={<MainPages2 />} />
             <Route 
-              path={`${PATH.root}*`} 
+              path={`${PATH.event}*`} 
               element={
-                user?.userId ? <HTRoadPage /> : <SignInPage />
+                user?.userId ? <HTRoadPage /> : <NeedSignInPage />
               } 
             />
             <Route 
