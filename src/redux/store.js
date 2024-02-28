@@ -11,6 +11,7 @@ import topupRequestDataForUserSlice from "../slices/topup_request_data_for_user.
 import playedTimeTableDataSlice from "../slices/played_time_data.slice";
 import moderatorAccountTableDataSlice from "../slices/moderator_account_table_data.slice";
 import voucherTableDataReducer from "../slices/voucher_table_data.slice";
+import guestFreeAccountSlice from "../slices/guest_fetch_free_account.slice";
 
 export const store = configureStore({
     reducer: {
@@ -26,5 +27,6 @@ export const store = configureStore({
         playedTimeTableData: playedTimeTableDataSlice,
         moderatorAccountTableData: moderatorAccountTableDataSlice,
         voucherTableData: voucherTableDataReducer,
+        freeAccountForGuest: guestFreeAccountSlice,
     },
 });
