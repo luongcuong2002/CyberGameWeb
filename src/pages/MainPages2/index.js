@@ -13,9 +13,14 @@ import { ReactComponent as MapIcon } from "../../assets/icons/ic_map.svg";
 import clsx from "clsx";
 import Home from "./Home";
 import FreeAccount from "./FreeAccount";
-import { set } from "date-fns";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../slices/user.slice";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const MainPages2 = () => {
+
+    const navigate = useNavigate();
+    const user = useSelector(selectUser)
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -25,6 +30,10 @@ const MainPages2 = () => {
 
     const handleAddressClick = () => {
         window.open("https://www.google.com/maps?q=21.0333,105.8500");
+    }
+
+    const handleLoginButtonClick = () => {
+        navigate(PATH.signIn);
     }
 
     const NavLinkItem = (path, text) => {
@@ -73,9 +82,15 @@ const MainPages2 = () => {
                             }
                         </ul>
                     </nav>
-                    <button className={styles.loginButton}>
-                        Đăng nhập
-                    </button>
+                    {
+                        user?.userId == null &&
+                        <button 
+                            onClick={handleLoginButtonClick}
+                            className={styles.loginButton}
+                        >
+                            Đăng nhập
+                        </button>
+                    }
                 </div>
                 <MenuIcon
                     onClick={handleMenuIconClick}
@@ -88,6 +103,7 @@ const MainPages2 = () => {
                 <Routes>
                     <Route path={PATH.root} element={<Home />} />
                     <Route path={PATH.free_account} element={<FreeAccount />} />
+                    <Route path={"/*"} element={<Navigate to={PATH.root} />} />
                 </Routes>
             </div>
         </div>

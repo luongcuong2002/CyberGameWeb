@@ -5,7 +5,7 @@
     align-items: center;
     flex-direction: column;
     overflow: hidden;
-    padding-top: 120px;
+    padding-top: calc(100vh / 8);
     z-index: 1;
 }
 
@@ -35,8 +35,7 @@
     width: 80%;
     max-width: 850px;
     min-width: 300px;
-    height: 55%;
-    min-height: 350px;
+    height: 60%;
     background: linear-gradient(0deg, #3C3C3C, #4A545C);
     border-radius: 12px;
     display: flex;
@@ -273,5 +272,23 @@
 }
 
 @media (max-height: 765px) {
-    
+    #freeAccountContainer {
+        padding-top: 80px;
+    }
+
+    .neonText {
+        font-size: 1.2rem;
+    }
+
+    .freeAccountDescription {
+        font-size: 0.8rem;
+    }
+
+    .block {
+        margin-top: 24px;
+    }
+
+    .table {
+        font-size: 0.8rem;
+    }
 }
