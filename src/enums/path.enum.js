@@ -4,6 +4,7 @@ const PATH = {
   signIn: "/dang-nhap",
   promotion: "/khuyen-mai",
   event: "/su-kien",
+  free_account: "/tai-khoan-mien-phi",
   profile: "/ho-so",
   chat: "/tin-nhan",
   notification: "/thong-bao",

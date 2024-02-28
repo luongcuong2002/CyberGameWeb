@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./main_page_2.module.scss";
 import {
-    NavLink,
+    NavLink, Routes, Route
 } from "react-router-dom";
 
 import PATH from "../../enums/path.enum";
@@ -11,6 +11,9 @@ import { ReactComponent as MenuIcon } from "../../assets/icons/ic_menu.svg";
 import { ReactComponent as PhoneIcon } from "../../assets/icons/ic_phone.svg";
 import { ReactComponent as MapIcon } from "../../assets/icons/ic_map.svg";
 import clsx from "clsx";
+import Home from "./Home";
+import FreeAccount from "./FreeAccount";
+import { set } from "date-fns";
 
 const MainPages2 = () => {
 
@@ -27,7 +30,11 @@ const MainPages2 = () => {
     const NavLinkItem = (path, text) => {
         return (
             <li className={styles.navItem}>
-                <NavLink to={path} className={styles.navLink}>
+                <NavLink 
+                    to={path} 
+                    className={styles.navLink}
+                    onClick={() => setIsMenuOpen(false)}
+                >
                     <label className={styles.navLinkText}>{text}</label>
                 </NavLink>
             </li>
@@ -59,7 +66,7 @@ const MainPages2 = () => {
                     <nav>
                         <ul className={styles.navBox}>
                             {
-                                NavLinkItem(PATH.promotion, "Tài khoản miễn phí")
+                                NavLinkItem(PATH.free_account, "Tài khoản miễn phí")
                             }
                             {
                                 NavLinkItem(PATH.event, "Sự kiện")
@@ -78,9 +85,10 @@ const MainPages2 = () => {
             </header>
             <div id={styles.content}>
                 <img className={styles.backgroundImage} src={BackgroundImage} alt="background" />
-                <p className={styles.contentText}>
-                    Website này được tạo ra nhằm mang đến nhiều quyền lợi cho khách hàng. Trở thành hội viên của chúng tôi để nhận được nhiều ưu đãi hấp dẫn.
-                </p>
+                <Routes>
+                    <Route path={PATH.root} element={<Home />} />
+                    <Route path={PATH.free_account} element={<FreeAccount />} />
+                </Routes>
             </div>
         </div>
     );
