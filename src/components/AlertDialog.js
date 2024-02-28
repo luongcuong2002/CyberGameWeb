@@ -41,13 +41,11 @@ export default function AlertDialog({
         <DialogActions>
           {
             shouldShowNegativeButton &&
-            <Button onClick={() => {
-                onClickNegativeButton();
-            }}>
+            <Button onClick={onClickNegativeButton}>
               {negativeButtonText}
             </Button>
           }
-          <Button onClick={handleClose}>
+          <Button onClick={onClickPositiveButton}>
             {positiveButtonText}
           </Button>
         </DialogActions>

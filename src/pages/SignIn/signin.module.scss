@@ -28,7 +28,8 @@ $essential-negative-color: #e91429;
 }
 
 .signInForm {
-    width: 324px;
+    width: 90%;
+    max-width: 324px;
 }
 
 .inputGroup {
@@ -101,5 +102,22 @@ $essential-negative-color: #e91429;
 
     &:hover {
         scale: 1.03;
+    }
+}
+
+@media screen and (max-width: 768px){
+
+}
+
+@media screen and (max-width: 576px){
+
+    #root {
+        padding: 16px;
+        padding-top: 32px;
+    }
+
+    .title {
+        font-size: 2rem;
+        margin: 24px;
     }
 }

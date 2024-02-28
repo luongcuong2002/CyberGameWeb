@@ -123,7 +123,7 @@ const SignInPage = () => {
         title={"Thông báo"}
         message={"Bạn cần liên hệ với chủ quán để đổi mật khẩu!"}
         isOpen={openDialog}
-        onClick={() => {
+        onClickPositiveButton={() => {
           setOpenDialog(false);
         }}
       />
