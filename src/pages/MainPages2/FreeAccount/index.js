@@ -42,7 +42,7 @@ const FreeAccount = () => {
                                         const endTimeAllowedToLogin = new Date(item.endTimeAllowedToLogin);
 
                                         let timeString = "";
-                                        const decimalTime = (item.timeInMinutes / 60).toFixed(1);
+                                        const decimalTime = (item.timeToUseInMinutes / 60).toFixed(1);
 
                                         if (decimalTime.endsWith('.0')) {
                                             timeString = parseInt(decimalTime) + " giờ";
@@ -51,7 +51,7 @@ const FreeAccount = () => {
                                         }
 
                                         return <tr key={index}>
-                                            <td>{item.account}</td>
+                                            <td>{item.accountName}</td>
                                             <td>{item.password}</td>
                                             <td>{timeString}</td>
                                             <td>{moment(startTimeAllowedToLogin).format("HH:mm")} đến {moment(endTimeAllowedToLogin).format("HH:mm")}</td>

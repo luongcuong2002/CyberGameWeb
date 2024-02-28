@@ -37,9 +37,21 @@ const convertPlayedTimeFormationToTimestamp = (formattedDate, formattedTime) => 
 
     const [hours, minutes, seconds] = formattedTime.split(':');
 
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    date.setSeconds(seconds);
+    if (hours && parseInt(hours) > 23 || (minutes && parseInt(minutes) > 59) || (seconds && parseInt(seconds) > 59)){
+      return null;
+    }
+
+    if (hours) {
+      date.setHours(hours);
+    }
+
+    if (minutes) {
+      date.setMinutes(minutes);
+    }
+
+    if (seconds) {
+      date.setSeconds(seconds);
+    }
 
     return date.getTime();
   } catch (error) {

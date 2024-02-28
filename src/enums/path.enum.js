@@ -19,6 +19,7 @@ const PATH = {
   send_notification: "/moderator/gui-thong-bao",
   view_feedback: "/moderator/xem-gop-y",
   played_time: "/moderator/thoi-gian-choi",
+  free_account_management: "/moderator/tai-khoan-mien-phi",
   account: "/account",
   account_info: "/account/thong-tin-tai-khoan",
   transaction_history: "/account/lich-su-giao-dich",

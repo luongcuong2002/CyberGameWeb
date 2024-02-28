@@ -15,6 +15,8 @@ import { fetchTopupRequestHistoryTableState, setEndDate, setStartDate, selectTop
 import CONSTANT from "../../utils/constant";
 import { fetchTopupRequestTableData } from "../../slices/topup_request_table_data.slice";
 import { fetchPlayedTimeTableData } from "../../slices/played_time_data.slice";
+import FreeAccountManagement from "./FreeAccountManagement";
+import { fetchFreeAccountForModerator } from "../../slices/moderator_fetch_free_account.slice";
 
 const ModeratorPages = () => {
 
@@ -70,6 +72,13 @@ const ModeratorPages = () => {
 
     dispatch(fetchPlayedTimeTableData(playedTimeParams));
 
+    // load free account for moderator
+    const freeAccountParams = {
+      date: new Date().getTime(),
+    }
+
+    dispatch(fetchFreeAccountForModerator(freeAccountParams));
+
   }, [])
 
   return (
@@ -121,6 +130,12 @@ const ModeratorPages = () => {
             text: "Thời gian chơi",
             icon: IconPlayedTime,
             page: PlayedTime,
+          },
+          {
+            path: PATH.free_account_management,
+            text: "Tài khoản miễn phí",
+            icon: IconPlayedTime,
+            page: FreeAccountManagement,
           },
         ]}
       />
