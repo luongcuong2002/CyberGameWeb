@@ -55,7 +55,7 @@ const MainPages2 = () => {
             <div id={styles.contact}>
                 <span className={styles.wrapper}>
                     <PhoneIcon className={styles.contactIcon} />
-                    <label>097 208 58 01</label>
+                    <label>034 753 8182</label>
                 </span>
                 <div className={styles.divider} />
                 <span
@@ -92,11 +92,15 @@ const MainPages2 = () => {
                         </button>
                     }
                 </div>
-                <MenuIcon
+                <div
+                    className={styles.menuIconWrapper}
                     onClick={handleMenuIconClick}
-                    className={styles.menuIcon}
-                    color="#FFFFFF"
-                />
+                >
+                    <MenuIcon
+                        className={styles.menuIcon}
+                        color="#FFFFFF"
+                    />
+                </div>
             </header>
             <div id={styles.content}>
                 <img className={styles.backgroundImage} src={BackgroundImage} alt="background" />

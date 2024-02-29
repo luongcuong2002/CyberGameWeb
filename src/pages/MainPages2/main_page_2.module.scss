@@ -40,7 +40,12 @@
     }
 
     .addressWrapper {
+        text-decoration: underline;
         cursor: pointer;
+
+        label {
+            flex: 1;
+        }
 
         &:hover {
             text-decoration-line: underline;
@@ -71,7 +76,7 @@
 
 #content {
     width: 100%;
-    height: calc(100% - 70px);
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,12 +114,19 @@
     }
 }
 
+.menuIconWrapper {
+    height: 100%;
+    aspect-ratio: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
 .menuIcon {
     width: 24px;
     height: 24px;
     object-fit: contain;
-    cursor: pointer;
-    display: none;
 }
 
 .navBox {
@@ -183,13 +195,19 @@
 }
 
 @media screen and (max-width: 768px) {
-    .menuIcon {
-        display: block;
+
+    #header {
+        padding: 0px 0px;
+        padding-left: 24px;
+    }
+
+    .menuIconWrapper {
+        display: flex;
     }
 
     .headerRightPanel {
         position: absolute;
-        height: fit-content;
+        height: auto;
         left: 0;
         right: 0;
         top: 100%;
@@ -200,10 +218,12 @@
         padding: 24px;
         translate: 100%;
         transition: 0.5s;
+        opacity: 0;
     }
 
     .headerRightPanelOpen {
         translate: 0;
+        opacity: 1;
     }
 
     .navBox {
@@ -230,7 +250,7 @@
     }
 
     #contact {
-        height: fit-content;
+        height: auto;
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
