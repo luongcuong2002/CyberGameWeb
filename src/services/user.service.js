@@ -7,7 +7,7 @@ class UserService {
 
   async getCurrentUser() {
     return axiosApiInstance.get(API_URL + "get-info").then((res) => {
-      if (res.data.message) {
+      if (res.data && res.data.message) {
         return null;
       } else {
         return res.data;

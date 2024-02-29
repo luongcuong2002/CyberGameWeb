@@ -62,29 +62,29 @@ const FreeAccount = () => {
                             </tbody>
                         )
                     }
-                    {
-                        freeAccountForGuest.data && freeAccountForGuest.data.length == 0 && (
-                            <div className={clsx(styles.emptyList, styles.noData)}>
-                                Hiện tại chưa có tài khoản miễn phí nào.
-                            </div>
-                        )
-                    }
-                    {
-                        freeAccountForGuest.isLoading && (
-                            <div className={styles.emptyList}>
-                                <Loader color="#fff" width="30px" />
-                                <span className={styles.loading} >Đang lấy dữ liệu...</span>
-                            </div>
-                        )
-                    }
-                    {
-                        freeAccountForGuest.errorMessage && (
-                            <div className={clsx(styles.emptyList, styles.errorMessage)}>
-                                {freeAccountForGuest.errorMessage}
-                            </div>
-                        )
-                    }
                 </table>
+                {
+                    freeAccountForGuest.data && freeAccountForGuest.data.length == 0 && (
+                        <div className={clsx(styles.emptyList, styles.noData)}>
+                            Hiện tại chưa có tài khoản miễn phí nào.
+                        </div>
+                    )
+                }
+                {
+                    freeAccountForGuest.isLoading && (
+                        <div className={styles.emptyList}>
+                            <Loader color="#fff" width="30px" />
+                            <span className={styles.loading} >Đang lấy dữ liệu...</span>
+                        </div>
+                    )
+                }
+                {
+                    freeAccountForGuest.errorMessage && (
+                        <div className={clsx(styles.emptyList, styles.errorMessage)}>
+                            {freeAccountForGuest.errorMessage}
+                        </div>
+                    )
+                }
             </div>
         </div>
     </div>
