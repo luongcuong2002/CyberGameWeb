@@ -1,5 +1,5 @@
 const CONSTANT = {
-  baseUrl: "http://localhost:8080",
+  baseUrl: "https://103.56.160.190:8080",
   roomChatChannelName: "kenh-phong-net",
   pageSize: 20,
 };
