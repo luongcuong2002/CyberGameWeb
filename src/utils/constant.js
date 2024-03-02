@@ -1,5 +1,5 @@
 const CONSTANT = {
-  baseUrl: "https://103.56.160.190:8080",
+  baseUrl: "https://cybergameserver.top/cyber-game-server",
   roomChatChannelName: "kenh-phong-net",
   pageSize: 20,
 };
