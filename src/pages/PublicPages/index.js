@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styles from "./public_pages.module.scss";
 import {
     NavLink, Routes, Route
@@ -24,10 +24,6 @@ const MainPages2 = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const refContactBar = useRef(null);
-    const refHeader = useRef(null);
-    const refContent = useRef(null);
-
     const handleMenuIconClick = () => {
         setIsMenuOpen(!isMenuOpen);
     }
@@ -39,31 +35,6 @@ const MainPages2 = () => {
     const handleLoginButtonClick = () => {
         navigate(PATH.signIn);
     }
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (refContactBar.current && refHeader.current && refContent.current) {
-                const windowScrollY = window.scrollY;
-                const contactBarHeight = refContactBar.current.clientHeight;
-                const headerHeight = refHeader.current.clientHeight;
-
-                // change contact bar top position
-                refContactBar.current.style.top = `${Math.max(-windowScrollY, -contactBarHeight)}px`;
-                // change header top position
-                refHeader.current.style.top = `${Math.max(contactBarHeight - windowScrollY, 0)}px`;
-                // change content margin-top position
-                refContent.current.style.marginTop = `${headerHeight + contactBarHeight}px`;
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        handleScroll();
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
 
     const NavLinkItem = (path, text) => {
         return (
@@ -81,7 +52,7 @@ const MainPages2 = () => {
 
     return (
         <div id={styles.root}>
-            <div ref={refContactBar} id={styles.contact}>
+            <div id={styles.contact}>
                 <span className={styles.wrapper}>
                     <PhoneIcon className={styles.contactIcon} />
                     <label>034 753 8182</label>
@@ -95,7 +66,7 @@ const MainPages2 = () => {
                     <label style={{cursor: "pointer"}}>Số nhà 39, Đường Vành Đai, Canh Nậu, Thạch Thất, Hà Nội</label>
                 </span>
             </div>
-            <header ref={refHeader} id={styles.header}>
+            <header id={styles.header}>
                 <div 
                     onClick={() => navigate(PATH.root)}
                     className={styles.headerLeftPanel}
@@ -134,7 +105,7 @@ const MainPages2 = () => {
                     />
                 </div>
             </header>
-            <div ref={refContent} id={styles.content}>
+            <div id={styles.content}>
                 <img className={styles.backgroundImage} src={BackgroundImage} alt="background" loading="lazy" />
                 <Routes>
                     <Route path={PATH.root} element={<Home />} />

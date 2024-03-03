@@ -1,9 +1,9 @@
 #root {
     width: 100vw;
     height: 100vh;
+    max-width: -webkit-fill-available;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     position: relative;
 }
 
@@ -17,8 +17,6 @@
     align-items: center;
     font-size: 0.875rem;
     gap: 24px;
-    position: fixed;
-    top: 0;
 
     .divider {
         width: 1px;
@@ -69,7 +67,9 @@
     padding: 0px 24px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     user-select: none;
-    position: fixed;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
 
     nav {
         height: 100%;
