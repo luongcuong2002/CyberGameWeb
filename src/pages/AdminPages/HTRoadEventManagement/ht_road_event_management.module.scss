@@ -1,6 +1,6 @@
 #root {
     width: 100%;
-    height: calc(100vh - 60px); // bad code here (60px is the height of the header)
+    height: calc(100% - 60px); // bad code here (60px is the height of the header)
     display: flex;
     flex-direction: column;
     padding: 24px;

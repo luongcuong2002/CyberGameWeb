@@ -87,6 +87,8 @@
 }
 
 html {
+  width: 100%;
+  height: 100%;
   font-size: 100%;
   font-family: Linotte;
   color: #fff;
@@ -94,7 +96,15 @@ html {
 }
 
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 table {
@@ -141,7 +151,7 @@ input:focus {
 
 .pageBackground {
   width: 100%;
-  height: calc(100vh - 50px);
+  height: calc(100% - 50px);
   margin-left: 240px;
   padding: 0 20px;
   background-image: linear-gradient(315deg, #696ac1 30%, #5c8fb0 74%);
