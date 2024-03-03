@@ -7,7 +7,7 @@ import { setUser } from "../slices/user.slice";
 
 const axiosApiInstance = axios.create({
   baseURL: CONSTANT.baseUrl,
-  timeout: 10000,
+  timeout: 5000,
   headers: {
     "Content-Type": "application/json",
   },

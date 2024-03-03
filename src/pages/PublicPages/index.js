@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./main_page_2.module.scss";
+import styles from "./public_pages.module.scss";
 import {
     NavLink, Routes, Route
 } from "react-router-dom";
@@ -103,7 +103,7 @@ const MainPages2 = () => {
                 </div>
             </header>
             <div id={styles.content}>
-                <img className={styles.backgroundImage} src={BackgroundImage} alt="background" />
+                <img className={styles.backgroundImage} src={BackgroundImage} alt="background" loading="lazy" />
                 <Routes>
                     <Route path={PATH.root} element={<Home />} />
                     <Route path={PATH.free_account} element={<FreeAccount />} />

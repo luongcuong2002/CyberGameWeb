@@ -9,10 +9,8 @@ import TopupDialog from "../../../parts/TopupDialog";
 import InputChecker from "../../../utils/input_checker";
 import ChangePasswordDialog from "../../../parts/ChangePasswordDialog";
 import BlockUserDialog from "../../../parts/BlockUserDialog";
-import UserInfoDialog from "../../../parts/UserInfoDialog";
 import { fetchUserTableData, selectUserTableData } from "../../../slices/user_table_data.slice";
 import moderator_account_managementService from "../../../services/moderator_account_management.service";
-import DebtManagementDialog from "../../../parts/DebtManagementDialog";
 
 const AccountManagement = () => {
 
@@ -27,8 +25,6 @@ const AccountManagement = () => {
   const [showTopupDialog, setShowTopupDialog] = useState(false);
   const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
   const [showBlockUserDialog, setShowBlockUserDialog] = useState(false);
-  const [showUserInfoDialog, setShowUserInfoDialog] = useState(false);
-  const [showDebtManagementDialog, setShowDebtManagementDialog] = useState(false);
 
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -191,14 +187,6 @@ const AccountManagement = () => {
             refreshUserTableData();
           }}
         />
-      }
-      {
-        showUserInfoDialog && selectedUser &&
-        <UserInfoDialog setShowDialog={setShowUserInfoDialog} user={selectedUser} />
-      }
-      {
-        showDebtManagementDialog && selectedUser &&
-        <DebtManagementDialog setShowDialog={setShowDebtManagementDialog} user={selectedUser} />
       }
     </div>
   );

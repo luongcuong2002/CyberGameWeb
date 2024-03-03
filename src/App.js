@@ -15,8 +15,7 @@ import GoToHomePage from "./pages/GoToHome";
 import NeedSignInPage from "./pages/NeedSignIn";
 import ROLE from "./enums/role.enum";
 import HTRoadPage from "./pages/HTRoadPage";
-import MainPages from "./pages/MainPages";
-import MainPages2 from "./pages/MainPages2";
+import PublicPages from "./pages/PublicPages";
 
 function App() {
 
@@ -73,8 +72,7 @@ function App() {
           />
 
           <Routes>
-            {/* <Route path={`${PATH.root}*`} element={<MainPages />} /> */}
-            <Route path={`${PATH.root}*`} element={<MainPages2 />} />
+            <Route path={`${PATH.root}*`} element={<PublicPages />} />
             <Route 
               path={`${PATH.event}/*`} 
               element={

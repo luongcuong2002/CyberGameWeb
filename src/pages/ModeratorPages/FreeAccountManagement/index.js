@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styles from "./free_account_management.module.scss";
 import PagingTable from "../../../components/PagingTable";
 import { useDispatch, useSelector } from "react-redux";
