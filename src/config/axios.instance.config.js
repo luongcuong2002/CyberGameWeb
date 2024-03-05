@@ -47,7 +47,7 @@ axiosApiInstance.interceptors.response.use(
 
       // show dialog if user is blocked
       if (errorMessage === API_ERROR.userIsBlocked) {
-        console.log("user is blocked");
+        // console.log("user is blocked");
         store.dispatch(setUser(null));
         store.dispatch(setBlockUserDialogShowing({ isBlockUserDialogShowing: true }));
         return Promise.reject(error);

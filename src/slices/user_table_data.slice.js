@@ -30,18 +30,18 @@ export const userTableDataSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchUserTableData.pending, (state, action) => {
             state.isLoading = true;
-            console.log("fetchUserTableData.pending");
+            // console.log("fetchUserTableData.pending");
         });
         builder.addCase(fetchUserTableData.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
-            console.log("fetchUserTableData.fulfilled");
+            // console.log("fetchUserTableData.fulfilled");
         });
         builder.addCase(fetchUserTableData.rejected, (state, action) => {
             state.isLoading = false;
             state.data = null;
             state.errorMessage = action.payload;
-            console.log("fetchUserTableData.rejected: ", action.payload);
+            // console.log("fetchUserTableData.rejected: ", action.payload);
         });
     }
 });

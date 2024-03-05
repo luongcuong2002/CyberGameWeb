@@ -36,7 +36,6 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log(err);
         })
         .finally(() => {
           setRender(true);

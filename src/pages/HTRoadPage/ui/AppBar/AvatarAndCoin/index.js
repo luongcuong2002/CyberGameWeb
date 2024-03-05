@@ -43,7 +43,7 @@ const AvatarAndCoin = () => {
         setOpenPopup(false);
         authService.signOut()
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
             .finally(() => {
                 window.location.href = PATH.root;

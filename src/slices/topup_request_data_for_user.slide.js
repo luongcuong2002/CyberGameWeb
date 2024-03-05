@@ -29,18 +29,18 @@ export const topupRequestDataForUserSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchTopupRequestDataForUser.pending, (state, action) => {
             state.isLoading = true;
-            console.log("fetchTopupRequestDataForUser.pending");
+            // console.log("fetchTopupRequestDataForUser.pending");
         });
         builder.addCase(fetchTopupRequestDataForUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
-            console.log("fetchTopupRequestDataForUser.fulfilled");
+            // console.log("fetchTopupRequestDataForUser.fulfilled");
         });
         builder.addCase(fetchTopupRequestDataForUser.rejected, (state, action) => {
             state.isLoading = false;
             state.data = null;
             state.errorMessage = action.payload;
-            console.log("fetchTopupRequestDataForUser.rejected: ", action.payload);
+            // console.log("fetchTopupRequestDataForUser.rejected: ", action.payload);
         });
     }
 });

@@ -30,18 +30,18 @@ export const moderatorAccountTableDataSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchModeratorAccountTableData.pending, (state, action) => {
             state.isLoading = true;
-            console.log("fetchModeratorAccountTableData.pending");
+            // console.log("fetchModeratorAccountTableData.pending");
         });
         builder.addCase(fetchModeratorAccountTableData.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
-            console.log("fetchModeratorAccountTableData.fulfilled");
+            // console.log("fetchModeratorAccountTableData.fulfilled");
         });
         builder.addCase(fetchModeratorAccountTableData.rejected, (state, action) => {
             state.isLoading = false;
             state.data = null;
             state.errorMessage = action.payload;
-            console.log("fetchModeratorAccountTableData.rejected: ", action.payload);
+            // console.log("fetchModeratorAccountTableData.rejected: ", action.payload);
         });
     }
 });

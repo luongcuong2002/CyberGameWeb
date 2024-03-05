@@ -14,7 +14,7 @@ const LuckyWheelPopup = ({ setShowDialog }) => {
     }
 
     const spin = () => {
-        console.log(wheelRef.current);
+        // console.log(wheelRef.current);
         wheelRef.current?.spin();
     }
 

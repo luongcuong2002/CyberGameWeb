@@ -85,6 +85,7 @@
     height: 100%;
     padding: 8px;
     position: relative;
+    border-radius: 12px;
 }
 
 .table {
@@ -112,7 +113,8 @@
     thead tr {
         width: 100%;
         padding: 12px 0px;
-        border-radius: inherit inherit 0px 0px;
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

@@ -16,7 +16,7 @@ const ModeratorPermissionDialog = ({ setShowDialog, user }) => {
         adminAccountManagementService.fetchModeratorPermission(user.userId)
             .then((data) => {
                 setPermissions(data);
-                console.log(data);
+                // console.log(data);
             })
             .catch((error) => {
                 setShowDialog(false);
@@ -44,7 +44,7 @@ const ModeratorPermissionDialog = ({ setShowDialog, user }) => {
 
         setWarning("");
 
-        console.log(changedPermission);
+        // console.log(changedPermission);
 
         setIsSendingRequest(true);
         adminAccountManagementService.changeModeratorPermission(user.userId, changedPermission)

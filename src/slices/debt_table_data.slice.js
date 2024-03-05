@@ -93,18 +93,18 @@ export const debtTableStateSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchDebtTableState.pending, (state, action) => {
             state.isLoading = true;
-            console.log("fetchDebtTableState.pending");
+            // console.log("fetchDebtTableState.pending");
         });
         builder.addCase(fetchDebtTableState.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
-            console.log("fetchDebtTableState.fulfilled");
+            // console.log("fetchDebtTableState.fulfilled");
         });
         builder.addCase(fetchDebtTableState.rejected, (state, action) => {
             state.isLoading = false;
             state.data = null;
             state.errorMessage = action.payload;
-            console.log("fetchDebtTableState.rejected: ", action.payload);
+            // console.log("fetchDebtTableState.rejected: ", action.payload);
         });
     }
 });

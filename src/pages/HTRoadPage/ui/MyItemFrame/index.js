@@ -196,8 +196,6 @@ const MyItemFrame = () => {
     ]
 
     const scrollManagement = useSelector(selectScrollableManagement);
-    
-    console.log(scrollManagement);
 
     return (
         <div id={styles.root}>

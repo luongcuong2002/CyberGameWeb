@@ -30,18 +30,18 @@ export const voucherTableDataSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchVoucherTableData.pending, (state, action) => {
             state.isLoading = true;
-            console.log("fetchVoucherTableData.pending");
+            // console.log("fetchVoucherTableData.pending");
         });
         builder.addCase(fetchVoucherTableData.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
-            console.log("fetchVoucherTableData.fulfilled");
+            // console.log("fetchVoucherTableData.fulfilled");
         });
         builder.addCase(fetchVoucherTableData.rejected, (state, action) => {
             state.isLoading = false;
             state.data = null;
             state.errorMessage = action.payload;
-            console.log("fetchVoucherTableData.rejected: ", action.payload);
+            // console.log("fetchVoucherTableData.rejected: ", action.payload);
         });
     }
 });

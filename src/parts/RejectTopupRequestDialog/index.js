@@ -39,7 +39,7 @@ const RejectTopupRequestDialog = ({ setShowDialog, topupRequests, userName, onSu
             reason: reason.trim()
         };
 
-        console.log(params);
+        // console.log(params);
 
         setWarning("");
         setIsSendingRequest(true);

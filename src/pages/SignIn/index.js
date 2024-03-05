@@ -61,6 +61,12 @@ const SignInPage = () => {
     setPassword(inputValue);
   };
 
+  const onEnterPress = (e) => {
+    if (e.keyCode === 13) {
+      onClickSignInButton();
+    }
+  }
+
   return (
     <div id={styles.root}>
       <div className={styles.signInContainer}>
@@ -80,6 +86,7 @@ const SignInPage = () => {
               value={userName}
               disabled={waitingForServer}
               onChange={onUserNameChange}
+              onKeyDown={onEnterPress}
             />
           </div>
           <div className={styles.inputGroup}>
@@ -96,6 +103,7 @@ const SignInPage = () => {
               value={password}
               disabled={waitingForServer}
               onChange={onPasswordChange}
+              onKeyDown={onEnterPress}
             />
           </div>
           <>{warning && <AlertError text={warning} />}</>

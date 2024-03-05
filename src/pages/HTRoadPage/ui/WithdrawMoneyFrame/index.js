@@ -53,7 +53,7 @@ const WithdrawMoneyFrame = () => {
                 dispatch(fetchTopupRequestDataForUser());
             }).catch((err) => {
                 const message = err?.response?.data?.message;
-                console.log(err);
+                // console.log(err);
                 if (message) {
                     alert(message);
                 } else {

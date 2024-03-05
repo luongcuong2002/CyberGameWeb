@@ -63,7 +63,7 @@ const Wheel = forwardRef(
         useImperativeHandle(ref, () => ({
             async spin () {
                 if (spinning) {
-                    console.log("Spinning already");
+                    // console.log("Spinning already");
                     return;
                 }
 
@@ -76,7 +76,7 @@ const Wheel = forwardRef(
                 setTimeout(() => {
 
                     const targetIndex = Math.floor(Math.random() * wheelContent.length);
-                    console.log("Target index", targetIndex);
+                    // console.log("Target index", targetIndex);
 
                     const finalDeg = targetIndex >= 0
                         ? Math.floor(360 * minLoops + (360 - targetIndex * 360 / wheelContent.length))

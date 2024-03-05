@@ -68,7 +68,7 @@ const TopupRequestPendingFrame = () => {
                     >
                         <ul className={styles.item_list}>
                             {topupRequestData.data.map((item, index) => {
-                                console.log(item);
+                                // console.log(item);
                                 return (
                                     <li key={index}>
                                         <ItemRow item={item} />

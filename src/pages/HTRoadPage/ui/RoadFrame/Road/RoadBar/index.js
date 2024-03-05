@@ -45,7 +45,7 @@ const RoadBar = ({ gifts, userTimedHours, widthItem }) => {
                             }
                         }
 
-                        console.log(percentProgress);
+                        // console.log(percentProgress);
                         return <BarItem index={index} percentProgress={percentProgress} widthItem={widthItem} />
                     }
                 )
