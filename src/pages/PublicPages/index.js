@@ -29,7 +29,7 @@ const MainPages2 = () => {
     }
 
     const handleAddressClick = () => {
-        window.open("https://www.google.com/maps?q=21.0333,105.8500");
+        window.open("https://www.google.com/maps/place/Qu%C3%A1n+Net+H%C6%B0%C6%A1ng+Thi%E1%BA%BFt/@21.0534276,105.6113647,17.62z/data=!4m6!3m5!1s0x313457fe2cec8347:0xcb3c7fcd9f68fbce!8m2!3d21.053646!4d105.6112289!16s%2Fg%2F11q93s5gs_?entry=ttu");
     }
 
     const handleLoginButtonClick = () => {
@@ -53,9 +53,9 @@ const MainPages2 = () => {
     return (
         <div id={styles.root}>
             <div id={styles.contact}>
-                <span className={styles.wrapper}>
+                <span className={clsx(styles.wrapper, styles.addressWrapper)}>
                     <PhoneIcon className={styles.contactIcon} />
-                    <label>034 753 8182</label>
+                    <a href="tel:0347538182">034 753 8182</a>
                 </span>
                 <div className={styles.divider} />
                 <span
@@ -63,7 +63,7 @@ const MainPages2 = () => {
                     onClick={handleAddressClick}
                 >
                     <MapIcon className={styles.contactIcon} />
-                    <label style={{cursor: "pointer"}}>Số nhà 39, Đường Vành Đai, Canh Nậu, Thạch Thất, Hà Nội</label>
+                    <label style={{cursor: "pointer"}}>Số nhà 37, Đường Vành Đai, Canh Nậu, Thạch Thất, Hà Nội</label>
                 </span>
             </div>
             <header id={styles.header}>

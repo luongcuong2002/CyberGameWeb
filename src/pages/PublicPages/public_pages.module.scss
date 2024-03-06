@@ -44,10 +44,16 @@
 
     .addressWrapper {
         text-decoration: underline;
+        color: #fff;
         cursor: pointer;
 
         label {
             flex: 1;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
         }
 
         &:hover {
